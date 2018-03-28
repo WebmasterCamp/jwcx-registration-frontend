@@ -14,14 +14,19 @@ class Step1Form extends Component {
   }
 
   handleSubmit = (e) => {
+    const { fileList } = this.state
     const { form, onSubmit } = this.props
 
     e.preventDefault()
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        const image = this.getUploadImage()
-        values.image = image
-        onSubmit(values)
+        if (fileList.length > 0) {
+          const image = this.getUploadImage()
+          values.image = image
+          onSubmit(values)
+        } else {
+          onSubmit(values)
+        }
       }
     })
   }

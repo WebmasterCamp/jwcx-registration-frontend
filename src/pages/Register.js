@@ -9,7 +9,7 @@ class Register extends Component {
     super()
     
     this.state = {
-      step: 2,
+      step: 0,
       data: {}
     }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -32,9 +32,13 @@ class Register extends Component {
     this.setState({ step: step < 0? 0: step })
   }
 
-  handleSubmit = (data) => {
-    const { step } = this.state
+  handleSubmit = (newData) => {
+    const { step, data } = this.state
+
     console.log(`Step: ${step} ;`, 'submit data:', data)
+
+    const updateData = { ...data, ...newData }
+    this.setState({ data: updateData })
 
     if (step < 2) {
       this.setState({ step: step + 1 })
@@ -49,7 +53,7 @@ class Register extends Component {
     } else if (step === 1) {
       return <Step2 onBackStep={this.handleUpdateStep(step - 1)} onSubmit={this.handleSubmit} width={width} />
     } else if (step === 2) {
-      return <Step3 onSubmit={this.handleSubmit} width={width} />
+      return <Step3 onBackStep={this.handleUpdateStep(step - 1)} onSubmit={this.handleSubmit} width={width} />
     }
 
     return <Step1 />
