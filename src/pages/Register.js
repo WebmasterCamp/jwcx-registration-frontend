@@ -15,7 +15,7 @@ class Register extends Component {
     super()
     
     this.state = {
-      step: 0,
+      step: 1,
       data: {}
     }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)

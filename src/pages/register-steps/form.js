@@ -9,12 +9,22 @@ const cssFontInput = css`
 `
 
 const cssGhostButton = css`
-  background-color: transparent;
+  ${cssFontInput};
+  background-color: transparent !important;
   color: #ffffff;
   border-radius: 4px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #ffffff;
+  border-width: 2px solid #ffffff !important;
+  text-decoration: none;
+  min-width: 100px;
+  margin-bottom: 8px;
+  padding-top: 6px;
+`
+const cssNormalButton = css`
+  ${cssFontInput};
+  background-color: #ffffff !important;
+  color: #5e4a88;
+  border-radius: 4px;
+  border-width: 0px;
   text-decoration: none;
   min-width: 100px;
   margin-bottom: 8px;
@@ -22,25 +32,15 @@ const cssGhostButton = css`
 `
 const NavigationContainer = styled.div`
   display: flex;
-
-  .ant-btn {
-    background-color: #ffffff;
-    color: #5e4a88;
-    border-radius: 4px;
-    border-width: 0px;
-    text-decoration: none;
-    min-width: 100px;
-    margin-bottom: 8px;
-    padding-top: 6px;
-
-    ${props => props.ghost && cssGhostButton}
-  }
+`
+const FormButton = styled(Button)`
+  ${props => props.ghost? cssGhostButton: cssNormalButton}
 `
 export const NavigationButton = ({ onSubmit, onBackStep, last }) => {
   return (
     <NavigationContainer>
-      {onBackStep && <Button onClick={onBackStep}>{'ย้อนกลับ'}</Button>}
-      <Button ghost onClick={onSubmit}>{ !last? 'ต่อไป': 'ตกลง'}</Button>
+      {onBackStep && <FormButton ghost onClick={onBackStep}>{'ย้อนกลับ'}</FormButton>}
+      <FormButton onClick={onSubmit}>{ !last? 'ต่อไป': 'ตกลง'}</FormButton>
     </NavigationContainer>
   )
 }
@@ -150,7 +150,7 @@ const FormContainerWrapper = styled.div`
   }
   
   ${Row} {
-    // flex-direction: column;
+    ${props => props.small && 'flex-direction: column;'}
     .ant-row:last-child {
       margin-right: 0px ;
     }
@@ -158,7 +158,7 @@ const FormContainerWrapper = styled.div`
 `
 export const FormContainer = ({ children, width, step3 }) => {
   return (
-    <FormContainerWrapper step3={step3}>
+    <FormContainerWrapper step3={step3} small={width < 800}>
       <Form>{children}</Form>
     </FormContainerWrapper>
   )
