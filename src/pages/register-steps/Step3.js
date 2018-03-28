@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form } from 'antd';
 
-import { FormContainer, FormItem, NavigationButton } from './Form'
+import { FormContainer, FormItem, NavigationButton } from './form'
 
 class Step2Form extends Component {
   handleSubmit = (e) => {
@@ -19,7 +19,7 @@ class Step2Form extends Component {
     const { form: { getFieldDecorator }, onBackStep } = this.props
 
     return (
-      <FormContainer>
+      <FormContainer step3>a
         <FormItem label={'คำถาม1'} field={'q1'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
         <FormItem label={'คำถาม2'} field={'q2'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
         <FormItem label={'คำถาม3'} field={'q3'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />

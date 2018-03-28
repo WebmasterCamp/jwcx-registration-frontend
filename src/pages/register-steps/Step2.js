@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form } from 'antd';
 
-import { FormContainer, FormItem, NavigationButton, Row } from './Form'
+import { FormContainer, FormItem, NavigationButton, Row } from './form'
 
 class Step2Form extends Component {
   handleSubmit = (e) => {

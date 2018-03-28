@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
-import { Form, Icon, Upload } from 'antd';
+import { Form, Upload } from 'antd';
+import styled from 'styled-components'
 
-import { FormContainer, FormItem, NavigationButton, Row } from './Form'
+import { FormContainer, FormItem, NavigationButton, Row } from './form'
+
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+`
 
 class Step1Form extends Component {
   constructor(props) {
@@ -53,22 +60,23 @@ class Step1Form extends Component {
     const { fileList } = this.state
     const uploadButton = (
       <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">Upload<br/>รูปภาพ</div>
       </div>
     )
 
     return (
       <FormContainer width={width}>
-        <Upload
-          action="//jsonplaceholder.typicode.com/posts/"
-          listType="picture-card"
-          fileList={fileList}
-          onChange={this.handleChangeImage}
-          beforeUpload={this.handleUploadImage}
-        >
-          {fileList.length >= 1 ? null : uploadButton}
-        </Upload>
+        <ImageContainer>
+          <Upload
+            action="//jsonplaceholder.typicode.com/posts/"
+            listType="picture-card"
+            fileList={fileList}
+            onChange={this.handleChangeImage}
+            beforeUpload={this.handleUploadImage}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
+          </Upload>
+        </ImageContainer>
         <Row>
           <FormItem label={'ชื่อ'} field={'name'} message={'กรุณากรอกชื่อ'} getFieldDecorator={getFieldDecorator} />
           <FormItem label={'นามสกุล'} field={'lastname'} message={'กรุณากรอกนามสกุล'} getFieldDecorator={getFieldDecorator} />
@@ -86,8 +94,8 @@ class Step1Form extends Component {
         <Row>
           <FormItem label={'เบอร์โทร'} field={'number'} message={'กรุณากรอกเบอร์โทร'} getFieldDecorator={getFieldDecorator} />
           <FormItem label={'อีเมล์'} field={'email'} message={'กรุณากรอกอีเมล์'} getFieldDecorator={getFieldDecorator} />
-          <FormItem label={'Social Media ต่างๆ'} field={'social-media'} getFieldDecorator={getFieldDecorator} required={false} textarea />
         </Row>
+        <FormItem label={'Social Media ต่างๆ'} field={'social-media'} getFieldDecorator={getFieldDecorator} required={false} textarea />
         <Row>
           <FormItem label={'โรคประจำตัว'} field={'disease'} getFieldDecorator={getFieldDecorator} required={false} />
           <FormItem label={'อาหารที่แพ้'} field={'allergy-food'}  getFieldDecorator={getFieldDecorator} required={false} />

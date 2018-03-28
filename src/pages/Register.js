@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 
 import Step1 from './register-steps/Step1'
 import Step2 from './register-steps/Step2'
 import Step3 from './register-steps/Step3'
+
+const Container = styled.div`
+  max-width: 800px;
+  margin: auto;
+`
 
 class Register extends Component {
   constructor(props) {
@@ -60,7 +66,11 @@ class Register extends Component {
   }
 
   render() {
-    return this.renderStep()
+    return (
+      <Container>
+        {this.renderStep()}
+      </Container>
+    )
   }
 }
 
