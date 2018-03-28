@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import StepList from '../components/step-list.js';
 
 export default class Home extends Component {
     render() {
         return (
             <div>
+                <div className="row">
+                    <StepList className="offset-2 col-8" titles={['STEP 0', 'STEP 1', 'STEP 2', 'STEP 3']} currentStep={1} />
+                </div>
                 <div><a href="#">ผู้สนับสนุน</a></div>
                 <div><button href="#" className="button-invert">รายละเอียด</button></div>
                 <div><button href="#" className="button">สมัครเลย</button></div>
