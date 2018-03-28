@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, Icon, Cascader, Select, Button } from 'antd';
 import styled from 'styled-components'
 
-import { FormItem } from './Form'
+import { FormContainer, FormItem, NavigationButton } from './Form'
 
 const Row = styled.div`
   display: flex;
@@ -34,8 +34,7 @@ class Step2Form extends Component {
           <FormItem label={'ความเกี่ยวข้อง'} field={'relation'} message={'กรุณากรอกความเกี่ยวข้อง'} getFieldDecorator={getFieldDecorator} />
           <FormItem label={'เบอร์โทร'} field={'number'} message={'กรุณากรอกเบอร์โทร'} getFieldDecorator={getFieldDecorator} />
         </Row>
-        <Button onClick={onBackStep}>ย้อนกลับ</Button>
-        <Button onClick={this.handleSubmit}>ต่อไป</Button>
+        <NavigationButton onBackStep={onBackStep} onSubmit={this.handleSubmit} />
       </Form>
     )
   }
