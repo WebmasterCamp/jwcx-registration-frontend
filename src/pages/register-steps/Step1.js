@@ -1,31 +1,69 @@
 import React, { Component } from 'react'
-import { Form, Input, Icon, Cascader, Select, Button } from 'antd';
-import styled from 'styled-components'
+import { Form, Icon, Upload } from 'antd';
 
-import { FormContainer, FormItem, NavigationButton } from './Form'
-
-const Row = styled.div`
-  display: flex;
-`
+import { FormContainer, FormItem, NavigationButton, Row } from './Form'
 
 class Step1Form extends Component {
+  constructor(props) {
+    super()
+
+    this.state = {
+      fileList: [],
+      uploadList:[]
+    }
+  }
+
   handleSubmit = (e) => {
     const { form, onSubmit } = this.props
 
     e.preventDefault()
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const image = this.getUploadImage()
+        values.image = image
         onSubmit(values)
       }
     })
   }
 
+  getUploadImage() {
+    const { fileList, uploadList } = this.state
+
+    return uploadList[fileList[0].uid]
+  }
+
+  handleChangeImage = ({ fileList }) => {
+    this.setState({ fileList })
+  }
+
+  handleUploadImage = (file) => {
+    const uploadList = this.state.uploadList
+    uploadList[file.uid] = file
+    
+    this.setState({ uploadList })
+  }
+
   render() {
-    const { getFieldDecorator } = this.props.form
-  
+    const { form: { getFieldDecorator }, width } = this.props
+    const { fileList } = this.state
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    )
+
     return (
-      <FormContainer>
+      <FormContainer width={width}>
+        <Upload
+          action="//jsonplaceholder.typicode.com/posts/"
+          listType="picture-card"
+          fileList={fileList}
+          onChange={this.handleChangeImage}
+          beforeUpload={this.handleUploadImage}
+        >
+          {fileList.length >= 1 ? null : uploadButton}
+        </Upload>
         <Row>
           <FormItem label={'ชื่อ'} field={'name'} message={'กรุณากรอกชื่อ'} getFieldDecorator={getFieldDecorator} />
           <FormItem label={'นามสกุล'} field={'lastname'} message={'กรุณากรอกนามสกุล'} getFieldDecorator={getFieldDecorator} />
@@ -58,7 +96,7 @@ class Step1Form extends Component {
   }
 }
 
-const WrappedForm = Form.create()(Step1Form);
+const WrappedForm = Form.create()(Step1Form)
 
 export default (props) => {
   return <WrappedForm {...props} />

@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Input, Icon, Cascader, Select, Button } from 'antd';
-import styled from 'styled-components'
+import { Form } from 'antd';
 
 import { FormContainer, FormItem, NavigationButton } from './Form'
-
-const Row = styled.div`
-  display: flex;
-`
 
 class Step2Form extends Component {
   handleSubmit = (e) => {
@@ -15,7 +10,6 @@ class Step2Form extends Component {
     e.preventDefault()
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         onSubmit(values)
       }
     })
@@ -26,9 +20,9 @@ class Step2Form extends Component {
 
     return (
       <FormContainer>
-        <FormItem label={'คำถาม1'} field={'1'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
-        <FormItem label={'คำถาม2'} field={'2'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
-        <FormItem label={'คำถาม3'} field={'3'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
+        <FormItem label={'คำถาม1'} field={'q1'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
+        <FormItem label={'คำถาม2'} field={'q2'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
+        <FormItem label={'คำถาม3'} field={'q3'} message={'กรุณาตอบคำถาม'} getFieldDecorator={getFieldDecorator} textarea />
         <NavigationButton onBackStep={onBackStep} onSubmit={this.handleSubmit} last />
       </FormContainer>
     )

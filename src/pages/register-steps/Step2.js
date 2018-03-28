@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Input, Icon, Cascader, Select, Button } from 'antd';
-import styled from 'styled-components'
+import { Form } from 'antd';
 
-import { FormContainer, FormItem, NavigationButton } from './Form'
-
-const Row = styled.div`
-  display: flex;
-`
+import { FormContainer, FormItem, NavigationButton, Row } from './Form'
 
 class Step2Form extends Component {
   handleSubmit = (e) => {
@@ -15,7 +10,6 @@ class Step2Form extends Component {
     e.preventDefault()
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         onSubmit(values)
       }
     })
@@ -25,7 +19,7 @@ class Step2Form extends Component {
     const { form: { getFieldDecorator }, onBackStep } = this.props
   
     return (
-      <Form>
+      <FormContainer>
         <Row>
           <FormItem label={'ชื่อ'} field={'name'} message={'กรุณากรอกชื่อ'} getFieldDecorator={getFieldDecorator} />
           <FormItem label={'นามสกุล'} field={'lastname'} message={'กรุณากรอกนามสกุล'} getFieldDecorator={getFieldDecorator} />
@@ -35,7 +29,7 @@ class Step2Form extends Component {
           <FormItem label={'เบอร์โทร'} field={'number'} message={'กรุณากรอกเบอร์โทร'} getFieldDecorator={getFieldDecorator} />
         </Row>
         <NavigationButton onBackStep={onBackStep} onSubmit={this.handleSubmit} />
-      </Form>
+      </FormContainer>
     )
   }
 }
