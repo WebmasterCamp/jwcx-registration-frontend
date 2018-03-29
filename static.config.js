@@ -3,7 +3,7 @@ import {extractCritical} from 'emotion-server'
 
 import webpack from './webpack.config.js'
 
-const siteRoot = 'https://jwcx-196915.firebaseapp.com'
+const siteRoot = 'https://registration.jwc.in.th'
 
 class Document extends Component {
   render() {
