@@ -15,6 +15,7 @@ class Document extends Component {
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style dangerouslySetInnerHTML={{__html: renderMeta.css}} />
+          <title>Registration | Junior Webmaster Camp X</title>
           <link
             href="https://fonts.googleapis.com/css?family=Kanit:300,400"
             rel="stylesheet"
@@ -30,7 +31,6 @@ export default {
   webpack,
   siteRoot,
   getSiteProps: () => ({
-    title: 'Registration | Junior Webmaster Camp X',
     siteRoot,
   }),
   getRoutes: async () => [
