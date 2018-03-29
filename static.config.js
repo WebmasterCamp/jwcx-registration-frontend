@@ -27,6 +27,13 @@ class Document extends Component {
   }
 }
 
+const majors = ['programming', 'design', 'content', 'marketing']
+
+const majorRoutes = majors.map(major => ({
+  path: '/' + major,
+  component: 'src/routes/register',
+}))
+
 export default {
   webpack,
   siteRoot,
@@ -38,6 +45,7 @@ export default {
       path: '/',
       component: 'src/routes/index',
     },
+    ...majorRoutes,
     {
       is404: true,
       component: 'src/routes/404',

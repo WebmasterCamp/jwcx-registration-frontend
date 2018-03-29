@@ -12,14 +12,18 @@ export const LOGOUT = 'LOGOUT'
 
 export const STORE_USER = 'STORE_USER'
 export const CLEAR_USER = 'CLEAR_USER'
+
 export const SET_LOADING = 'SET_LOADING'
+export const SET_AUTHENTICATING = 'SET_AUTHENTICATING'
 
 export const login = Creator(LOGIN)
 export const logout = Creator(LOGOUT)
 
 export const storeUser = Creator(STORE_USER)
 export const clearUser = Creator(CLEAR_USER)
+
 export const setLoading = Creator(SET_LOADING)
+export const setAuthenticating = Creator(SET_AUTHENTICATING)
 
 const db = app.firestore()
 
@@ -35,6 +39,7 @@ const userProps = R.pick([
 
 export function* loginSaga() {
   const hide = message.loading('กำลังยืนยันตัวตนผ่าน Facebook...', 0)
+  yield put(setAuthenticating(true))
 
   const provider = new firebase.auth.FacebookAuthProvider()
   provider.addScope('email')
@@ -42,10 +47,8 @@ export function* loginSaga() {
 
   try {
     const auth = yield call(rsf.auth.signInWithPopup, provider)
-    console.log('Authentication Credentials', auth)
-
     const cred = yield call(rsf.auth.signInAndRetrieveDataWithCredential, auth)
-    console.log('User Credentials', cred)
+    console.log('Logged in as', cred.user.displayName, cred.user.uid)
 
     yield call(hide)
 
@@ -63,6 +66,8 @@ export function* loginSaga() {
     console.warn(err.code, err.message)
     message.error(err.message)
   }
+
+  yield put(setAuthenticating(false))
 }
 
 export function* logoutSaga() {
@@ -79,7 +84,7 @@ export function* authRoutineSaga(user) {
   yield put(storeUser(user))
 }
 
-const getUserStatus = () =>
+export const getUserStatus = () =>
   new Promise((resolve, reject) => {
     app.auth().onAuthStateChanged(resolve, reject)
   })
@@ -111,6 +116,7 @@ const initial = {
 
 export default createReducer(initial, state => ({
   [SET_LOADING]: loading => ({...state, loading}),
+  [SET_AUTHENTICATING]: authenticating => ({...state, authenticating}),
   [STORE_USER]: user => user && userProps(user),
   [CLEAR_USER]: () => ({}),
 }))

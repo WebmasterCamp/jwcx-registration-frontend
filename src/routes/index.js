@@ -1,10 +1,7 @@
 import React from 'react'
 import styled from 'react-emotion'
-import {connect} from 'react-redux'
 
 import Button from '../components/Button'
-
-import {login, logout} from '../ducks/user'
 
 const Page = styled.div`
   display: flex;
@@ -19,7 +16,15 @@ const Page = styled.div`
   min-height: 100vh;
 `
 
-const Title = styled.h1`
+const Heading = styled.h1`
+  color: #777;
+  font-size: 1.95em;
+  font-weight: 300;
+
+  margin-bottom: 1.2em;
+`
+
+const SubHeading = styled.h1`
   color: #555;
   font-size: 1.85em;
   font-weight: 300;
@@ -27,35 +32,18 @@ const Title = styled.h1`
   margin-bottom: 1.8em;
 `
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+// TODO: The user may re-enter the registration subdomain directly.
+//       Re-auth, then check if the user had already chosen their major, and redirect.
 
-  width: 100%;
-`
-
-const Landing = ({user, login, logout}) => (
+const Landing = () => (
   <Page>
-    {user.uid ? (
-      <Container>
-        <Title>เข้าสู่ระบบแล้วในชื่อ {user.displayName}</Title>
-        <Button onClick={logout}>ออกจากระบบ</Button>
-      </Container>
-    ) : (
-      <Container>
-        <Title>สมัครเข้าค่าย | Junior Webmaster Camp X</Title>
-        <Button onClick={login}>สมัครผ่าน Facebook</Button>
-      </Container>
-    )}
+    <Heading>ลงทะเบียนเข้าค่าย | Junior Webmaster Camp X</Heading>
+    <SubHeading>กรุณาเลือกสาขาที่ท่านต้องการในเว็บไซต์หลัก</SubHeading>
+
+    <a href="https://x.jwc.in.th">
+      <Button>กลับสู่เว็บไซต์หลัก</Button>
+    </a>
   </Page>
 )
 
-const mapStateToProps = state => ({
-  user: state.user,
-})
-
-const enhance = connect(mapStateToProps, {login, logout})
-
-export default enhance(Landing)
+export default Landing
