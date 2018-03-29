@@ -1,8 +1,7 @@
-import axios from 'axios'
 import * as R from 'ramda'
 import {message} from 'antd'
-import {untouch} from 'redux-form'
-import {takeEvery, call, put, fork, select} from 'redux-saga/effects'
+import firebase from 'firebase'
+import {takeEvery, call, put, fork} from 'redux-saga/effects'
 
 import {createReducer, Creator} from './helper'
 
@@ -24,6 +23,7 @@ export const setLoading = Creator(SET_LOADING)
 
 const db = app.firestore()
 
+// Serializes the user's information into an object
 const userProps = R.pick([
   'uid',
   'displayName',
@@ -33,29 +33,45 @@ const userProps = R.pick([
   'metadata',
 ])
 
-export function* loginSaga({payload}) {
-  // const hide = message.loading('...', 0)
-  // try {
-  //   const user = yield call(rsf.auth.signInWithFacebook)
-  //   yield call(hide)
-  //   yield fork(authRoutineSaga, user)
-  // } catch (err) {
-  //   yield call(hide)
-  //   console.warn(err.code, err.message)
-  //   message.error(err.message)
-  // }
+export function* loginSaga() {
+  const hide = message.loading('กำลังยืนยันตัวตนผ่าน Facebook...', 0)
+
+  const provider = new firebase.auth.FacebookAuthProvider()
+  provider.addScope('email')
+  provider.addScope('public_profile')
+
+  try {
+    const auth = yield call(rsf.auth.signInWithPopup, provider)
+    console.log('Authentication Credentials', auth)
+
+    const cred = yield call(rsf.auth.signInAndRetrieveDataWithCredential, auth)
+    console.log('User Credentials', cred)
+
+    yield call(hide)
+
+    message.info('ยินดีต้อนรับ!')
+
+    yield fork(authRoutineSaga, cred.user)
+  } catch (err) {
+    yield call(hide)
+
+    // The facebook login popup was closed by the user
+    if (err.code === 'auth/popup-closed-by-user') {
+      return
+    }
+
+    console.warn(err.code, err.message)
+    message.error(err.message)
+  }
 }
 
 export function* logoutSaga() {
-  // try {
-  //   yield call(rsf.auth.signOut)
-  //   yield call(hide)
-  //   yield call(message.success, '')
-  //   yield put(clearUser())
-  // } catch (err) {
-  //   yield call(hide)
-  //   message.error(err.message)
-  // }
+  try {
+    yield call(rsf.auth.signOut)
+    yield put(clearUser())
+  } catch (err) {
+    message.error(err.message)
+  }
 }
 
 // Routines to perform when the user begins or resumes their session
@@ -72,6 +88,7 @@ const getUserStatus = () =>
 export function* reauthSaga() {
   try {
     const user = yield call(getUserStatus)
+    console.log('Reauthenticated:', user)
 
     if (user) {
       yield fork(authRoutineSaga, user)

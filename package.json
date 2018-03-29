@@ -20,6 +20,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-emotion": "^9.1.0",
+    "react-ink": "^6.2.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-static": "^5.6.8",
