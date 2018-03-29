@@ -3,9 +3,9 @@ import styled from 'react-emotion'
 import {connect} from 'react-redux'
 import {compose, lifecycle, branch, withState} from 'recompose'
 import {message, Spin} from 'antd'
+import {Redirect} from 'react-static'
 
-import Button from '../components/Button'
-import {Heading, SubHeading} from '../components/Layout'
+import {Heading} from '../components/Layout'
 
 import {login, logout, getUserStatus} from '../ducks/user'
 
@@ -46,15 +46,7 @@ const Authenticating = ({match}) => (
   </Page>
 )
 
-const Register = ({match, user, logout}) => (
-  <Page>
-    <Heading>
-      เข้าสู่ระบบแล้วในชื่อ {user.displayName} <br />
-      เพื่อสมัครเข้าสาขา <Major> {getMajor(match)}</Major>
-    </Heading>
-    <Button onClick={logout}>ออกจากระบบ</Button>
-  </Page>
-)
+const Register = ({match}) => <Redirect to={`/${getMajor(match)}/step1`} />
 
 const mapStateToProps = state => ({
   user: state.user,

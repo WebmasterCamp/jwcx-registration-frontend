@@ -27,6 +27,7 @@
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
+    "redux-form-antd": "^1.0.5",
     "redux-persist": "^5.9.1",
     "redux-saga": "^0.16.0",
     "redux-saga-firebase": "^0.12.0",

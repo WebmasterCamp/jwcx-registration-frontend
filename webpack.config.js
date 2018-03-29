@@ -82,6 +82,7 @@ export default function webpack(config, {stage, defaultLoaders}) {
   const extractTextPlugin = new ExtractTextPlugin({
     filename: getPath => {
       process.env.extractedCSSpath = 'styles.css'
+
       return getPath('styles.css')
     },
     allChunks: true,
