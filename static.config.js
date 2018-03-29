@@ -3,7 +3,7 @@ import {extractCritical} from 'emotion-server'
 
 import webpack from './webpack.config.js'
 
-const siteRoot = 'https://jwcx.firebaseapp.com'
+const siteRoot = 'https://jwcx-196915.firebaseapp.com'
 
 class Document extends Component {
   render() {
@@ -30,7 +30,7 @@ export default {
   webpack,
   siteRoot,
   getSiteProps: () => ({
-    title: 'Registration | Junior Webmaster Camp 10',
+    title: 'Registration | Junior Webmaster Camp X',
     siteRoot,
   }),
   getRoutes: async () => [

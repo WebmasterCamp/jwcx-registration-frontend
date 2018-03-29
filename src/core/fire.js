@@ -4,10 +4,10 @@ import SagaFirebase from 'redux-saga-firebase'
 
 const config = {
   apiKey: 'AIzaSyBNxcnU0P4XyuwybfISGtYasiEZbzpgV1A',
-  authDomain: 'jwcx.firebaseapp.com',
-  databaseURL: 'https://jwcx.firebaseio.com',
+  authDomain: 'jwcx-196915.firebaseapp.com',
+  databaseURL: 'https://jwcx-196915.firebaseio.com',
   projectId: 'jwcx-196915',
-  storageBucket: 'jwcx.appspot.com',
+  storageBucket: 'jwcx-196915.appspot.com',
   messagingSenderId: '774371380064',
 }
 
