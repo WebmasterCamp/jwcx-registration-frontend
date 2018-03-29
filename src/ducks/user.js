@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import {takeEvery, call, put, fork} from 'redux-saga/effects'
 
 import {createReducer, Creator} from './helper'
+import {loadCamperSaga} from './camper'
 
 import rsf, {app} from '../core/fire'
 
@@ -37,7 +38,7 @@ const userProps = R.pick([
   'metadata',
 ])
 
-export function* loginSaga() {
+export function* loginSaga({payload}) {
   const hide = message.loading('กำลังยืนยันตัวตนผ่าน Facebook...', 0)
   yield put(setAuthenticating(true))
 
@@ -51,9 +52,6 @@ export function* loginSaga() {
     console.log('Logged in as', cred.user.displayName, cred.user.uid)
 
     yield call(hide)
-
-    message.info('ยินดีต้อนรับ!')
-
     yield fork(authRoutineSaga, cred.user)
   } catch (err) {
     yield call(hide)
@@ -82,6 +80,7 @@ export function* logoutSaga() {
 // Routines to perform when the user begins or resumes their session
 export function* authRoutineSaga(user) {
   yield put(storeUser(user))
+  yield fork(loadCamperSaga)
 }
 
 export const getUserStatus = () =>
@@ -93,9 +92,10 @@ export const getUserStatus = () =>
 export function* reauthSaga() {
   try {
     const user = yield call(getUserStatus)
-    console.log('Reauthenticated:', user)
 
     if (user) {
+      console.log('Reauthenticated:', user)
+
       yield fork(authRoutineSaga, user)
     }
   } catch (err) {

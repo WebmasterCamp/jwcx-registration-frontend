@@ -66,14 +66,11 @@ const enhance = compose(
   withState('loading', 'setLoading', true),
   lifecycle({
     async componentWillMount() {
-      const {match, login, setLoading} = this.props
-      const major = getMajor(match)
-
+      const {login, setLoading} = this.props
       const hide = message.loading('กำลังเข้าสู่ระบบ กรุณารอสักครู่', 0)
 
       // Check if the user is already logged in
       const user = await getUserStatus()
-
       hide()
 
       // If the user hasn't authenticated before, do it now.

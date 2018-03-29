@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {extractCritical} from 'emotion-server'
 
+import majors from './src/core/majors'
 import webpack from './webpack.config.js'
 
 const siteRoot = 'https://registration.jwc.in.th'
@@ -27,11 +28,9 @@ class Document extends Component {
   }
 }
 
-const majors = ['programming', 'design', 'content', 'marketing']
-
 const majorRoutes = majors.map(major => ({
   path: '/' + major,
-  component: 'src/routes/register',
+  component: 'src/routes/major',
 }))
 
 export default {
@@ -46,6 +45,10 @@ export default {
       component: 'src/routes/index',
     },
     ...majorRoutes,
+    {
+      path: '/change_denied',
+      component: 'src/routes/change_denied',
+    },
     {
       is404: true,
       component: 'src/routes/404',

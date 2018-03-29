@@ -22,6 +22,7 @@ const ButtonContainer = styled.button`
   position: relative;
   text-align: center;
   text-decoration: none;
+  text-transform: capitalize;
 
   &:hover {
     background: #34495e;
