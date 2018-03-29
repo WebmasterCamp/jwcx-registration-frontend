@@ -28,9 +28,8 @@ const Major = styled.span`
   text-transform: capitalize;
 `
 
-function getMajor(match) {
-  return match.params[0].slice('1')
-}
+// Derives the major from the route match object
+const getMajor = match => match.params[0].split('/')[1]
 
 const Loading = ({match}) => (
   <Page>
