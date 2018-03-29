@@ -1,8 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {AppContainer} from 'react-hot-loader'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+import App from './components/App'
+
+if (typeof document !== 'undefined') {
+  const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
+
+  const render = Component => {
+    renderMethod(
+      <AppContainer>
+        <Component />
+      </AppContainer>,
+      document.getElementById('root'),
+    )
+  }
+
+  render(App)
+
+  if (module.hot) {
+    module.hot.accept('./components/App', () => {
+      render(require('./components/App').default)
+    })
+  }
+}
+
+export default App
