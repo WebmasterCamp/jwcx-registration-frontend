@@ -9,6 +9,8 @@ import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextInput from './Input'
 
+import formOptions from '../core/form'
+
 const ParentalForm = ({prev, handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
     <Paper>
@@ -39,13 +41,7 @@ const mapStateToProps = state => ({
 
 const enhance = compose(
   connect(mapStateToProps, {prev}),
-  reduxForm({
-    form: 'submission',
-    enableReinitialize: true,
-    keepDirtyOnReinitialize: true,
-    destroyOnUnmount: false,
-    forceUnregisterOnUnmount: true,
-  }),
+  reduxForm(formOptions),
 )
 
 export default enhance(ParentalForm)

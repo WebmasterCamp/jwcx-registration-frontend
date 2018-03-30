@@ -8,6 +8,8 @@ import Button from './Button'
 import TextArea from './TextArea'
 
 import {General} from '../core/questions'
+import formOptions from '../core/form'
+
 import {prev} from '../ducks/submission'
 
 const QuestionForm = ({prev, handleSubmit}) => (
@@ -32,13 +34,7 @@ const mapStateToProps = state => ({
 
 const enhance = compose(
   connect(mapStateToProps, {prev}),
-  reduxForm({
-    form: 'submission',
-    enableReinitialize: true,
-    keepDirtyOnReinitialize: true,
-    destroyOnUnmount: false,
-    forceUnregisterOnUnmount: true,
-  }),
+  reduxForm(formOptions),
 )
 
 export default enhance(QuestionForm)

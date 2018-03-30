@@ -40,15 +40,33 @@ const Label = styled.label`
     margin-bottom: 0.6em;
     transform: none !important;
   `};
+
+  ${props => props.meta.touched && props.meta.error && css`
+    color: #e74c3c;
+  `};
+`
+
+const ErrorMessage = styled.div`
+  position: absolute;
+  font-size: 0.9em;
+  bottom: 15%;
+  right: 3%;
+
+  color: #ee5253;
+  font-weight: 600;
+
+  pointer-events: none;
 `
 
 const wrap = Component => ({label, input, meta, float, wordy, ...props}) => (
   <Container wordy={wordy}>
-    <Label float={input.value || float} wordy={wordy}>
+    <Label float={input.value || float} wordy={wordy} meta={meta}>
       {label}
     </Label>
 
-    <Component {...meta} {...input} {...props} />
+    <Component meta={meta} {...input} {...props} />
+
+    {meta.touched && meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
   </Container>
 )
 

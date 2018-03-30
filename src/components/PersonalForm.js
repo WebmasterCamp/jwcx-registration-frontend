@@ -8,6 +8,8 @@ import Button from './Button'
 import TextInput from './Input'
 import TextArea from './TextArea'
 
+import formOptions from '../core/form'
+
 const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
     <Paper>
@@ -79,15 +81,6 @@ const mapStateToProps = state => ({
   initialValues: state.camper,
 })
 
-const enhance = compose(
-  connect(mapStateToProps),
-  reduxForm({
-    form: 'submission',
-    enableReinitialize: true,
-    keepDirtyOnReinitialize: true,
-    destroyOnUnmount: false,
-    forceUnregisterOnUnmount: true,
-  }),
-)
+const enhance = compose(connect(mapStateToProps), reduxForm(formOptions))
 
 export default enhance(PersonalForm)

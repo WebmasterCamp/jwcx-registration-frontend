@@ -1,7 +1,8 @@
-import styled from 'react-emotion'
+import styled, {css} from 'react-emotion'
 
 import withField from './withField'
 
+// prettier-ignore
 export const TextInput = styled.input`
   font-weight: 300;
   text-align: left;
@@ -40,6 +41,10 @@ export const TextInput = styled.input`
   &:focus + label {
     transform: translateY(-40px) scale(1);
   }
+
+  ${props => props.meta.touched && props.meta.error && css`
+    border-bottom: 2px solid #e74c3c;
+  `};
 `
 
 export default withField(TextInput)
