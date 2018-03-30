@@ -5,6 +5,7 @@ import {getFormValues} from 'redux-form'
 
 import Button from '../components/Button'
 import Upload from '../components/Upload'
+import {DesignUpload} from '../components/DesignUpload'
 import {Backdrop, Row, Paper} from '../components/Layout'
 
 import questions, {General} from '../core/questions'
@@ -112,7 +113,8 @@ const GeneralSection = ({data}) => (
   </Card>
 )
 
-const MajorSection = ({major = 'general', data}) => {
+const MajorSection = ({data}) => {
+  const major = getMajorFromPath()
   const {Q1, Q2, Q3} = questions[major]
 
   return (
@@ -120,20 +122,21 @@ const MajorSection = ({major = 'general', data}) => {
       <Title>คำถามสาขา</Title>
       <Item>
         <Label>{Q1}:</Label>
-
         <Paragraph>{data.majorAnswer1}</Paragraph>
       </Item>
 
       <Item>
         <Label>{Q2}:</Label>
-
         <Paragraph>{data.majorAnswer2}</Paragraph>
       </Item>
 
       <Item>
         <Label>{Q3}:</Label>
-
-        <Paragraph>{data.majorAnswer3}</Paragraph>
+        {major === 'design' ? (
+          <DesignUpload name="majorAnswer3" label={questions.Q3} wordy />
+        ) : (
+          <Paragraph>{data.majorAnswer3}</Paragraph>
+        )}
       </Item>
     </Card>
   )
@@ -145,14 +148,14 @@ const prev = () => {
   history.push(`/${major}/step4`)
 }
 
-const StepOne = ({data = {}, major, submit}) => (
+const Verify = ({data = {}, submit}) => (
   <Backdrop>
     <Container>
       <Upload />
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
       <Section title="ข้อมูลผู้ปกครอง" fields={parentFields} data={data} />
       <GeneralSection fields={personalFields} data={data} />
-      <MajorSection major={major} data={data} />
+      <MajorSection data={data} />
 
       <Row>
         <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
@@ -165,9 +168,8 @@ const StepOne = ({data = {}, major, submit}) => (
 
 const mapStateToProps = state => ({
   data: getFormValues('submission')(state) || state.camper,
-  major: state.camper.major,
 })
 
 const enhance = connect(mapStateToProps, {submit})
 
-export default enhance(StepOne)
+export default enhance(Verify)

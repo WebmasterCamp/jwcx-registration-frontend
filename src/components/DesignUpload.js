@@ -4,6 +4,9 @@ import styled, {css} from 'react-emotion'
 import ReactDropzone from 'react-dropzone'
 import {message, Icon} from 'antd'
 import firebase from 'firebase'
+import Ink from 'react-ink'
+
+import withField from '../components/withField'
 
 // prettier-ignore
 const DropZone = styled(ReactDropzone)`
@@ -20,17 +23,23 @@ const DropZone = styled(ReactDropzone)`
   box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
 
   margin: 0 auto;
+  margin-top: 1.2em;
   margin-bottom: 3.8em;
 
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 400px;
 
-  border-radius: 22px;
+  border-radius: 6px;
   transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) all;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: #2c3e50;
     transform: scale(1.045);
+
+    div, i {
+      color: white;
+      border-color: white;
+    }
   }
 
   ${props => props.preview && css`
@@ -102,16 +111,16 @@ class Upload extends Component {
 
   loadPreview = async uid => {
     const storage = firebase.storage().ref()
-    const avatar = storage.child(`avatar/${uid}.jpg`)
+    const designs = storage.child(`designs/${uid}.jpg`)
 
     try {
-      const url = await avatar.getDownloadURL()
-      console.log('Avatar URL', url)
+      const url = await designs.getDownloadURL()
+      console.log('Design URL', url)
 
       this.setState({preview: url})
     } catch (err) {
       if (err.code === 'storage/object-not-found') {
-        console.info('User', uid, 'has not uploaded an avatar yet.')
+        console.info('User', uid, 'has not uploaded their designs yet.')
       } else {
         console.warn(err.message)
       }
@@ -119,24 +128,24 @@ class Upload extends Component {
   }
 
   onDrop = async (acceptedFiles, rejectedFiles) => {
-    const hide = message.loading('กำลังอัพโหลดรูปประจำตัว กรุณารอสักครู่...', 0)
+    const hide = message.loading('กำลังอัพโหลดรูปดีไซน์ กรุณารอสักครู่...', 0)
 
     try {
       const {uid} = this.props
 
       const storage = firebase.storage().ref()
-      const avatar = storage.child(`avatar/${uid}.jpg`)
+      const designs = storage.child(`designs/${uid}.jpg`)
 
       const [file] = acceptedFiles
       this.setState({preview: file.preview})
 
-      const snapshot = await avatar.put(file)
+      const snapshot = await designs.put(file)
 
-      console.log('Avatar File:', file)
-      console.log('Uploaded Avatar:', snapshot)
+      console.log('Design Photo File:', file)
+      console.log('Uploaded Design Photo:', snapshot)
 
       hide()
-      message.success('อัพโหลดรูปประจำตัวเรียบร้อยแล้ว')
+      message.success('อัพโหลดรูปสำหรับสาขาดีไซน์เรียบร้อยแล้ว')
     } catch (err) {
       hide()
       message.error(err.message)
@@ -149,8 +158,9 @@ class Upload extends Component {
     return (
       <DropZone onDrop={this.onDrop} preview={preview}>
         <Overlay active={preview}>
+          <Ink />
           <DropIcon type="upload" />
-          <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
+          <DropTitle>อัพโหลดรูปสำหรับคำถามนี้</DropTitle>
         </Overlay>
       </DropZone>
     )
@@ -163,4 +173,6 @@ const mapStateToProps = state => ({
 
 const enhance = connect(mapStateToProps)
 
-export default enhance(Upload)
+export const DesignUpload = enhance(Upload)
+
+export default withField(DesignUpload)
