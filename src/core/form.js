@@ -1,3 +1,5 @@
+import {message} from 'antd'
+
 const personalFields = [
   'firstname',
   'lastname',
@@ -63,6 +65,12 @@ function validate(values) {
   return errors
 }
 
+function onSubmitFail(error) {
+  message.error('กรุณากรอกข้อมูลให้ครบถ้วนค่ะ')
+
+  console.warn('Encountered Validation Error:', error)
+}
+
 const options = {
   form: 'submission',
   enableReinitialize: true,
@@ -70,6 +78,7 @@ const options = {
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
   validate,
+  onSubmitFail,
 }
 
 export default options
