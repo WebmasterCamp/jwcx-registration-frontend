@@ -2,19 +2,7 @@ import React from 'react'
 import styled from 'react-emotion'
 
 import Button from '../components/Button'
-
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin: 0 auto;
-  padding: 1em;
-
-  width: 100%;
-  min-height: 100vh;
-`
+import {Backdrop, Container, Paper} from '../components/Layout'
 
 const Heading = styled.h1`
   color: #777;
@@ -36,14 +24,18 @@ const SubHeading = styled.h1`
 //       Re-auth, then check if the user had already chosen their major, and redirect.
 
 const Landing = () => (
-  <Page>
-    <Heading>ลงทะเบียนเข้าค่าย | Junior Webmaster Camp X</Heading>
-    <SubHeading>กรุณาเลือกสาขาที่ท่านต้องการในเว็บไซต์หลัก</SubHeading>
+  <Backdrop>
+    <Container>
+      <Paper>
+        <Heading>ลงทะเบียนเข้าค่าย | Junior Webmaster Camp X</Heading>
+        <SubHeading>กรุณาเลือกสาขาที่ท่านต้องการในเว็บไซต์หลัก</SubHeading>
 
-    <a href="https://x.jwc.in.th">
-      <Button>กลับสู่เว็บไซต์หลัก</Button>
-    </a>
-  </Page>
+        <a href="https://x.jwc.in.th">
+          <Button>กลับสู่เว็บไซต์หลัก</Button>
+        </a>
+      </Paper>
+    </Container>
+  </Backdrop>
 )
 
 export default Landing

@@ -100,6 +100,7 @@ export const formOptions = {
 
 const mapStateToProps = state => ({
   initialValues: state.camper,
+  major: state.camper.major,
 })
 
 const enhance = compose(
