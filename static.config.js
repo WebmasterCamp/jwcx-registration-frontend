@@ -33,9 +33,20 @@ const majorRoutes = majors.map(major => ({
   component: 'src/routes/major',
 }))
 
-const stepOneRoutes = majors.map(major => ({
-  path: '/' + major + '/step1',
-  component: 'src/routes/step1',
+const steps = [1, 2, 3]
+
+const formRoutes = majors
+  .map(major =>
+    steps.map(step => ({
+      path: '/' + major + '/step' + step,
+      component: 'src/routes/step' + step,
+    })),
+  )
+  .reduce((prev, cur) => [...prev, ...cur])
+
+const verifyRoutes = majors.map(major => ({
+  path: '/' + major + '/verify',
+  component: 'src/routes/verify',
 }))
 
 export default {
@@ -50,7 +61,8 @@ export default {
       component: 'src/routes/index',
     },
     ...majorRoutes,
-    ...stepOneRoutes,
+    ...formRoutes,
+    ...verifyRoutes,
     {
       path: '/change_denied',
       component: 'src/routes/change_denied',
