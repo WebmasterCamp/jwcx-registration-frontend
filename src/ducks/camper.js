@@ -61,7 +61,9 @@ export function* loadCamperSaga() {
   }
 }
 
-const initial = {}
+const initial = {
+  birthdate: '2001-1-1',
+}
 
 export default createReducer(initial, state => ({
   [STORE_CAMPER]: camper => camper,

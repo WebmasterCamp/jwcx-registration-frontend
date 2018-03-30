@@ -37,6 +37,10 @@ const enhance = lifecycle({
         min-width: unset !important;
       }
 
+      .DayPickerInput {
+        width: 100%;
+      }
+
       .DayPickerInput-OverlayWrapper {
         z-index: 2;
       }
