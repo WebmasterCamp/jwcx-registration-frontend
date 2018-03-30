@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, {css} from 'react-emotion'
+import {Field} from 'redux-form'
 
 const Container = styled.div`
   position: relative;
@@ -27,11 +28,17 @@ const Label = styled.label`
   `};
 `
 
-const withField = Component => ({label, input, meta, ...props}) => (
+const wrap = Component => ({label, input, meta, ...props}) => (
   <Container>
     <Component {...meta} {...input} {...props} />
     <Label float={input.value}>{label}</Label>
   </Container>
 )
+
+const withField = Component => {
+  const InputField = wrap(Component)
+
+  return props => <Field component={InputField} {...props} />
+}
 
 export default withField

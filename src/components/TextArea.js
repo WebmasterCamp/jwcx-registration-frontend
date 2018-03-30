@@ -1,6 +1,6 @@
 import styled from 'react-emotion'
 
-import withField from './Field'
+import withField from './withField'
 
 const TextAreaInput = styled.textarea`
   font-weight: 300;

@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Field, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
 import {compose} from 'recompose'
 import styled from 'react-emotion'
 
-import Input from '../../components/Input'
-import TextAreaInput from '../../components/TextArea'
+import TextInput from '../../components/Input'
+import TextArea from '../../components/TextArea'
 
 const FormContainer = styled.form`
   width: 100%;
@@ -36,9 +36,6 @@ const Row = styled.div`
 
   width: 100%;
 `
-
-const TextInput = props => <Field component={Input} {...props} />
-const TextArea = props => <Field component={TextAreaInput} {...props} />
 
 const StepOneForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
