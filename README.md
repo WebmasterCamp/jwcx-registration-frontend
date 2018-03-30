@@ -1,7 +1,8 @@
 Task:
 
 - Update font (RSU, RSU Text & KeepCalm) and styling according to JWCx CI
-- Upload Profile Image
+- Add Meta and OpenGraph Tags to static.config.js
+- Uploader for Profile Image
 - Uploader for Design Major Question
 - Add Responsivity for Mobile
 - Firestore Security Rules
@@ -13,3 +14,4 @@ Task:
 - Check if user is authenticated, then redirect (optimistic ui)
 - Load Previous Data into Redux Form initialState
 - Verify if user is in session before allowing form submission
+-
