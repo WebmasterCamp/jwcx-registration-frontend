@@ -5,7 +5,7 @@ import Button from './Button'
 import Input from './Input'
 import Select from './Select'
 import TextArea from './TextArea'
-import Upload from './Upload'
+import {UploadField} from './Upload'
 
 import withWizard from '../core/form'
 
@@ -37,7 +37,7 @@ const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(toOptions)
 
 const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
-    <Upload />
+    <UploadField name="photo" />
 
     <Paper>
       <Row>

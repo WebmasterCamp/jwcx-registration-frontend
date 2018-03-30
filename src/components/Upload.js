@@ -4,6 +4,7 @@ import styled, {css} from 'react-emotion'
 import ReactDropzone from 'react-dropzone'
 import {message, Icon} from 'antd'
 import firebase from 'firebase'
+import {Field} from 'redux-form'
 
 // prettier-ignore
 const DropZone = styled(ReactDropzone)`
@@ -39,9 +40,12 @@ const DropZone = styled(ReactDropzone)`
     background-repeat: no-repeat;
     background-position: center;
   `};
+
+  ${props => props.meta.touched && props.meta.error && css`
+    border: 5px solid #ee5253;
+  `};
 `
 
-// prettier-ignore
 const DropIcon = styled(Icon)`
   color: #555;
   font-size: 1.8em;
@@ -53,9 +57,14 @@ const DropIcon = styled(Icon)`
   border-radius: 50%;
 `
 
-// prettier-ignore
 const DropTitle = styled.div`
   color: #555;
+  text-align: center;
+  font-size: 1.2em;
+`
+
+const DropWarning = styled.div`
+  color: #ee5253;
   text-align: center;
   font-size: 1.2em;
 `
@@ -122,7 +131,14 @@ class Upload extends Component {
     const hide = message.loading('กำลังอัพโหลดรูปประจำตัว กรุณารอสักครู่...', 0)
 
     try {
-      const {uid} = this.props
+      const {uid, input = {}} = this.props
+
+      if (!uid) {
+        hide()
+        message.error('ไม่พบผู้ใช้นี้อยู่ในระบบ ไม่สามารถอัพโหลดรูปภาพได้', 0)
+
+        return
+      }
 
       const storage = firebase.storage().ref()
       const avatar = storage.child(`avatar/${uid}.jpg`)
@@ -132,25 +148,43 @@ class Upload extends Component {
 
       const snapshot = await avatar.put(file)
 
+      if (input.onChange) {
+        input.onChange(true)
+      }
+
       console.log('Avatar File:', file)
       console.log('Uploaded Avatar:', snapshot)
 
-      hide()
+      if (input.onChange) {
+        input.onChange(snapshot.downloadURL)
+      }
+
       message.success('อัพโหลดรูปประจำตัวเรียบร้อยแล้ว')
     } catch (err) {
-      hide()
       message.error(err.message)
+    } finally {
+      hide()
     }
   }
 
   render() {
     const {preview} = this.state
+    const {meta = {}} = this.props
 
     return (
-      <DropZone onDrop={this.onDrop} preview={preview}>
+      <DropZone onDrop={this.onDrop} preview={preview} meta={meta}>
         <Overlay active={preview}>
           <DropIcon type="upload" />
-          <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
+
+          {meta.touched && meta.error ? (
+            <DropWarning>
+              กรุณาอัพโหลด
+              <br />
+              รูปประจำตัว
+            </DropWarning>
+          ) : (
+            <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
+          )}
         </Overlay>
       </DropZone>
     )
@@ -161,6 +195,10 @@ const mapStateToProps = state => ({
   uid: state.user.uid,
 })
 
-const enhance = connect(mapStateToProps)
+const AvatarUpload = connect(mapStateToProps)(Upload)
 
-export default enhance(Upload)
+export const UploadField = props => (
+  <Field component={AvatarUpload} {...props} />
+)
+
+export default AvatarUpload

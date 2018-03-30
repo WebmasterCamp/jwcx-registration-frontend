@@ -38,12 +38,8 @@ const generalQuestionFields = [
 
 const majorQuestionFields = ['majorAnswer1', 'majorAnswer2', 'majorAnswer3']
 
-const requiredFields = [
-  ...personalFields,
-  ...parentFields,
-  ...generalQuestionFields,
-  ...majorQuestionFields,
-]
+const requiredFields = [...personalFields, ...parentFields]
+const questionFields = [...generalQuestionFields, ...majorQuestionFields]
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const phoneRegex = /^\d{10}$/
@@ -51,9 +47,19 @@ const phoneRegex = /^\d{10}$/
 function validate(values) {
   const errors = {}
 
+  if (!values.photo) {
+    errors.photo = 'กรุณาอัพโหลดรูปภาพ'
+  }
+
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'กรุณาระบุข้อมูลดังกล่าว'
+    }
+  })
+
+  questionFields.forEach(field => {
+    if (!values[field]) {
+      errors[field] = 'กรุณาตอบคำถามดังกล่าว'
     }
   })
 

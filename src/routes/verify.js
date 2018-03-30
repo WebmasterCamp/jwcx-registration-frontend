@@ -8,6 +8,7 @@ import Upload from '../components/Upload'
 import {DesignUpload} from '../components/DesignUpload'
 import {religions, grades} from '../components/PersonalForm'
 import {Backdrop, Row, Paper} from '../components/Layout'
+import Q3Dev from '../components/Q3Dev'
 
 import questions, {General} from '../core/questions'
 
@@ -113,19 +114,19 @@ const GeneralSection = ({data}) => (
   <Card>
     <Title>คำถามทั่วไป</Title>
     <Item>
-      <Label>{General.Q1}:</Label>
+      <Label>{General.Q1}</Label>
 
       <Paragraph>{data.generalAnswer1}</Paragraph>
     </Item>
 
     <Item>
-      <Label>{General.Q2}:</Label>
+      <Label>{General.Q2}</Label>
 
       <Paragraph>{data.generalAnswer2}</Paragraph>
     </Item>
 
     <Item>
-      <Label>{General.Q3}:</Label>
+      <Label>{General.Q3}</Label>
 
       <Paragraph>{data.generalAnswer3}</Paragraph>
     </Item>
@@ -136,25 +137,30 @@ const MajorSection = ({data}) => {
   const major = getMajorFromPath()
   if (!major) return null
 
-  const {Q1, Q2, Q3} = questions[major]
+  let {Q1, Q2, Q3} = questions[major]
+
+  if (major === 'programming') {
+    Q3 = Q3Dev
+  }
 
   return (
     <Card>
       <Title>คำถามสาขา</Title>
       <Item>
-        <Label>{Q1}:</Label>
+        <Label>{Q1}</Label>
         <Paragraph>{data.majorAnswer1}</Paragraph>
       </Item>
 
       <Item>
-        <Label>{Q2}:</Label>
+        <Label>{Q2}</Label>
         <Paragraph>{data.majorAnswer2}</Paragraph>
       </Item>
 
       <Item>
-        <Label>{Q3}:</Label>
+        <Label>{Q3}</Label>
+
         {major === 'design' ? (
-          <DesignUpload name="majorAnswer3" label={questions.Q3} wordy />
+          <DesignUpload />
         ) : (
           <Paragraph>{data.majorAnswer3}</Paragraph>
         )}

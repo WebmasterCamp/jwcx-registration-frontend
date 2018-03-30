@@ -48,6 +48,10 @@ const DropZone = styled(ReactDropzone)`
     background-repeat: no-repeat;
     background-position: center;
   `};
+  
+  ${props => props.meta.touched && props.meta.error && css`
+    border: 5px solid #ee5253;
+  `};
 `
 
 // prettier-ignore
@@ -88,6 +92,12 @@ const Overlay = styled.div`
       opacity: 1;
     }
   `};
+`
+
+const DropWarning = styled.div`
+  color: #ee5253;
+  text-align: center;
+  font-size: 1.2em;
 `
 
 class Upload extends Component {
@@ -131,7 +141,14 @@ class Upload extends Component {
     const hide = message.loading('กำลังอัพโหลดรูปดีไซน์ กรุณารอสักครู่...', 0)
 
     try {
-      const {uid} = this.props
+      const {uid, onChange} = this.props
+
+      if (!uid) {
+        hide()
+        message.error('ไม่พบผู้ใช้นี้อยู่ในระบบ ไม่สามารถอัพโหลดรูปภาพได้', 0)
+
+        return
+      }
 
       const storage = firebase.storage().ref()
       const designs = storage.child(`designs/${uid}.jpg`)
@@ -139,10 +156,18 @@ class Upload extends Component {
       const [file] = acceptedFiles
       this.setState({preview: file.preview})
 
+      if (onChange) {
+        onChange(true)
+      }
+
       const snapshot = await designs.put(file)
 
       console.log('Design Photo File:', file)
       console.log('Uploaded Design Photo:', snapshot)
+
+      if (onChange) {
+        onChange(snapshot.downloadURL)
+      }
 
       hide()
       message.success('อัพโหลดรูปสำหรับสาขาดีไซน์เรียบร้อยแล้ว')
@@ -154,13 +179,19 @@ class Upload extends Component {
 
   render() {
     const {preview} = this.state
+    const {meta = {}} = this.props
 
     return (
-      <DropZone onDrop={this.onDrop} preview={preview}>
+      <DropZone onDrop={this.onDrop} preview={preview} meta={meta}>
         <Overlay active={preview}>
           <Ink />
           <DropIcon type="upload" />
-          <DropTitle>อัพโหลดรูปสำหรับคำถามนี้</DropTitle>
+
+          {meta.touched && meta.error ? (
+            <DropWarning>กรุณาอัพโหลดรูปสำหรับคำถามนี้</DropWarning>
+          ) : (
+            <DropTitle>อัพโหลดรูปสำหรับคำถามนี้</DropTitle>
+          )}
         </Overlay>
       </DropZone>
     )
