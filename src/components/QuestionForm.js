@@ -27,13 +27,15 @@ const QuestionForm = ({prev, handleSubmit}) => (
 )
 
 const mapStateToProps = state => ({
-  initialValues: {},
+  initialValues: state.camper,
 })
 
 const enhance = compose(
   connect(mapStateToProps, {prev}),
   reduxForm({
     form: 'submission',
+    enableReinitialize: true,
+    keepDirtyOnReinitialize: true,
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
   }),
