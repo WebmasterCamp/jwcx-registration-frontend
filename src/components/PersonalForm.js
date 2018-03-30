@@ -76,13 +76,15 @@ const PersonalForm = ({handleSubmit}) => (
 )
 
 const mapStateToProps = state => ({
-  initialValues: {},
+  initialValues: state.camper,
 })
 
 const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
     form: 'submission',
+    enableReinitialize: true,
+    keepDirtyOnReinitialize: true,
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
   }),

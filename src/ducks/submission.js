@@ -34,8 +34,10 @@ function* nextPageSaga({payload}) {
   const uid = yield select(s => s.user.uid)
   const docRef = db.collection('campers').doc(uid)
 
-  yield call(rsf.firestore.setDocument, docRef, payload, {merge: true})
-  console.log('Updated Camper Record:', payload)
+  const data = {...payload, updatedAt: new Date()}
+  yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
+
+  console.log('Updated Camper Record:', data)
 
   const {major, step} = getStepFromPath()
   console.log('Next', major, step)
