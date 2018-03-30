@@ -38,6 +38,7 @@ const Label = styled.label`
     display: block;
 
     margin-bottom: 0.6em;
+    transform: none !important;
   `};
 `
 
