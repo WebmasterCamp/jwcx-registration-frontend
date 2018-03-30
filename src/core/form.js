@@ -65,6 +65,10 @@ function validate(values) {
     errors.phone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
   }
 
+  if (!phoneRegex.test(values.parentPhone)) {
+    errors.phone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
+  }
+
   const age = parseInt(values.age)
 
   if (isNaN(age)) {
