@@ -10,9 +10,6 @@ const personalFields = [
   'phone',
   'email',
   'socialMedia',
-  'disease',
-  'foodAllergy',
-  'drugAllergy',
   'shirtSize',
   'activity',
 ]
