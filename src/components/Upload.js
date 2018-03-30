@@ -83,24 +83,34 @@ class Upload extends Component {
     preview: null,
   }
 
+  async componentDidMount() {
+    if (this.props.uid) {
+      await this.loadPreview(this.props.uid)
+    }
+  }
+
   async componentWillReceiveProps(props) {
     if (this.props.uid !== props.uid) {
       const {uid} = props
 
-      const storage = firebase.storage().ref()
-      const avatar = storage.child(`avatar/${uid}.jpg`)
+      await this.loadPreview(uid)
+    }
+  }
 
-      try {
-        const url = await avatar.getDownloadURL()
-        console.log('Avatar URL', url)
+  loadPreview = async uid => {
+    const storage = firebase.storage().ref()
+    const avatar = storage.child(`avatar/${uid}.jpg`)
 
-        this.setState({preview: url})
-      } catch (err) {
-        if (err.code === 'storage/object-not-found') {
-          console.info('User', uid, 'has not uploaded an avatar yet.')
-        } else {
-          console.warn(err.message)
-        }
+    try {
+      const url = await avatar.getDownloadURL()
+      console.log('Avatar URL', url)
+
+      this.setState({preview: url})
+    } catch (err) {
+      if (err.code === 'storage/object-not-found') {
+        console.info('User', uid, 'has not uploaded an avatar yet.')
+      } else {
+        console.warn(err.message)
       }
     }
   }

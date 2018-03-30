@@ -154,7 +154,7 @@ const StepOne = ({data = {}, major, submit}) => (
       <GeneralSection fields={personalFields} data={data} />
       <MajorSection major={major} data={data} />
 
-      <Row>
+      <Row alwaysRow>
         <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
 
         <Button onClick={submit}>ยืนยันการสมัครเข้าค่าย JWC</Button>
