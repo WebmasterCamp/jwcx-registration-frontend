@@ -89,7 +89,7 @@ const GeneralSection = ({data}) => (
   </Card>
 )
 
-const MajorSection = ({major, data}) => {
+const MajorSection = ({major = 'general', data}) => {
   const {Q1, Q2, Q3} = questions[major]
 
   return (
@@ -108,15 +108,17 @@ const MajorSection = ({major, data}) => {
   )
 }
 
-const StepOne = ({data, camper}) => (
+const StepOne = ({data = {}, major}) => (
   <Backdrop>
     <Container>
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
       <Section title="ข้อมูลผู้ปกครอง" fields={parentFields} data={data} />
       <GeneralSection fields={personalFields} data={data} />
-      <MajorSection major={camper.major} data={data} />
+      <MajorSection major={major} data={data} />
 
       <Row>
+        <Button>ย้อนกลับไปแก้ไข</Button>
+
         <Button>ยืนยันการสมัครเข้าค่าย JWC</Button>
       </Row>
     </Container>
@@ -124,8 +126,8 @@ const StepOne = ({data, camper}) => (
 )
 
 const mapStateToProps = state => ({
-  data: getFormValues('submission')(state),
-  camper: state.camper,
+  data: getFormValues('submission')(state) || state.camper,
+  major: state.camper.major,
 })
 
 const enhance = connect(mapStateToProps, {submit})
