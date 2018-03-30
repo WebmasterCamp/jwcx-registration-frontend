@@ -2,7 +2,7 @@ import styled from 'react-emotion'
 
 import withField from './withField'
 
-const TextInput = styled.input`
+export const TextInput = styled.input`
   font-weight: 300;
   text-align: left;
   font-size: 1.08em;
