@@ -1,10 +1,10 @@
-import {withProps} from 'recompose'
+import React from 'react'
 
 import {TextInput} from './Input'
 import withField from './withField'
 
 const TextArea = TextInput.withComponent('textarea')
 
-const TextAreaInput = withProps({rows: 5})(TextArea)
+const TextAreaInput = props => <TextArea rows={5} {...props} />
 
 export default withField(TextAreaInput)

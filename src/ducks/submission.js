@@ -1,6 +1,5 @@
 import * as R from 'ramda'
-import {message} from 'antd'
-import firebase from 'firebase'
+import {message, notification} from 'antd'
 import {takeEvery, call, select, put, fork} from 'redux-saga/effects'
 
 import {createReducer, Creator} from './helper'
@@ -9,13 +8,15 @@ import rsf, {app} from '../core/fire'
 import history from '../core/history'
 import {getStepFromPath} from '../core/util'
 
-export const NEXT = 'NEXT'
-export const PREV = 'PREV'
-export const SUBMIT = 'SUBMIT'
+export const NEXT = '@CAMP/NEXT'
+export const PREV = '@CAMP/PREV'
+export const SUBMIT = '@CAMP/SUBMIT'
+export const SET_LOADING = '@CAMP/SET_LOADING'
 
 export const next = Creator(NEXT)
 export const prev = Creator(PREV)
 export const submit = Creator(SUBMIT)
+export const setLoading = Creator(SET_LOADING)
 
 const db = app.firestore()
 
@@ -27,17 +28,34 @@ function* submissionSaga({payload}) {
   yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
 
   console.log('Updated and Submitted Camper Record', data)
+
+  notification.success({message: 'การสมัครเข้าค่ายเสร็จสิ้น'})
 }
 
-// Wizard Pattern: onSubmit progresses to the next page, run validation and save data.
+function* updateCamperRecord(payload) {
+  const hide = message.loading('กำลังบันทึกข้อมูล...', 0)
+
+  try {
+    const uid = yield select(s => s.user.uid)
+
+    if (uid) {
+      const docRef = db.collection('campers').doc(uid)
+
+      const data = {...payload, updatedAt: new Date()}
+      yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
+
+      console.log('Updated Camper Record:', data)
+      hide()
+
+      message.info('บันทึกข้อมูลเรียบร้อยแล้ว', 0.5)
+    }
+  } catch (err) {
+    message.error(err.message)
+  }
+}
+
 function* nextPageSaga({payload}) {
-  const uid = yield select(s => s.user.uid)
-  const docRef = db.collection('campers').doc(uid)
-
-  const data = {...payload, updatedAt: new Date()}
-  yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
-
-  console.log('Updated Camper Record:', data)
+  yield fork(updateCamperRecord, payload)
 
   const {major, step} = getStepFromPath()
   console.log('Next', major, step)
@@ -51,8 +69,13 @@ function* nextPageSaga({payload}) {
   history.push(`/${major}/step${step + 1}`)
 }
 
-// TODO: Perform Remote Submit
-function* previousPageSaga({payload}) {
+function* previousPageSaga() {
+  const payload = yield select(s => s.form.submission)
+
+  if (payload) {
+    yield fork(updateCamperRecord, payload.values)
+  }
+
   const {major, step} = getStepFromPath()
   console.log('Prev', major, step)
 
@@ -65,6 +88,10 @@ export function* submissionWatcherSaga() {
   yield takeEvery(SUBMIT, submissionSaga)
 }
 
-const initial = {}
+const initial = {
+  loading: false,
+}
 
-export default createReducer(initial, state => ({}))
+export default createReducer(initial, state => ({
+  [SET_LOADING]: loading => ({...state, loading}),
+}))

@@ -7,6 +7,8 @@ import rsf, {app} from '../core/fire'
 import history from '../core/history'
 import {getMajorFromPath} from '../core/util'
 
+import {setLoading} from '../ducks/submission'
+
 const db = app.firestore()
 
 export const STORE_CAMPER = 'STORE_CAMPER'
@@ -14,6 +16,9 @@ export const STORE_CAMPER = 'STORE_CAMPER'
 export const storeCamper = Creator(STORE_CAMPER)
 
 export function* loadCamperSaga() {
+  const hide = message.loading('กรุณารอสักครู่...', 0)
+  yield put(setLoading(true))
+
   try {
     const major = getMajorFromPath()
     const uid = yield select(s => s.user.uid)
@@ -51,6 +56,9 @@ export function* loadCamperSaga() {
     }
   } catch (err) {
     message.error(err.message)
+  } finally {
+    hide()
+    yield put(setLoading(false))
   }
 }
 
