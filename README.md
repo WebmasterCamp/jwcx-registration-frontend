@@ -4,7 +4,6 @@ Task:
 * Uploader for Design Major Question
 * Firestore Security Rules
 * Form Types (Birthdate -> Date, Religion/Grade/ShirtSize -> Select)
-* Verification Page before Submission (Summary)
 * Redirect from / if user is already logged in
 * Fix TODOs
 * Check if user is authenticated, then redirect (optimistic ui)
