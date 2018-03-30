@@ -33,6 +33,11 @@ const majorRoutes = majors.map(major => ({
   component: 'src/routes/major',
 }))
 
+const stepOneRoutes = majors.map(major => ({
+  path: '/' + major + '/step1',
+  component: 'src/routes/step1',
+}))
+
 export default {
   webpack,
   siteRoot,
@@ -45,6 +50,7 @@ export default {
       component: 'src/routes/index',
     },
     ...majorRoutes,
+    ...stepOneRoutes,
     {
       path: '/change_denied',
       component: 'src/routes/change_denied',
