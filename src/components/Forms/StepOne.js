@@ -20,7 +20,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 
   width: 100%;
 `
@@ -57,13 +57,22 @@ const StepOneForm = ({handleSubmit}) => (
 
     <Row>
       <TextInput name="disease" label="โรคประจำตัว" />
+    </Row>
+
+    <Row>
       <TextInput name="foodAllergy" label="อาหารที่แพ้" />
+    </Row>
+
+    <Row>
       <TextInput name="drugAllergy" label="ยาที่แพ้" />
+    </Row>
+
+    <Row>
       <TextInput name="shirtSize" label="ไซส์เสื้อ" />
     </Row>
 
     <Row>
-      <textarea
+      <TextInput
         name="activity"
         label="กิจกรรมหรือผลงานที่น้องๆ เคยทำหรือเข้าร่วม"
       />

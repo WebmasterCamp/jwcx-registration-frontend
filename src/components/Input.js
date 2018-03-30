@@ -4,7 +4,9 @@ import styled, {css} from 'react-emotion'
 const Container = styled.div`
   position: relative;
   font-size: 1rem;
-  margin-bottom: 3em;
+
+  width: 100%;
+  margin: 1.4em 0.8em;
 `
 
 const TextInput = styled.input`
@@ -13,6 +15,7 @@ const TextInput = styled.input`
   font-size: 1.08em;
   line-height: 1.3em;
 
+  width: 100%;
   padding: 0.5em 0.8em;
 
   min-width: 13em;
