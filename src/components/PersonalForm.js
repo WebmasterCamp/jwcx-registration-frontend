@@ -70,7 +70,7 @@ const PersonalForm = ({handleSubmit}) => (
       </Row>
     </Paper>
 
-    <Row alwaysRow>
+    <Row>
       <Button disabled>ขั้นตอนก่อนหน้า</Button>
 
       <Button type="submit">ขั้นตอนถัดไป</Button>

@@ -14,7 +14,7 @@ const MajorQuestionForm = ({prev, questions = {}, handleSubmit}) => (
       <TextArea name="majorAnswer3" label={questions.Q3} wordy />
     </Paper>
 
-    <Row alwaysRow>
+    <Row>
       <Button onClick={prev}>ขั้นตอนก่อนหน้า</Button>
 
       <Button type="submit">ขั้นตอนถัดไป</Button>

@@ -25,6 +25,12 @@ const ButtonContainer = styled.button`
   text-decoration: none;
   text-transform: capitalize;
 
+  @media screen and (max-width: 840px) {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 1em;
+  }
+
   &:hover {
     background: #34495e;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
