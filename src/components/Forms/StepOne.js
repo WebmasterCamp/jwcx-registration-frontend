@@ -47,7 +47,7 @@ const StepOneForm = ({handleSubmit}) => (
 
       <Row>
         <TextInput name="age" label="อายุ" type="number" />
-        <TextInput name="birthdate" label="วันเกิด" />
+        <TextInput name="birthdate" label="วันเกิด" type="date" float />
         <TextInput name="religion" label="ศาสนา" />
       </Row>
     </Paper>
@@ -64,7 +64,7 @@ const StepOneForm = ({handleSubmit}) => (
       </Row>
 
       <Row>
-        <TextInput name="email" label="อีเมล" />
+        <TextInput name="email" label="อีเมล" type="email" />
         <TextInput name="socialMedia" label="Social Media" />
       </Row>
     </Paper>
@@ -98,7 +98,9 @@ const StepOneForm = ({handleSubmit}) => (
   </FormContainer>
 )
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  initialValues: {},
+})
 
 const enhance = compose(connect(mapStateToProps), reduxForm({form: 'personal'}))
 

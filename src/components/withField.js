@@ -31,7 +31,7 @@ const Label = styled.label`
 const wrap = Component => ({label, input, meta, ...props}) => (
   <Container>
     <Component {...meta} {...input} {...props} />
-    <Label float={input.value}>{label}</Label>
+    <Label float={input.value || props.float}>{label}</Label>
   </Container>
 )
 
