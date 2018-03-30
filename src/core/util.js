@@ -1,3 +1,5 @@
+import React, {Component} from 'react'
+
 import majors from './majors'
 
 export function getMajorFromPath() {
@@ -19,3 +21,14 @@ export function getStepFromPath() {
     }
   }
 }
+
+export const withFocus = Base =>
+  class WrappedInput extends Component {
+    focus = () => {
+      this.input.focus()
+    }
+
+    render() {
+      return <Base innerRef={el => (this.input = el)} {...this.props} />
+    }
+  }

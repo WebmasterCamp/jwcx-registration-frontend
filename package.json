@@ -18,6 +18,7 @@
     "polished": "^1.9.2",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
+    "react-day-picker": "^7.1.4",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.9",
     "react-emotion": "^9.1.0",

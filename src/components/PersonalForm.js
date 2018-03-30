@@ -5,6 +5,7 @@ import Button from './Button'
 import Input from './Input'
 import Select from './Select'
 import TextArea from './TextArea'
+import DatePicker from './DatePicker'
 import {UploadField} from './Upload'
 
 import withWizard from '../core/form'
@@ -47,7 +48,7 @@ const PersonalForm = ({handleSubmit}) => (
 
       <Row>
         <Input name="age" label="อายุ" type="number" />
-        <Input name="birthdate" label="วันเกิด" type="date" float />
+        <DatePicker name="birthdate" label="วันเกิด" float />
         <Select name="religion" label="ศาสนา" options={religionOptions} />
       </Row>
     </Paper>
