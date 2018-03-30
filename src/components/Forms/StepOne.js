@@ -19,7 +19,7 @@ const Paper = styled.form`
   align-items: center;
   justify-content: space-between;
 
-  padding: 2.2em 1.8em 1.2em 1.8em;
+  padding: 1.8em 1.8em 1.2em 1.8em;
   margin-bottom: 3.2em;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
