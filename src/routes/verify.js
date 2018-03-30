@@ -10,6 +10,9 @@ import {Backdrop, Row, Paper} from '../components/Layout'
 
 import {submit} from '../ducks/submission'
 
+import history from '../core/history'
+import {getMajorFromPath} from '../core/util'
+
 export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -61,13 +64,25 @@ const Item = styled.div`
   line-height: 1.8em;
 `
 
+const Label = styled.strong`
+  font-weight: bold;
+`
+
+const Paragraph = styled.p`
+  margin-top: 0.6em;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+`
+
 const Section = ({data, title, fields}) => (
   <Card>
     <Title>{title}</Title>
 
     {fields.map(([name, label]) => (
       <Item key={name}>
-        {label}: {data[name]}
+        <Label>{label}:</Label> {data[name]}
       </Item>
     ))}
   </Card>
@@ -76,15 +91,22 @@ const Section = ({data, title, fields}) => (
 const GeneralSection = ({data}) => (
   <Card>
     <Title>คำถามทั่วไป</Title>
+    <Item>
+      <Label>{General.Q1}:</Label>
+
+      <Paragraph>{data.generalAnswer1}</Paragraph>
+    </Item>
 
     <Item>
-      {General.Q1}: {data.generalAnswer1}
+      <Label>{General.Q2}:</Label>
+
+      <Paragraph>{data.generalAnswer2}</Paragraph>
     </Item>
+
     <Item>
-      {General.Q2}: {data.generalAnswer2}
-    </Item>
-    <Item>
-      {General.Q3}: {data.generalAnswer3}
+      <Label>{General.Q3}:</Label>
+
+      <Paragraph>{data.generalAnswer3}</Paragraph>
     </Item>
   </Card>
 )
@@ -96,19 +118,33 @@ const MajorSection = ({major = 'general', data}) => {
     <Card>
       <Title>คำถามสาขา</Title>
       <Item>
-        {Q1}: {data.majorAnswer1}
+        <Label>{Q1}:</Label>
+
+        <Paragraph>{data.majorAnswer1}</Paragraph>
       </Item>
+
       <Item>
-        {Q2}: {data.majorAnswer2}
+        <Label>{Q2}:</Label>
+
+        <Paragraph>{data.majorAnswer2}</Paragraph>
       </Item>
+
       <Item>
-        {Q3}: {data.majorAnswer3}
+        <Label>{Q3}:</Label>
+
+        <Paragraph>{data.majorAnswer3}</Paragraph>
       </Item>
     </Card>
   )
 }
 
-const StepOne = ({data = {}, major}) => (
+const prev = () => {
+  const major = getMajorFromPath()
+
+  history.push(`/${major}/step4`)
+}
+
+const StepOne = ({data = {}, major, submit}) => (
   <Backdrop>
     <Container>
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
@@ -117,9 +153,9 @@ const StepOne = ({data = {}, major}) => (
       <MajorSection major={major} data={data} />
 
       <Row>
-        <Button>ย้อนกลับไปแก้ไข</Button>
+        <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
 
-        <Button>ยืนยันการสมัครเข้าค่าย JWC</Button>
+        <Button onClick={submit}>ยืนยันการสมัครเข้าค่าย JWC</Button>
       </Row>
     </Container>
   </Backdrop>

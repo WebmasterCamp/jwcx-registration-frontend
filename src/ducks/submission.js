@@ -20,16 +20,19 @@ export const setLoading = Creator(SET_LOADING)
 
 const db = app.firestore()
 
-function* submissionSaga({payload}) {
-  const uid = yield select(s => s.user.uid)
-  const docRef = db.collection('campers').doc(uid)
+function* submissionSaga() {
+  try {
+    const uid = yield select(s => s.user.uid)
+    const docRef = db.collection('campers').doc(uid)
 
-  const data = {...payload, submitted: true}
-  yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
+    const data = {submitted: true, updatedAt: new Date()}
+    yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
 
-  console.log('Updated and Submitted Camper Record', data)
-
-  notification.success({message: 'การสมัครเข้าค่ายเสร็จสิ้น'})
+    console.log('Updated and Submitted Camper Record', data)
+    message.success('การสมัครเข้าค่ายเสร็จสิ้น')
+  } catch (err) {
+    message.error(err.message)
+  }
 }
 
 function* updateCamperRecord(payload) {
