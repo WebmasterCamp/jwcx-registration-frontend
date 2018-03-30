@@ -5,7 +5,7 @@ import Button from './Button'
 import Input from './Input'
 import Select from './Select'
 import TextArea from './TextArea'
-import Upload from './Upload'
+import {UploadField} from './Upload'
 
 import withWizard from '../core/form'
 
@@ -19,10 +19,6 @@ export const religions = {
   buddhist: 'ศาสนาพุทธ',
   christianity: 'ศาสนาคริสต์',
   islam: 'ศาสนาอิสลาม',
-  hinduism: 'ศาสนาฮินดู',
-  sikhism: 'ศาสนาซิกข์',
-  taoism: 'ศาสนาเต๋า',
-  judaism: 'ศาสนายูดาห์',
   other: 'ศาสนาอื่นๆ',
 }
 
@@ -41,7 +37,7 @@ const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(toOptions)
 
 const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
-    <Upload />
+    <UploadField name="photo" />
 
     <Paper>
       <Row>
