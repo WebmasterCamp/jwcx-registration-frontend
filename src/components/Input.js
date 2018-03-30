@@ -1,34 +1,71 @@
-import styled from 'react-emotion'
+import React from 'react'
+import styled, {css} from 'react-emotion'
 
-// color: hsl(155, 80%, 40%);
-// border-bottom: 2px solid hsl(155, 80%, 40%);
-// box-shadow: 0 1px 1.5px 1px rgba(0, 0, 0, 0.12);
-// width: 100%;
-const Input = styled.input`
+const Container = styled.div`
+  position: relative;
+  font-size: 1rem;
+  margin-bottom: 3em;
+`
+
+const TextInput = styled.input`
   font-weight: 300;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  font-size: 1.5em;
+  text-align: left;
+  font-size: 1.08em;
   line-height: 1.3em;
-  margin-top: 0.5em;
+
+  padding: 0.5em 0.8em;
+
   min-width: 13em;
   outline: none;
-  padding: 0.3em;
-  text-align: center;
   transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) all;
 
-  color: white;
-  background: transparent;
-  border-bottom: 2px solid white;
+  border: none;
+  border-radius: 4px;
+
+  background: white;
+  color: #555;
+  border-bottom: 2px solid #555;
+  box-shadow: 0 1px 1.5px 1px rgba(0, 0, 0, 0.12);
 
   &::placeholder {
-    color: white;
+    color: #999;
   }
 
-  &:hover {
-    transform: scale(1.1);
+  &:hover,
+  &:focus,
+  &:active {
+    transform: scale(1.08);
+    box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
+  }
+
+  &:focus + label {
+    transform: translateY(-40px) scale(1);
   }
 `
+
+// prettier-ignore
+const Label = styled.label`
+  position: absolute;
+  top: 9px;
+  left: calc(0.625em + 3px);
+
+  font-size: 1em;
+  font-weight: 600;
+
+  cursor: text;
+  pointer-events: none;
+  transition: transform 0.2s ease-out;
+
+  ${props => props.float && css`
+    transform: translateY(-40px) scale(1);
+  `};
+`
+
+const Input = ({label, input, meta, ...props}) => (
+  <Container>
+    <TextInput {...input} {...props} />
+    <Label float={input.value}>{label}</Label>
+  </Container>
+)
 
 export default Input

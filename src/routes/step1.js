@@ -24,6 +24,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
+  padding: 3.2em 2.8em;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
+
   margin: 0 auto;
   max-width: 1000px;
 `
