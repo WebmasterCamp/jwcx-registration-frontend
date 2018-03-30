@@ -25,7 +25,7 @@ const enhance = lifecycle({
         font-weight: 300;
         font-family: Roboto, "Helvetica Neue", "Sukhumvit Set", Kanit, Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", sans-serif;
 
-        background: #fbfcff;
+        background-image: linear-gradient(#6973ad, #6bc9e9);
       }
 
       * {

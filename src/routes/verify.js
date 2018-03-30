@@ -4,9 +4,10 @@ import styled from 'react-emotion'
 import {getFormValues} from 'redux-form'
 
 import Button from '../components/Button'
+import Upload from '../components/Upload'
+import {Backdrop, Row, Paper} from '../components/Layout'
 
 import questions, {General} from '../core/questions'
-import {Backdrop, Row, Paper} from '../components/Layout'
 
 import {submit} from '../ducks/submission'
 
@@ -147,6 +148,7 @@ const prev = () => {
 const StepOne = ({data = {}, major, submit}) => (
   <Backdrop>
     <Container>
+      <Upload />
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
       <Section title="ข้อมูลผู้ปกครอง" fields={parentFields} data={data} />
       <GeneralSection fields={personalFields} data={data} />

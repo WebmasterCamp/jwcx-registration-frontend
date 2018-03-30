@@ -5,24 +5,21 @@ import {compose, lifecycle, branch, withState} from 'recompose'
 import {message, Spin} from 'antd'
 import {Redirect} from 'react-static'
 
-import {Heading} from '../components/Layout'
+import {Heading, Backdrop, Paper} from '../components/Layout'
 
 import {login, logout, getUserStatus} from '../ducks/user'
 
-const Page = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   margin: 0 auto;
-  padding: 1em;
+  max-width: 500px;
 
   width: 100%;
-  min-height: 100vh;
 `
-
-const Footnote = styled.div``
 
 const Major = styled.span`
   text-transform: capitalize;
@@ -31,19 +28,25 @@ const Major = styled.span`
 // Derives the major from the route match object
 const getMajor = match => match.params[0].split('/')[1]
 
-const Loading = ({match}) => (
-  <Page>
-    <Spin size="large" />
-  </Page>
+const Splash = ({children}) => (
+  <Backdrop>
+    <Container>
+      <Paper>
+        <Heading style={{margin: 0, marginBottom: '1.5em'}}>{children}</Heading>
+
+        <Spin size="large" />
+      </Paper>
+    </Container>
+  </Backdrop>
 )
 
+const Loading = ({match}) => <Splash>กำลังยืนยันตัวตน กรุณารอสักครู่</Splash>
+
 const Authenticating = ({match}) => (
-  <Page>
-    <Heading>
-      กรุณาเข้าสู่ระบบด้วย Facebook เพื่อสมัครเข้าสาขา
-      <Major> {getMajor(match)}</Major>
-    </Heading>
-  </Page>
+  <Splash>
+    กรุณาเข้าสู่ระบบด้วย Facebook เพื่อสมัครเข้าสาขา
+    <Major> {getMajor(match)}</Major>
+  </Splash>
 )
 
 const Register = ({match}) => <Redirect to={`/${getMajor(match)}/step1`} />
