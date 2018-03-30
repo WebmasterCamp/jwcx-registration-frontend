@@ -4,6 +4,7 @@ import {reduxForm} from 'redux-form'
 import {compose} from 'recompose'
 import styled from 'react-emotion'
 
+import Button from '../../components/Button'
 import TextInput from '../../components/Input'
 import TextArea from '../../components/TextArea'
 
@@ -95,6 +96,12 @@ const StepOneForm = ({handleSubmit}) => (
         />
       </Row>
     </Paper>
+
+    <Row>
+      <Button disabled>ขั้นตอนก่อนหน้า</Button>
+
+      <Button type="submit">ขั้นตอนถัดไป</Button>
+    </Row>
   </FormContainer>
 )
 

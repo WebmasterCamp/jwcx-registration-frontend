@@ -1,7 +1,8 @@
 import React from 'react'
 import Ink from 'react-ink'
-import styled from 'react-emotion'
+import styled, {css} from 'react-emotion'
 
+// prettier-ignore
 const ButtonContainer = styled.button`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   height: 3em;
@@ -30,6 +31,14 @@ const ButtonContainer = styled.button`
       0 2px 10px 0 rgba(0, 0, 0, 0.12);
     transform: translateY(-1px);
   }
+
+  ${props => props.disabled && css`
+    background: #95afc0;
+
+    &:hover {
+      background: #95afc0;
+    }
+  `};
 `
 
 const Button = ({children, ...props}) => (
