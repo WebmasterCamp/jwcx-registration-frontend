@@ -1,14 +1,18 @@
 import React from 'react'
+import styled from 'react-emotion'
 
 import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextInput from './Input'
 import TextArea from './TextArea'
+import Upload from './Upload'
 
 import withWizard from '../core/form'
 
 const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
+    <Upload />
+
     <Paper>
       <Row>
         <TextInput name="firstname" label="ชื่อ" />
