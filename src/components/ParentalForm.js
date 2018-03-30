@@ -3,11 +3,13 @@ import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {compose} from 'recompose'
 
+import {prev} from '../ducks/submission'
+
 import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextInput from './Input'
 
-const ParentalForm = ({handleSubmit}) => (
+const ParentalForm = ({prev, handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
     <Paper>
       <Row>
@@ -24,7 +26,7 @@ const ParentalForm = ({handleSubmit}) => (
     </Paper>
 
     <Row>
-      <Button>ขั้นตอนก่อนหน้า</Button>
+      <Button onClick={prev}>ขั้นตอนก่อนหน้า</Button>
 
       <Button type="submit">ขั้นตอนถัดไป</Button>
     </Row>
@@ -36,7 +38,7 @@ const mapStateToProps = state => ({
 })
 
 const enhance = compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, {prev}),
   reduxForm({form: 'parental', destroyOnUnmount: false}),
 )
 
