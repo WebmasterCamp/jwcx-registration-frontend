@@ -66,7 +66,7 @@ function validate(values) {
   }
 
   if (!phoneRegex.test(values.parentPhone)) {
-    errors.phone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
+    errors.parentPhone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
   }
 
   const age = parseInt(values.age)
