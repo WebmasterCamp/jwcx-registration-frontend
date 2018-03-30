@@ -2,7 +2,6 @@ Task:
 
 * Update font (RSU, RSU Text & KeepCalm) and styling according to JWCx CI
 * Uploader for Design Major Question
-* Add Responsivity for Mobile
 * Firestore Security Rules
 * Form Types (Birthdate -> Date, Religion/Grade/ShirtSize -> Select)
 * Verification Page before Submission (Summary)
