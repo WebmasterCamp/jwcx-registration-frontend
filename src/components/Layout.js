@@ -25,6 +25,23 @@ export const Backdrop = styled.div`
   padding-bottom: 7em;
 `
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  margin: 0 auto;
+  max-width: 980px;
+
+  padding: 0 2.2em;
+
+  @media screen and (max-width: 480px) {
+    padding: 0 1.2em;
+  }
+`
+
 export const FormContainer = styled.form`
   width: 100%;
   margin: 0 auto;

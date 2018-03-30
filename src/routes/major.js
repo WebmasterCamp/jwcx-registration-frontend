@@ -5,21 +5,9 @@ import {compose, lifecycle, branch, withState} from 'recompose'
 import {message, Spin} from 'antd'
 import {Redirect} from 'react-static'
 
-import {Heading, Backdrop, Paper} from '../components/Layout'
+import {Heading, Container, Backdrop, Paper} from '../components/Layout'
 
 import {login, logout, getUserStatus} from '../ducks/user'
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin: 0 auto;
-  max-width: 500px;
-
-  width: 100%;
-`
 
 const Major = styled.span`
   text-transform: capitalize;

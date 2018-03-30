@@ -2,18 +2,7 @@ import React from 'react'
 import styled from 'react-emotion'
 
 import Button from '../components/Button'
-
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin: 0 auto;
-  padding: 1em;
-
-  min-height: 100vh;
-`
+import {Backdrop, Container, Paper} from '../components/Layout'
 
 const Title = styled.h1`
   color: #555;
@@ -24,13 +13,17 @@ const Title = styled.h1`
 `
 
 const Landing = () => (
-  <Page>
-    <Title>ไม่พบหน้าดังกล่าว | Junior Webmaster Camp X</Title>
+  <Backdrop>
+    <Container>
+      <Paper>
+        <Title>ไม่พบหน้าดังกล่าว | Junior Webmaster Camp X</Title>
 
-    <a href="https://x.jwc.in.th">
-      <Button>กลับสู่เว็บไซต์หลัก</Button>
-    </a>
-  </Page>
+        <a href="https://x.jwc.in.th">
+          <Button>กลับสู่เว็บไซต์หลัก</Button>
+        </a>
+      </Paper>
+    </Container>
+  </Backdrop>
 )
 
 export default Landing
