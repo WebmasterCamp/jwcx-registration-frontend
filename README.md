@@ -6,5 +6,8 @@
 
 3.  Check if user is authenticated in steppers and verify, then redirect out if they haven't authenticated yet. (Optimistic UI)
 
+4.  Fix Back Button Bugs on Safari
+
 Nice to have: Resume to previously completed steps
-Consideration: Use React-based DatePicker instead of Native Browser Date Input
+
+Won't Fix: Set Design Uploader to Full Height with Fixed Width (Not Possible because it is a dropzone, not a normal `<img />` tag)
