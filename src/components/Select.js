@@ -35,7 +35,7 @@ const Select = styled(ReactSelect)`
   }
 
   .Select-arrow {
-    border-color: #999 transparent transparent;
+    border-color: #575757 transparent transparent;
     border-style: solid;
     border-width: 5px 5px 2.5px;
     display: inline-block;
