@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import styled from 'react-emotion'
 
 import {Backdrop} from '../components/Layout'
-import ParentalForm from '../components/ParentalForm'
+import QuestionForm from '../components/QuestionForm'
 
 import {submit} from '../ducks/submission'
 
@@ -18,8 +18,8 @@ const Title = styled.div`
 
 const StepOne = ({submit}) => (
   <Backdrop>
-    <Title>STEP 2: ข้อมูลผู้ปกครอง</Title>
-    <ParentalForm onSubmit={submit} />
+    <Title>STEP 3: คำถามสมัครเข้าค่าย</Title>
+    <QuestionForm onSubmit={submit} />
   </Backdrop>
 )
 
