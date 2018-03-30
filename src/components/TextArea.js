@@ -1,6 +1,10 @@
+import {withProps} from 'recompose'
+
 import {TextInput} from './Input'
 import withField from './withField'
 
-const TextAreaInput = TextInput.withComponent('textarea')
+const TextArea = TextInput.withComponent('textarea')
+
+const TextAreaInput = withProps({rows: 5})(TextArea)
 
 export default withField(TextAreaInput)
