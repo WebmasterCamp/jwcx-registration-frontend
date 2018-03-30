@@ -10,7 +10,6 @@ import history from '../core/history'
 const Routes = ({uid, ready}) => (
   <Router history={history}>
     <Switch>
-      <Route path="/:major/step2" component={() => <div>Step B</div>} />
       <StaticRoutes />
       <Route component={NotFound} />
     </Switch>

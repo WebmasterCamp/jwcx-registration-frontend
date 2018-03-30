@@ -2,43 +2,13 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {compose} from 'recompose'
-import styled from 'react-emotion'
 
-import Button from '../../components/Button'
-import TextInput from '../../components/Input'
-import TextArea from '../../components/TextArea'
+import {FormContainer, Paper, Row} from './Layout'
+import Button from './Button'
+import TextInput from './Input'
+import TextArea from './TextArea'
 
-const FormContainer = styled.form`
-  width: 100%;
-  margin: 0 auto;
-  max-width: 980px;
-`
-
-const Paper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 1.8em 2.2em;
-  margin-bottom: 3.2em;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
-
-  width: 100%;
-`
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-
-  width: 100%;
-`
-
-const StepOneForm = ({handleSubmit}) => (
+const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
     <Paper>
       <Row>
@@ -61,7 +31,7 @@ const StepOneForm = ({handleSubmit}) => (
 
       <Row>
         <TextInput name="address" label="ที่อยู่" />
-        <TextInput name="number" label="เบอร์โทรศัพท์" />
+        <TextInput name="phone" label="เบอร์โทรศัพท์" />
       </Row>
 
       <Row>
@@ -111,4 +81,4 @@ const mapStateToProps = state => ({
 
 const enhance = compose(connect(mapStateToProps), reduxForm({form: 'personal'}))
 
-export default enhance(StepOneForm)
+export default enhance(PersonalForm)

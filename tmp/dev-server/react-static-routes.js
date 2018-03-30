@@ -7,20 +7,28 @@ import { cleanPath } from 'react-static'
 
 import t_0 from '../../src/routes/index'
 import t_1 from '../../src/routes/major'
-import t_2 from '../../src/routes/change_denied'
-import t_3 from '../../src/routes/404'
+import t_2 from '../../src/routes/step1'
+import t_3 from '../../src/routes/step2'
+import t_4 from '../../src/routes/step3'
+import t_5 from '../../src/routes/verify'
+import t_6 from '../../src/routes/change_denied'
+import t_7 from '../../src/routes/404'
 
 // Template Map
 global.componentsByTemplateID = global.componentsByTemplateID || [
   t_0,
 t_1,
 t_2,
-t_3
+t_3,
+t_4,
+t_5,
+t_6,
+t_7
 ]
 
 // Template Tree
 global.templateIDsByPath = global.templateIDsByPath || {
-  '404': 3
+  '404': 7
 }
 
 // Get template for given path
