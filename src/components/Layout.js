@@ -61,7 +61,7 @@ export const Row = styled.div`
 
   width: 100%;
 
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 840px) {
     flex-direction: column;
 
     ${props => props.alwaysRow && css`
