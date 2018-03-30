@@ -1,28 +1,18 @@
 import React from 'react'
 import {call, put, select} from 'redux-saga/effects'
-import {message, Modal} from 'antd'
+import {message} from 'antd'
 
 import {createReducer, Creator} from './helper'
 
 import rsf, {app} from '../core/fire'
-import majors from '../core/majors'
 import history from '../core/history'
+import {getMajorFromPath} from '../core/util'
 
 const db = app.firestore()
 
 export const STORE_CAMPER = 'STORE_CAMPER'
 
 export const storeCamper = Creator(STORE_CAMPER)
-
-function getMajorFromPath() {
-  if (typeof window !== 'undefined') {
-    const path = window.location.pathname.split('/')[1]
-
-    if (majors.includes(path)) {
-      return path
-    }
-  }
-}
 
 export function* loadCamperSaga() {
   try {

@@ -5,7 +5,7 @@ import styled from 'react-emotion'
 import {Backdrop} from '../components/Layout'
 import ParentalForm from '../components/ParentalForm'
 
-import {submit} from '../ducks/submission'
+import {next} from '../ducks/submission'
 
 const Title = styled.div`
   position: absolute;
@@ -16,13 +16,13 @@ const Title = styled.div`
   font-size: 1.8em;
 `
 
-const StepOne = ({submit}) => (
+const StepOne = ({next}) => (
   <Backdrop>
     <Title>STEP 2: ข้อมูลผู้ปกครอง</Title>
-    <ParentalForm onSubmit={submit} />
+    <ParentalForm onSubmit={next} />
   </Backdrop>
 )
 
-const enhance = connect(null, {submit})
+const enhance = connect(null, {next})
 
 export default enhance(StepOne)
