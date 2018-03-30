@@ -28,10 +28,13 @@ const TextInput = styled.input`
     color: #999;
   }
 
-  &:hover,
+  &:hover {
+    box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
+  }
+
   &:focus,
   &:active {
-    transform: scale(1.08);
+    transform: scale(1.045);
     box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
   }
 

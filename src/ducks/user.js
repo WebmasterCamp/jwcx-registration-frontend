@@ -47,7 +47,7 @@ export function* loginSaga({payload}) {
   provider.addScope('public_profile')
 
   try {
-    const auth = yield call(rsf.auth.signInWithPopup, provider)
+    const auth = yield call(rsf.auth.signInWithRedirect, provider)
     const cred = yield call(rsf.auth.signInAndRetrieveDataWithCredential, auth)
     console.log('Logged in as', cred.user.displayName, cred.user.uid)
 
