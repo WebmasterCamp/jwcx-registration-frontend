@@ -37,6 +37,7 @@ const requiredFields = [
 ]
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+const phoneRegex = /^\d{10}$/
 
 function validate(values) {
   const errors = {}
@@ -48,7 +49,15 @@ function validate(values) {
   })
 
   if (!emailRegex.test(values.email)) {
-    errors.email = 'Invalid email address'
+    errors.email = 'ที่อยู่อีเมลไม่ถูกต้อง'
+  }
+
+  if (!phoneRegex.test(values.phone)) {
+    errors.phone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
+  }
+
+  if (isNaN(parseInt(values.age))) {
+    errors.age = 'รูปแบบอายุไม่่ถูกต้อง'
   }
 
   return errors

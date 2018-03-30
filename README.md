@@ -7,7 +7,6 @@ Task:
 * Add Responsivity for Mobile
 * Firestore Security Rules
 * Form Types (Birthdate -> Date, Religion/Grade/ShirtSize -> Select)
-* Form Validation (Fill Required, Phone Regex, Email Regex, Birthdate Regex, Age, etc)
 * Verification Page before Submission (Summary)
 * Redirect from / if user is already logged in
 * Fix TODOs
