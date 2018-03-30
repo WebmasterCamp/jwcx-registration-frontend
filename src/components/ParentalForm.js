@@ -22,7 +22,7 @@ const ParentalForm = ({prev, handleSubmit}) => (
       </Row>
     </Paper>
 
-    <Row>
+    <Row alwaysRow>
       <Button onClick={prev}>ขั้นตอนก่อนหน้า</Button>
 
       <Button type="submit">ขั้นตอนถัดไป</Button>

@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled, {css} from 'react-emotion'
 
 export const Heading = styled.h1`
   color: #555;
@@ -29,6 +29,12 @@ export const FormContainer = styled.form`
   width: 100%;
   margin: 0 auto;
   max-width: 980px;
+
+  padding: 0 2.2em;
+
+  @media screen and (max-width: 480px) {
+    padding: 0 1.2em;
+  }
 `
 
 export const Paper = styled.div`
@@ -46,6 +52,7 @@ export const Paper = styled.div`
   width: 100%;
 `
 
+// prettier-ignore
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -53,4 +60,12 @@ export const Row = styled.div`
   justify-content: space-around;
 
   width: 100%;
+
+  @media screen and (max-width: 680px) {
+    flex-direction: column;
+
+    ${props => props.alwaysRow && css`
+      flex-direction: row;
+    `};
+  }
 `
