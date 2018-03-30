@@ -2,7 +2,7 @@ import styled from 'react-emotion'
 
 import withField from './Field'
 
-const TextInput = styled.input`
+const TextAreaInput = styled.textarea`
   font-weight: 300;
   text-align: left;
   font-size: 1.08em;
@@ -13,7 +13,7 @@ const TextInput = styled.input`
 
   min-width: 13em;
   outline: none;
-  transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) all;
+  transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) all !important;
 
   border: none;
   border-radius: 4px;
@@ -42,4 +42,4 @@ const TextInput = styled.input`
   }
 `
 
-export default withField(TextInput)
+export default withField(TextAreaInput)

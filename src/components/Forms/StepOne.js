@@ -5,6 +5,7 @@ import {compose} from 'recompose'
 import styled from 'react-emotion'
 
 import Input from '../../components/Input'
+import TextAreaInput from '../../components/TextArea'
 
 const FormContainer = styled.form`
   width: 100%;
@@ -12,7 +13,7 @@ const FormContainer = styled.form`
   max-width: 980px;
 `
 
-const Paper = styled.form`
+const Paper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -37,6 +38,7 @@ const Row = styled.div`
 `
 
 const TextInput = props => <Field component={Input} {...props} />
+const TextArea = props => <Field component={TextAreaInput} {...props} />
 
 const StepOneForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
@@ -90,7 +92,7 @@ const StepOneForm = ({handleSubmit}) => (
       </Row>
 
       <Row>
-        <TextInput
+        <TextArea
           name="activity"
           label="กิจกรรมหรือผลงานที่น้องๆ เคยทำหรือเข้าร่วม"
         />

@@ -27,7 +27,7 @@ const Label = styled.label`
   `};
 `
 
-const withField = () => Component => ({label, input, meta, ...props}) => (
+const withField = Component => ({label, input, meta, ...props}) => (
   <Container>
     <Component {...meta} {...input} {...props} />
     <Label float={input.value}>{label}</Label>
