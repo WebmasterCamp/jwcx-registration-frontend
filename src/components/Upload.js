@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import styled from 'react-emotion'
 import ReactDropzone from 'react-dropzone'
 import {Icon} from 'antd'
+import firebase from 'firebase'
 
 const DropTitle = styled.div`
   color: #555;
@@ -48,11 +50,31 @@ const DropIcon = styled(Icon)`
   border-radius: 50%;
 `
 
-const Upload = () => (
-  <DropZone>
-    <DropIcon type="upload" />
-    <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
-  </DropZone>
-)
+class Upload extends Component {
+  onDrop = async (acceptedFiles, rejectedFiles) => {
+    const {uid} = this.props
 
-export default Upload
+    const storage = firebase.storage().ref()
+    const avatar = storage.child(`avatar/${uid}.jpg`)
+
+    const [file] = acceptedFiles
+    const snapshot = await avatar.put(file)
+
+    console.log('Uploaded Avatar:', snapshot)
+  }
+
+  render = () => (
+    <DropZone onDrop={this.onDrop}>
+      <DropIcon type="upload" />
+      <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
+    </DropZone>
+  )
+}
+
+const mapStateToProps = state => ({
+  uid: state.user.uid,
+})
+
+const enhance = connect(mapStateToProps)
+
+export default enhance(Upload)
