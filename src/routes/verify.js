@@ -115,6 +115,8 @@ const GeneralSection = ({data}) => (
 
 const MajorSection = ({data}) => {
   const major = getMajorFromPath()
+  if (!major) return null
+
   const {Q1, Q2, Q3} = questions[major]
 
   return (
