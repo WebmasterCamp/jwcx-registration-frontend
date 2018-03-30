@@ -1,4 +1,11 @@
 import {message} from 'antd'
+import {connect} from 'react-redux'
+import {reduxForm} from 'redux-form'
+import {compose} from 'recompose'
+
+import preventUnsaved from '../components/PreventUnsaved'
+
+import {prev} from '../ducks/submission'
 
 const personalFields = [
   'firstname',
@@ -66,12 +73,12 @@ function validate(values) {
 }
 
 function onSubmitFail(error) {
-  message.error('กรุณากรอกข้อมูลให้ครบถ้วนค่ะ')
+  message.error('กรุณากรอกข้อมูลให้ครบถ้วน')
 
   console.warn('Encountered Validation Error:', error)
 }
 
-const options = {
+export const formOptions = {
   form: 'submission',
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
@@ -81,4 +88,14 @@ const options = {
   onSubmitFail,
 }
 
-export default options
+const mapStateToProps = state => ({
+  initialValues: state.camper,
+})
+
+const enhance = compose(
+  connect(mapStateToProps, {prev}),
+  reduxForm(formOptions),
+  preventUnsaved('submission'),
+)
+
+export default enhance

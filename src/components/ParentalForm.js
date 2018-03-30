@@ -1,15 +1,10 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {reduxForm} from 'redux-form'
-import {compose} from 'recompose'
-
-import {prev} from '../ducks/submission'
 
 import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextInput from './Input'
 
-import formOptions from '../core/form'
+import withWizard from '../core/form'
 
 const ParentalForm = ({prev, handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
@@ -35,13 +30,4 @@ const ParentalForm = ({prev, handleSubmit}) => (
   </FormContainer>
 )
 
-const mapStateToProps = state => ({
-  initialValues: state.camper,
-})
-
-const enhance = compose(
-  connect(mapStateToProps, {prev}),
-  reduxForm(formOptions),
-)
-
-export default enhance(ParentalForm)
+export default withWizard(ParentalForm)

@@ -1,14 +1,11 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {reduxForm} from 'redux-form'
-import {compose} from 'recompose'
 
 import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextInput from './Input'
 import TextArea from './TextArea'
 
-import formOptions from '../core/form'
+import withWizard from '../core/form'
 
 const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
@@ -77,10 +74,4 @@ const PersonalForm = ({handleSubmit}) => (
   </FormContainer>
 )
 
-const mapStateToProps = state => ({
-  initialValues: state.camper,
-})
-
-const enhance = compose(connect(mapStateToProps), reduxForm(formOptions))
-
-export default enhance(PersonalForm)
+export default withWizard(PersonalForm)

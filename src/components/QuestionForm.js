@@ -1,16 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {reduxForm} from 'redux-form'
-import {compose} from 'recompose'
 
 import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextArea from './TextArea'
 
 import {General} from '../core/questions'
-import formOptions from '../core/form'
 
-import {prev} from '../ducks/submission'
+import withWizard from '../core/form'
 
 const QuestionForm = ({prev, handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
@@ -28,13 +24,4 @@ const QuestionForm = ({prev, handleSubmit}) => (
   </FormContainer>
 )
 
-const mapStateToProps = state => ({
-  initialValues: state.camper,
-})
-
-const enhance = compose(
-  connect(mapStateToProps, {prev}),
-  reduxForm(formOptions),
-)
-
-export default enhance(QuestionForm)
+export default withWizard(QuestionForm)
