@@ -1,6 +1,5 @@
 Task:
 
-* Uploader for Design Major Question
 * Form Types (Birthdate -> Date, Religion/Grade/ShirtSize -> Select)
 * Redirect from / if user is already logged in
 * Update font (RSU, RSU Text & KeepCalm) and styling according to JWCx CI
