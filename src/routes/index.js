@@ -20,9 +20,6 @@ const SubHeading = styled.h1`
   margin-bottom: 1.8em;
 `
 
-// TODO: The user may re-enter the registration subdomain directly.
-//       Re-auth, then check if the user had already chosen their major, and redirect.
-
 const Landing = () => (
   <Backdrop>
     <Container>

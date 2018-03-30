@@ -47,7 +47,6 @@ export function* loadCamperSaga() {
       return
     }
 
-    // TODO: Create the camper record based on existing data
     if (major) {
       const data = {major, createdAt: new Date()}
       yield call(rsf.firestore.setDocument, docRef, data)
