@@ -65,8 +65,14 @@ function validate(values) {
     errors.phone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
   }
 
-  if (isNaN(parseInt(values.age))) {
+  const age = parseInt(values.age)
+
+  if (isNaN(age)) {
     errors.age = 'รูปแบบอายุไม่่ถูกต้อง'
+  }
+
+  if (age < 10 || age > 30) {
+    errors.age = 'อายุไม่ถูกต้อง'
   }
 
   return errors

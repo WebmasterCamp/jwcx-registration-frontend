@@ -35,7 +35,7 @@ const PersonalForm = ({handleSubmit}) => (
 
       <Row>
         <TextInput name="email" label="อีเมล" type="email" />
-        <TextInput name="socialMedia" label="Social Media" />
+        <TextInput name="socialMedia" label="Social Media ต่างๆ" />
       </Row>
     </Paper>
 
