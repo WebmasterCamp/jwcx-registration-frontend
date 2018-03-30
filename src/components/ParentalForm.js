@@ -35,6 +35,9 @@ const mapStateToProps = state => ({
   initialValues: {},
 })
 
-const enhance = compose(connect(mapStateToProps), reduxForm({form: 'parental'}))
+const enhance = compose(
+  connect(mapStateToProps),
+  reduxForm({form: 'parental', destroyOnUnmount: false}),
+)
 
 export default enhance(ParentalForm)
