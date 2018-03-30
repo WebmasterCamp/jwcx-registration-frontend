@@ -1,13 +1,43 @@
 import React from 'react'
-import styled from 'react-emotion'
 
 import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
-import TextInput from './Input'
+import Input from './Input'
+import Select from './Select'
 import TextArea from './TextArea'
 import Upload from './Upload'
 
 import withWizard from '../core/form'
+
+const toOptions = i => ({value: i, label: i})
+
+const Options = options =>
+  Object.entries(options).map(([value, label]) => ({value, label}))
+
+export const religions = {
+  atheist: 'ไม่นับถือศาสนา',
+  buddhist: 'ศาสนาพุทธ',
+  christianity: 'ศาสนาคริสต์',
+  islam: 'ศาสนาอิสลาม',
+  hinduism: 'ศาสนาฮินดู',
+  sikhism: 'ศาสนาซิกข์',
+  taoism: 'ศาสนาเต๋า',
+  judaism: 'ศาสนายูดาห์',
+  other: 'ศาสนาอื่นๆ',
+}
+
+export const grades = {
+  m3: 'มัธยมศึกษาปีที่ 3',
+  m4: 'มัธยมศึกษาปีที่ 4',
+  m5: 'มัธยมศึกษาปีที่ 5',
+  m6: 'มัธยมศึกษาปีที่ 6',
+  other: 'อื่นๆ',
+}
+
+const religionOptions = Options(religions)
+const gradeOptions = Options(grades)
+
+const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(toOptions)
 
 const PersonalForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
@@ -15,51 +45,51 @@ const PersonalForm = ({handleSubmit}) => (
 
     <Paper>
       <Row>
-        <TextInput name="firstname" label="ชื่อ" />
-        <TextInput name="lastname" label="นามสกุล" />
+        <Input name="firstname" label="ชื่อ" />
+        <Input name="lastname" label="นามสกุล" />
       </Row>
 
       <Row>
-        <TextInput name="age" label="อายุ" type="number" />
-        <TextInput name="birthdate" label="วันเกิด" type="date" float />
-        <TextInput name="religion" label="ศาสนา" />
-      </Row>
-    </Paper>
-
-    <Paper>
-      <Row>
-        <TextInput name="class" label="ระดับชั้น" />
-        <TextInput name="school" label="โรงเรียน" />
-      </Row>
-
-      <Row>
-        <TextInput name="address" label="ที่อยู่" />
-        <TextInput name="phone" label="เบอร์โทรศัพท์" />
-      </Row>
-
-      <Row>
-        <TextInput name="email" label="อีเมล" type="email" />
-        <TextInput name="socialMedia" label="Social Media ต่างๆ" />
+        <Input name="age" label="อายุ" type="number" />
+        <Input name="birthdate" label="วันเกิด" type="date" float />
+        <Select name="religion" label="ศาสนา" options={religionOptions} />
       </Row>
     </Paper>
 
     <Paper>
       <Row>
-        <TextInput name="disease" label="โรคประจำตัว" />
+        <Select name="class" label="ระดับชั้น" options={gradeOptions} />
+        <Input name="school" label="โรงเรียน" />
       </Row>
 
       <Row>
-        <TextInput name="foodAllergy" label="อาหารที่แพ้" />
+        <Input name="address" label="ที่อยู่" />
+        <Input name="phone" label="เบอร์โทรศัพท์" />
       </Row>
 
       <Row>
-        <TextInput name="drugAllergy" label="ยาที่แพ้" />
+        <Input name="email" label="อีเมล" type="email" />
+        <Input name="socialMedia" label="Social Media ต่างๆ" />
       </Row>
     </Paper>
 
     <Paper>
       <Row>
-        <TextInput name="shirtSize" label="ไซส์เสื้อ" />
+        <Input name="disease" label="โรคประจำตัว" />
+      </Row>
+
+      <Row>
+        <Input name="foodAllergy" label="อาหารที่แพ้" />
+      </Row>
+
+      <Row>
+        <Input name="drugAllergy" label="ยาที่แพ้" />
+      </Row>
+    </Paper>
+
+    <Paper>
+      <Row>
+        <Select name="shirtSize" label="ไซส์เสื้อ" options={shirtSizes} />
       </Row>
 
       <Row>

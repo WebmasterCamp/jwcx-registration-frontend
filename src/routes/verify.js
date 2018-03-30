@@ -6,6 +6,7 @@ import {getFormValues} from 'redux-form'
 import Button from '../components/Button'
 import Upload from '../components/Upload'
 import {DesignUpload} from '../components/DesignUpload'
+import {religions, grades} from '../components/PersonalForm'
 import {Backdrop, Row, Paper} from '../components/Layout'
 
 import questions, {General} from '../core/questions'
@@ -78,13 +79,31 @@ const Paragraph = styled.p`
   word-break: break-word;
 `
 
+function format(name, data) {
+  const answer = data[name]
+
+  if (name === 'religion') {
+    return religions[answer]
+  }
+
+  if (name === 'class') {
+    return grades[answer]
+  }
+
+  if (answer) {
+    return answer
+  }
+
+  return '-'
+}
+
 const Section = ({data, title, fields}) => (
   <Card>
     <Title>{title}</Title>
 
     {fields.map(([name, label]) => (
       <Item key={name}>
-        <Label>{label}:</Label> {data[name]}
+        <Label>{label}:</Label> {format(name, data)}
       </Item>
     ))}
   </Card>

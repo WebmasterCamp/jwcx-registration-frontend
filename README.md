@@ -1,6 +1,6 @@
 ## TODOs
 
-1.  Add more Form Types: Dropdown Select for Religion, Grade and Shirt Size, and DatePicker for Birthdate.
+1.  Add Proper DatePicker for Birthdate.
 
 2.  Update font to RSU, RSU Text and KeepCalm, and update style according to JWCx CI
 
