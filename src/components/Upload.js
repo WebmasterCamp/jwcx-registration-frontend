@@ -1,16 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import styled from 'react-emotion'
+import styled, {css} from 'react-emotion'
 import ReactDropzone from 'react-dropzone'
-import {Icon} from 'antd'
+import {message, Icon} from 'antd'
 import firebase from 'firebase'
 
-const DropTitle = styled.div`
-  color: #555;
-  text-align: center;
-  font-size: 1.2em;
-`
-
+// prettier-ignore
 const DropZone = styled(ReactDropzone)`
   display: flex;
   flex-direction: column;
@@ -27,7 +22,6 @@ const DropZone = styled(ReactDropzone)`
 
   margin: 0 auto;
   margin-bottom: 3.8em;
-  background: white;
 
   width: 200px;
   height: 200px;
@@ -37,8 +31,15 @@ const DropZone = styled(ReactDropzone)`
   &:hover {
     background: rgba(255, 255, 255, 0.8);
   }
+
+  ${props => props.preview && css`
+    background-image: url(${props.preview});
+    background-size: cover;
+    background-repeat: no-repeat;
+  `};
 `
 
+// prettier-ignore
 const DropIcon = styled(Icon)`
   color: #555;
   font-size: 1.8em;
@@ -50,25 +51,94 @@ const DropIcon = styled(Icon)`
   border-radius: 50%;
 `
 
+// prettier-ignore
+const DropTitle = styled.div`
+  color: #555;
+  text-align: center;
+  font-size: 1.2em;
+`
+
+// prettier-ignore
+const Overlay = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  ${props => props.active && css`
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  `};
+`
+
 class Upload extends Component {
-  onDrop = async (acceptedFiles, rejectedFiles) => {
-    const {uid} = this.props
-
-    const storage = firebase.storage().ref()
-    const avatar = storage.child(`avatar/${uid}.jpg`)
-
-    const [file] = acceptedFiles
-    const snapshot = await avatar.put(file)
-
-    console.log('Uploaded Avatar:', snapshot)
+  state = {
+    preview: null,
   }
 
-  render = () => (
-    <DropZone onDrop={this.onDrop}>
-      <DropIcon type="upload" />
-      <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
-    </DropZone>
-  )
+  async componentWillReceiveProps(props) {
+    if (this.props.uid !== props.uid) {
+      const {uid} = props
+
+      const storage = firebase.storage().ref()
+      const avatar = storage.child(`avatar/${uid}.jpg`)
+
+      try {
+        const url = await avatar.getDownloadURL()
+        console.log('Avatar URL', url)
+
+        this.setState({preview: url})
+      } catch (err) {
+        if (err.code === 'storage/object-not-found') {
+          console.info('User', uid, 'has not uploaded an avatar yet.')
+        } else {
+          console.warn(err.message)
+        }
+      }
+    }
+  }
+
+  onDrop = async (acceptedFiles, rejectedFiles) => {
+    try {
+      const {uid} = this.props
+
+      const storage = firebase.storage().ref()
+      const avatar = storage.child(`avatar/${uid}.jpg`)
+
+      const [file] = acceptedFiles
+      this.setState({preview: file.preview})
+
+      const snapshot = await avatar.put(file)
+
+      console.log('Avatar File:', file)
+      console.log('Uploaded Avatar:', snapshot)
+
+      message.success('อัพโหลดรูปประจำตัวเรียบร้อยแล้ว')
+    } catch (err) {
+      message.error(err.message)
+    }
+  }
+
+  render() {
+    const {preview} = this.state
+
+    return (
+      <DropZone onDrop={this.onDrop} preview={preview}>
+        <Overlay active={preview}>
+          <DropIcon type="upload" />
+          <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
+        </Overlay>
+      </DropZone>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
