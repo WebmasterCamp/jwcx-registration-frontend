@@ -106,6 +106,8 @@ class Upload extends Component {
   }
 
   onDrop = async (acceptedFiles, rejectedFiles) => {
+    const hide = message.loading('กำลังอัพโหลดรูปประจำตัว กรุณารอสักครู่...', 0)
+
     try {
       const {uid} = this.props
 
@@ -120,8 +122,10 @@ class Upload extends Component {
       console.log('Avatar File:', file)
       console.log('Uploaded Avatar:', snapshot)
 
+      hide()
       message.success('อัพโหลดรูปประจำตัวเรียบร้อยแล้ว')
     } catch (err) {
+      hide()
       message.error(err.message)
     }
   }
