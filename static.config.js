@@ -16,8 +16,37 @@ class Document extends Component {
         <Head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>สมัครเข้าค่าย Junior Webmaster Camp X</title>
+
+          <meta
+            name="description"
+            content="พบกันเร็ว ๆ นี้ กับค่าย Junior Webmaster Camp ค่ายทำเว็บของเด็ก ม.ปลาย ปีที่ 10"
+          />
+
+          <meta property="og:url" content="https://registration.jwc.in.th" />
+
+          <meta
+            property="og:title"
+            content="สมัครเข้าค่าย Junior Webmaster Camp X"
+          />
+
+          <meta
+            property="og:description"
+            content="พบกันเร็ว ๆ นี้ กับค่าย Junior Webmaster Camp ค่ายทำเว็บของเด็ก ม.ปลาย ปีที่ 10"
+          />
+
+          <meta
+            property="og:image"
+            content="http://x.jwc.in.th/assets/img/og.jpg"
+          />
+
+          <meta
+            property="article:author"
+            content="https://www.facebook.com/jwcth"
+          />
+
           <style dangerouslySetInnerHTML={{__html: renderMeta.css}} />
-          <title>Registration | Junior Webmaster Camp X</title>
+
           <link
             href="https://fonts.googleapis.com/css?family=Kanit:300,400"
             rel="stylesheet"
