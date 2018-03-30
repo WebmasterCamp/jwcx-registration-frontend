@@ -15,7 +15,6 @@ const DropZone = styled(ReactDropzone)`
   position: relative;
 
   cursor: pointer;
-  padding: 1.8em 2.2em;
   margin-bottom: 3.2em;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
