@@ -63,6 +63,14 @@ const DropTitle = styled.div`
   font-size: 1.2em;
 `
 
+const Small = styled.small`
+  color: #777;
+  text-align: center;
+
+  font-size: 0.85em;
+  margin-top: 0.5em;
+`
+
 const DropWarning = styled.div`
   color: #ee5253;
   text-align: center;
@@ -185,6 +193,8 @@ class Upload extends Component {
           ) : (
             <DropTitle>อัพโหลดรูปประจำตัว</DropTitle>
           )}
+
+          <Small>ขอเป็นรูปที่เห็นหน้าชัดนะจ๊ะ</Small>
         </Overlay>
       </DropZone>
     )
