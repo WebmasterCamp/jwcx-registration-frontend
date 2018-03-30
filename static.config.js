@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {extractCritical} from 'emotion-server'
 
 import majors from './src/core/majors'
+import questions from './src/core/questions'
 import webpack from './webpack.config.js'
 
 const siteRoot = 'https://registration.jwc.in.th'
@@ -49,6 +50,12 @@ const verifyRoutes = majors.map(major => ({
   component: 'src/routes/verify',
 }))
 
+const majorQuestionRoutes = majors.map(major => ({
+  path: '/' + major + '/step4',
+  component: 'src/routes/step4',
+  getData: () => ({questions: questions[major]}),
+}))
+
 export default {
   webpack,
   siteRoot,
@@ -63,6 +70,7 @@ export default {
     ...majorRoutes,
     ...formRoutes,
     ...verifyRoutes,
+    ...majorQuestionRoutes,
     {
       path: '/change_denied',
       component: 'src/routes/change_denied',
