@@ -135,7 +135,16 @@ const GeneralSection = ({data}) => (
 
 const MajorSection = ({data}) => {
   const major = getMajorFromPath()
-  if (!major) return null
+
+  if (!major) {
+    return (
+      <Card>
+        <Title>คำถามสาขา</Title>
+
+        <Item>กรุณารอสักครู่</Item>
+      </Card>
+    )
+  }
 
   let {Q1, Q2, Q3} = questions[major]
 
