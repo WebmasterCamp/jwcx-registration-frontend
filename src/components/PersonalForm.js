@@ -19,10 +19,6 @@ export const religions = {
   buddhist: 'ศาสนาพุทธ',
   christianity: 'ศาสนาคริสต์',
   islam: 'ศาสนาอิสลาม',
-  hinduism: 'ศาสนาฮินดู',
-  sikhism: 'ศาสนาซิกข์',
-  taoism: 'ศาสนาเต๋า',
-  judaism: 'ศาสนายูดาห์',
   other: 'ศาสนาอื่นๆ',
 }
 
