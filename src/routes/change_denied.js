@@ -28,11 +28,11 @@ const Row = styled.div`
 const ChangeDenied = ({camper, match}) => (
   <Page>
     <Heading>
-      คุณไม่สามารถเปลี่ยนสาขาได้อีก หลักจากที่เลือกสาขานั้นๆ ไปแล้ว
+      คุณไม่สามารถเปลี่ยนสาขาได้อีก หลังจากที่เลือกสาขานั้นๆ ไปแล้ว
     </Heading>
 
     <Row>
-      <Link to={camper.major}>
+      <Link to={'/' + camper.major}>
         <Button>สมัครสมาชิกต่อในสาขา {camper.major}</Button>
       </Link>
 

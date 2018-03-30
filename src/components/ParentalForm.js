@@ -13,15 +13,15 @@ const ParentalForm = ({prev, handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
     <Paper>
       <Row>
-        <TextInput name="firstname" label="ชื่อผู้ปกครอง" />
-        <TextInput name="lastname" label="นามสกุล" />
+        <TextInput name="parentFirstName" label="ชื่อผู้ปกครอง" />
+        <TextInput name="parentLastName" label="นามสกุล" />
       </Row>
     </Paper>
 
     <Paper>
       <Row>
-        <TextInput name="relation" label="ความเกี่ยวข้อง" />
-        <TextInput name="phone" label="เบอร์โทรศัพท์" />
+        <TextInput name="parentRelation" label="ความเกี่ยวข้อง" />
+        <TextInput name="parentPhone" label="เบอร์โทรศัพท์" />
       </Row>
     </Paper>
 
@@ -39,7 +39,11 @@ const mapStateToProps = state => ({
 
 const enhance = compose(
   connect(mapStateToProps, {prev}),
-  reduxForm({form: 'parental', destroyOnUnmount: false}),
+  reduxForm({
+    form: 'submission',
+    destroyOnUnmount: false,
+    forceUnregisterOnUnmount: true,
+  }),
 )
 
 export default enhance(ParentalForm)
