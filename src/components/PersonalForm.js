@@ -81,7 +81,11 @@ const mapStateToProps = state => ({
 
 const enhance = compose(
   connect(mapStateToProps),
-  reduxForm({form: 'personal', destroyOnUnmount: false}),
+  reduxForm({
+    form: 'submission',
+    destroyOnUnmount: false,
+    forceUnregisterOnUnmount: true,
+  }),
 )
 
 export default enhance(PersonalForm)
