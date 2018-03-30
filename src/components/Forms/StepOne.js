@@ -7,11 +7,22 @@ import styled from 'react-emotion'
 import Input from '../../components/Input'
 
 const FormContainer = styled.form`
+  width: 100%;
+  margin: 0 auto;
+  max-width: 900px;
+`
+
+const Paper = styled.form`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+
+  padding: 2.2em 1.8em 1.2em 1.8em;
+  margin-bottom: 3.2em;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 3px 18.5px 2px rgba(0, 0, 0, 0.18);
 
   width: 100%;
 `
@@ -29,54 +40,62 @@ const TextInput = props => <Field component={Input} {...props} />
 
 const StepOneForm = ({handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
-    <Row>
-      <TextInput name="firstname" label="ชื่อ" />
-      <TextInput name="lastname" label="นามสกุล" />
-    </Row>
+    <Paper>
+      <Row>
+        <TextInput name="firstname" label="ชื่อ" />
+        <TextInput name="lastname" label="นามสกุล" />
+      </Row>
 
-    <Row>
-      <TextInput name="age" label="อายุ" />
-      <TextInput name="birthdate" label="วันเกิด" />
-      <TextInput name="religion" label="ศาสนา" />
-    </Row>
+      <Row>
+        <TextInput name="age" label="อายุ" />
+        <TextInput name="birthdate" label="วันเกิด" />
+        <TextInput name="religion" label="ศาสนา" />
+      </Row>
+    </Paper>
 
-    <Row>
-      <TextInput name="class" label="ระดับชั้น" />
-      <TextInput name="school" label="โรงเรียน" />
-    </Row>
+    <Paper>
+      <Row>
+        <TextInput name="class" label="ระดับชั้น" />
+        <TextInput name="school" label="โรงเรียน" />
+      </Row>
 
-    <Row>
-      <TextInput name="address" label="ที่อยู่" />
-      <TextInput name="number" label="เบอร์โทรศัพท์" />
-    </Row>
+      <Row>
+        <TextInput name="address" label="ที่อยู่" />
+        <TextInput name="number" label="เบอร์โทรศัพท์" />
+      </Row>
 
-    <Row>
-      <TextInput name="email" label="อีเมล" />
-      <TextInput name="socialMedia" label="Social Media" />
-    </Row>
+      <Row>
+        <TextInput name="email" label="อีเมล" />
+        <TextInput name="socialMedia" label="Social Media" />
+      </Row>
+    </Paper>
 
-    <Row>
-      <TextInput name="disease" label="โรคประจำตัว" />
-    </Row>
+    <Paper>
+      <Row>
+        <TextInput name="disease" label="โรคประจำตัว" />
+      </Row>
 
-    <Row>
-      <TextInput name="foodAllergy" label="อาหารที่แพ้" />
-    </Row>
+      <Row>
+        <TextInput name="foodAllergy" label="อาหารที่แพ้" />
+      </Row>
 
-    <Row>
-      <TextInput name="drugAllergy" label="ยาที่แพ้" />
-    </Row>
+      <Row>
+        <TextInput name="drugAllergy" label="ยาที่แพ้" />
+      </Row>
+    </Paper>
 
-    <Row>
-      <TextInput name="shirtSize" label="ไซส์เสื้อ" />
-    </Row>
+    <Paper>
+      <Row>
+        <TextInput name="shirtSize" label="ไซส์เสื้อ" />
+      </Row>
 
-    <Row>
-      <TextInput
-        name="activity"
-        label="กิจกรรมหรือผลงานที่น้องๆ เคยทำหรือเข้าร่วม"
-      />
-    </Row>
+      <Row>
+        <TextInput
+          name="activity"
+          label="กิจกรรมหรือผลงานที่น้องๆ เคยทำหรือเข้าร่วม"
+        />
+      </Row>
+    </Paper>
   </FormContainer>
 )
 
