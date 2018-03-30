@@ -22,8 +22,18 @@ const Backdrop = styled.div`
   padding-bottom: 7em;
 `
 
+const Title = styled.div`
+  position: absolute;
+  top: 1em;
+  left: 2em;
+
+  color: white;
+  font-size: 1.8em;
+`
+
 const Register = ({submit}) => (
   <Backdrop>
+    <Title>STEP 1: ข้อมูลส่วนตัว</Title>
     <PersonalForm onSubmit={submit} />
   </Backdrop>
 )

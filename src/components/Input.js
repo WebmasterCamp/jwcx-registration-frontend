@@ -1,13 +1,7 @@
 import React from 'react'
 import styled, {css} from 'react-emotion'
 
-const Container = styled.div`
-  position: relative;
-  font-size: 1rem;
-
-  width: 100%;
-  margin: 1.4em 0.8em;
-`
+import withField from './Field'
 
 const TextInput = styled.input`
   font-weight: 300;
@@ -64,11 +58,6 @@ const Label = styled.label`
   `};
 `
 
-const Input = ({label, input, meta, ...props}) => (
-  <Container>
-    <TextInput {...input} {...props} />
-    <Label float={input.value}>{label}</Label>
-  </Container>
-)
+const Input = props => <TextInput {...props} />
 
-export default Input
+export default withField()(Input)
