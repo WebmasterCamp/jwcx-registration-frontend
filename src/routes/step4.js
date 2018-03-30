@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import styled from 'react-emotion'
+import {withRouteData} from 'react-static'
 
 import {Backdrop} from '../components/Layout'
-import QuestionForm from '../components/QuestionForm'
+import MajorForm from '../components/MajorForm'
 
 import {next} from '../ducks/submission'
 
@@ -16,13 +17,13 @@ const Title = styled.div`
   font-size: 1.8em;
 `
 
-const StepOne = ({next}) => (
+const StepOne = ({next, questions}) => (
   <Backdrop>
-    <Title>STEP 3: คำถามกลาง</Title>
-    <QuestionForm onSubmit={next} />
+    <Title>STEP 4: คำถามสาขา</Title>
+    <MajorForm questions={questions} onSubmit={next} />
   </Backdrop>
 )
 
 const enhance = connect(null, {next})
 
-export default enhance(StepOne)
+export default withRouteData(enhance(StepOne))

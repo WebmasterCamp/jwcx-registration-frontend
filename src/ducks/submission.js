@@ -41,7 +41,7 @@ function* nextPageSaga({payload}) {
   console.log('Next', major, step)
 
   // If user is at last step, continue to verification process
-  if (step === 3) {
+  if (step === 4) {
     history.push(`/${major}/verify`)
     return
   }

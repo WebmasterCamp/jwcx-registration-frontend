@@ -7,15 +7,14 @@ import {FormContainer, Paper, Row} from './Layout'
 import Button from './Button'
 import TextArea from './TextArea'
 
-import {General} from '../core/questions'
 import {prev} from '../ducks/submission'
 
-const QuestionForm = ({prev, handleSubmit}) => (
+const MajorQuestionForm = ({prev, questions = {}, handleSubmit}) => (
   <FormContainer onSubmit={handleSubmit}>
     <Paper>
-      <TextArea name="generalAnswer1" label={General.Q1} wordy />
-      <TextArea name="generalAnswer2" label={General.Q2} wordy />
-      <TextArea name="generalAnswer3" label={General.Q3} wordy />
+      <TextArea name="majorAnswer1" label={questions.Q1} wordy />
+      <TextArea name="majorAnswer2" label={questions.Q2} wordy />
+      <TextArea name="majorAnswer3" label={questions.Q3} wordy />
     </Paper>
 
     <Row>
@@ -39,4 +38,4 @@ const enhance = compose(
   }),
 )
 
-export default enhance(QuestionForm)
+export default enhance(MajorQuestionForm)
