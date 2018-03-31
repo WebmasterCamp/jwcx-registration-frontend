@@ -189,8 +189,18 @@ const prev = () => {
   history.push(`/${major}/step4`)
 }
 
+const PageTitle = styled.div`
+  position: absolute;
+  top: 1em;
+  left: 1em;
+
+  color: white;
+  font-size: 1.6em;
+`
+
 const Verify = ({data = {}, submit}) => (
   <Backdrop>
+    <PageTitle>ตรวจสอบข้อมูล และยืนยันการสมัคร</PageTitle>
     <Container>
       <Upload />
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
