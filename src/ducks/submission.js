@@ -30,6 +30,8 @@ function* submissionSaga() {
 
     console.log('Updated and Submitted Camper Record', data)
     message.success('การสมัครเข้าค่ายเสร็จสิ้น')
+
+    yield call(history.push, '/thankyou')
   } catch (err) {
     message.error(err.message)
   }
@@ -65,11 +67,11 @@ function* nextPageSaga({payload}) {
 
   // If user is at last step, continue to verification process
   if (step === 4) {
-    history.push(`/${major}/verify`)
+    yield call(history.push, `/${major}/verify`)
     return
   }
 
-  history.push(`/${major}/step${step + 1}`)
+  yield call(history.push, `/${major}/step${step + 1}`)
 }
 
 function* previousPageSaga() {
@@ -82,7 +84,7 @@ function* previousPageSaga() {
   const {major, step} = getStepFromPath()
   console.log('Prev', major, step)
 
-  history.push(`/${major}/step${step - 1}`)
+  yield call(history.push, `/${major}/step${step - 1}`)
 }
 
 export function* submissionWatcherSaga() {

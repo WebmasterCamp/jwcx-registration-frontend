@@ -203,6 +203,15 @@ const Verify = ({data = {}, submit}) => (
     <PageTitle>ตรวจสอบข้อมูล และยืนยันการสมัคร</PageTitle>
     <Container>
       <Upload />
+
+      <Row style={{marginBottom: '2.8em'}}>
+        <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
+
+        <Button onClick={submit} success>
+          ยืนยันการสมัครเข้าค่าย JWC
+        </Button>
+      </Row>
+
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
       <Section title="ข้อมูลผู้ปกครอง" fields={parentFields} data={data} />
       <GeneralSection fields={personalFields} data={data} />
@@ -211,7 +220,9 @@ const Verify = ({data = {}, submit}) => (
       <Row>
         <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
 
-        <Button onClick={submit}>ยืนยันการสมัครเข้าค่าย JWC</Button>
+        <Button onClick={submit} success>
+          ยืนยันการสมัครเข้าค่าย JWC
+        </Button>
       </Row>
     </Container>
   </Backdrop>

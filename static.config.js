@@ -101,6 +101,10 @@ export default {
     ...verifyRoutes,
     ...majorQuestionRoutes,
     {
+      path: '/thankyou',
+      component: 'src/routes/thankyou',
+    },
+    {
       path: '/change_denied',
       component: 'src/routes/change_denied',
     },

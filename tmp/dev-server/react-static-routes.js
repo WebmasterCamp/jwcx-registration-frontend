@@ -12,8 +12,9 @@ import t_3 from '../../src/routes/step2'
 import t_4 from '../../src/routes/step3'
 import t_5 from '../../src/routes/verify'
 import t_6 from '../../src/routes/step4'
-import t_7 from '../../src/routes/change_denied'
-import t_8 from '../../src/routes/404'
+import t_7 from '../../src/routes/thankyou'
+import t_8 from '../../src/routes/change_denied'
+import t_9 from '../../src/routes/404'
 
 // Template Map
 global.componentsByTemplateID = global.componentsByTemplateID || [
@@ -25,12 +26,13 @@ t_4,
 t_5,
 t_6,
 t_7,
-t_8
+t_8,
+t_9
 ]
 
 // Template Tree
 global.templateIDsByPath = global.templateIDsByPath || {
-  '404': 8
+  '404': 9
 }
 
 // Get template for given path

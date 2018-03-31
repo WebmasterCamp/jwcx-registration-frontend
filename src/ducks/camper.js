@@ -54,7 +54,7 @@ export function* loadCamperSaga() {
       if (major && record.major !== major) {
         console.warn('You cannot change your major once it had been chosen.')
 
-        history.push('/change_denied?major=' + major)
+        yield call(history.push, '/change_denied?major=' + major)
       }
 
       return

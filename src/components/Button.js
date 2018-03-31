@@ -9,7 +9,7 @@ const ButtonContainer = styled.button`
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   align-self: center;
   border-radius: 3px;
-  background: #2c3e50;
+  background: ${props => props.color || '#2c3e50'};
   appearance: none;
   border: 0;
   margin-left: 1em;
@@ -37,6 +37,14 @@ const ButtonContainer = styled.button`
       0 2px 10px 0 rgba(0, 0, 0, 0.12);
     transform: translateY(-1px);
   }
+
+  ${props => props.success && css`
+    background: #2ecc71;
+
+    &:hover {
+      background: #27ae60;
+    }
+  `};
 
   ${props => props.disabled && css`
     background: #95afc0;
