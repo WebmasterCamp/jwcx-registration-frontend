@@ -6,7 +6,7 @@ import {getFormValues} from 'redux-form'
 import Button from '../components/Button'
 import Upload from '../components/Upload'
 import {DesignUpload} from '../components/DesignUpload'
-import {religions, grades} from '../components/PersonalForm'
+import {religions, grades, genders} from '../components/PersonalForm'
 import {Backdrop, Row, Paper} from '../components/Layout'
 import Q3Dev from '../components/Q3Dev'
 
@@ -36,13 +36,14 @@ const personalFields = Object.entries({
   lastname: 'นามสกุล',
   age: 'อายุ',
   birthdate: 'วันเกิด',
+  gender: 'เพศ',
   religion: 'ศาสนา',
   class: 'ระดับชั้น',
   school: 'โรงเรียน',
-  address: 'ที่อยู่',
   phone: 'เบอร์โทรศัพท์',
   email: 'อีเมล',
   socialMedia: 'Facebook URL และ/หรือ Twitter',
+  address: 'ที่อยู่',
   disease: 'โรคประจำตัว',
   foodAllergy: 'อาหารที่แพ้',
   drugAllergy: 'ยาที่แพ้',
@@ -89,6 +90,10 @@ function format(name, data) {
 
   if (name === 'class') {
     return grades[answer]
+  }
+
+  if (name === 'gender') {
+    return genders[answer]
   }
 
   if (answer) {

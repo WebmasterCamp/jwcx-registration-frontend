@@ -21,8 +21,10 @@ export function* loadCamperSaga() {
 
   try {
     const major = getMajorFromPath()
-    const uid = yield select(s => s.user.uid)
-    console.log('Camper UID', uid, '| Major', major)
+    const user = yield select(s => s.user)
+    const {uid, displayName, email, photoURL} = user
+
+    console.log('Camper UID', uid, '| Major', major, '| Facebook', displayName)
 
     if (!uid) {
       return
@@ -30,6 +32,17 @@ export function* loadCamperSaga() {
 
     const docRef = db.collection('campers').doc(uid)
     const doc = yield call(rsf.firestore.getDocument, docRef)
+
+    if (window.FS) {
+      console.log(`Identified camper ${uid} in Fullstory as ${displayName}`)
+
+      window.FS.identify(email, {
+        email,
+        displayName,
+        uid,
+        photoURL,
+      })
+    }
 
     // If the document does exist, navigate to the "Change Denied" route
     if (doc.exists) {
@@ -48,7 +61,14 @@ export function* loadCamperSaga() {
     }
 
     if (major) {
-      const data = {major, createdAt: new Date()}
+      const data = {
+        major,
+        facebookDisplayName: displayName,
+        facebookEmail: email,
+        facebookPhotoURL: photoURL,
+        createdAt: new Date(),
+      }
+
       yield call(rsf.firestore.setDocument, docRef, data)
 
       console.log('Created Camper Record:', data)

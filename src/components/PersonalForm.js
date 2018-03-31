@@ -31,8 +31,16 @@ export const grades = {
   other: 'อื่นๆ',
 }
 
+export const genders = {
+  male: 'ชาย',
+  female: 'หญิง',
+  other: 'เพศอื่นๆ',
+  none: 'ไม่ระบุ',
+}
+
 const religionOptions = Options(religions)
 const gradeOptions = Options(grades)
+const genderOptions = Options(genders)
 
 const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(toOptions)
 
@@ -49,7 +57,7 @@ const PersonalForm = ({handleSubmit}) => (
       <Row>
         <Input name="age" label="อายุ" type="number" />
         <DatePicker name="birthdate" label="วันเกิด" float />
-        <Select name="religion" label="ศาสนา" options={religionOptions} />
+        <Select name="gender" label="เพศ" options={genderOptions} />
       </Row>
     </Paper>
 
@@ -60,13 +68,16 @@ const PersonalForm = ({handleSubmit}) => (
       </Row>
 
       <Row>
-        <Input name="address" label="ที่อยู่" />
+        <Select name="religion" label="ศาสนา" options={religionOptions} />
         <Input name="phone" label="เบอร์โทรศัพท์" />
       </Row>
-
       <Row>
         <Input name="email" label="อีเมล" type="email" />
         <Input name="socialMedia" label="Facebook URL และ/หรือ Twitter" />
+      </Row>
+
+      <Row>
+        <Input name="address" label="ที่อยู่" />
       </Row>
     </Paper>
 
