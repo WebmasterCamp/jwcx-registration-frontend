@@ -42,7 +42,7 @@ const personalFields = Object.entries({
   address: 'ที่อยู่',
   phone: 'เบอร์โทรศัพท์',
   email: 'อีเมล',
-  socialMedia: 'Social Media ต่างๆ',
+  socialMedia: 'Facebook URL และ/หรือ Twitter',
   disease: 'โรคประจำตัว',
   foodAllergy: 'อาหารที่แพ้',
   drugAllergy: 'ยาที่แพ้',
