@@ -42,7 +42,7 @@ const personalFields = Object.entries({
   school: 'โรงเรียน',
   phone: 'เบอร์โทรศัพท์',
   email: 'อีเมล',
-  socialMedia: 'Facebook URL และ/หรือ Twitter',
+  socialMedia: 'Twitter ID',
   address: 'ที่อยู่',
   disease: 'โรคประจำตัว',
   foodAllergy: 'อาหารที่แพ้',
