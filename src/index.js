@@ -4,7 +4,11 @@ import {AppContainer} from 'react-hot-loader'
 
 import App from './components/App'
 
+import analytics from './core/analytics'
+
 if (typeof document !== 'undefined') {
+  analytics()
+
   const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 
   const render = Component => {
