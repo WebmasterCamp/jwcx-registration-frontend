@@ -2,13 +2,15 @@ import React, {Component} from 'react'
 
 import majors from './majors'
 
-export function getMajorFromPath() {
-  if (typeof window !== 'undefined') {
-    const path = window.location.pathname.split('/')[1]
+export function getMajorFromPath(pathname) {
+  if (!pathname && typeof window !== 'undefined') {
+    pathname = window.location.pathname
+  }
 
-    if (majors.indexOf(path) > -1) {
-      return path
-    }
+  const path = pathname.split('/')[1]
+
+  if (majors.indexOf(path) > -1) {
+    return path
   }
 }
 

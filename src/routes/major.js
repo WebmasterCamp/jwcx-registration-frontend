@@ -27,27 +27,33 @@ const Splash = ({children}) => (
   </Backdrop>
 )
 
-const Authenticating = () => (
+function getMajor({match}) {
+  return getMajorFromPath(match.params[0])
+}
+
+const Authenticating = props => (
   <Splash>
     กรุณาเข้าสู่ระบบด้วย Facebook เพื่อสมัครเข้าสาขา
-    <Major> {getMajorFromPath()}</Major>
+    <Major> {getMajor(props)}</Major>
   </Splash>
 )
 
-const Loading = () => (
+const Loading = props => (
   <Splash>
     กำลังยืนยันตัวตนเพื่อสมัครเข้าสาขา
-    <Major> {getMajorFromPath()} </Major>
+    <Major> {getMajor(props)} </Major>
     กรุณารอสักครู่
   </Splash>
 )
 
-const Register = ({match}) => {
-  const major = getMajorFromPath(match)
+const Redirection = props => {
+  const major = getMajor(props)
 
   if (major) {
     return <Redirect to={`/${major}/step1`} />
   }
+
+  return <Splash>ไม่พบสาขาดังกล่าวในระบบ กรุณาลองใหม่อีกครั้ง</Splash>
 }
 
 const mapStateToProps = state => ({
@@ -62,4 +68,4 @@ const enhance = compose(
   branch(props => props.loading, () => Loading),
 )
 
-export default enhance(Register)
+export default enhance(Redirection)

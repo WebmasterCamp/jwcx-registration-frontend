@@ -16,6 +16,7 @@ export const STORE_CAMPER = 'STORE_CAMPER'
 export const storeCamper = Creator(STORE_CAMPER)
 
 const LoadingMessage = `กำลังดึงข้อมูลการสมัครเข้าค่าย กรุณารอสักครู่...`
+const MajorRedirectLog = `User has chosen a major before. Redirecting to:`
 const MajorRedirectMessage = `กำลังเปลี่ยนหน้าไปที่แบบฟอร์มสมัครเข้าสาขา `
 const ChangeDeniedMessage = `คุณไม่สามารถเปลี่ยนสาขาได้อีก หลังจากที่เลือกสาขานั้นๆ ไปแล้ว`
 
@@ -96,7 +97,7 @@ export function* loadCamperSaga() {
 
       // A - If user is at root path and had chosen a major, redirect them.
       if (record.major && window.location.pathname === '/') {
-        console.log('Redirecting to', record.major)
+        console.info(MajorRedirectLog, record.major)
 
         yield call(message.info, MajorRedirectMessage + record.major)
         yield call(history.push, `/${record.major}/step1`)
@@ -134,6 +135,8 @@ export function* loadCamperSaga() {
 
       // If user is at /:major, redirect to /:major/step1
       if (isMajorRoot(major)) {
+        console.info('User is at major root. Redirecting to Step 1.')
+
         yield call(history.push, `/${major}/step1`)
       }
 
@@ -155,7 +158,7 @@ export function* loadCamperSaga() {
       window.analytics.track('Arrived', {uid, displayName, major})
     }
 
-    console.log('Created Camper Record for', displayName, '->', data)
+    console.log('Created Record for New Camper:', displayName, '->', data)
 
     // If user is at /:major, redirect to /:major/step1
     if (isMajorRoot(major)) {
