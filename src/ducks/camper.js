@@ -19,6 +19,11 @@ const LoadingMessage = `กำลังดึงข้อมูลการส�
 const MajorRedirectMessage = `กำลังเปลี่ยนหน้าไปที่แบบฟอร์มสมัครเข้าสาขา `
 const ChangeDeniedMessage = `คุณไม่สามารถเปลี่ยนสาขาได้อีก หลังจากที่เลือกสาขานั้นๆ ไปแล้ว`
 
+// Check if user is at major root, e.g. /:major
+function isMajorRoot(major) {
+  return window.location.pathname.replace('/', '') === major
+}
+
 // Analytics Module
 function Identify(uid, displayName, email, photoURL) {
   // Segment
@@ -127,7 +132,8 @@ export function* loadCamperSaga() {
         window.analytics.track('Returned', {uid, displayName, major})
       }
 
-      if (window.location.pathname.indexOf(`/${major}`) > -1) {
+      // If user is at /:major, redirect to /:major/step1
+      if (isMajorRoot) {
         yield call(history.push, `/${major}/step1`)
       }
 
@@ -151,7 +157,8 @@ export function* loadCamperSaga() {
 
     console.log('Created Camper Record for', displayName, '->', data)
 
-    if (window.location.pathname.replace('/', '') === major) {
+    // If user is at /:major, redirect to /:major/step1
+    if (isMajorRoot(major)) {
       yield call(history.push, `/${major}/step1`)
     }
   } catch (err) {
