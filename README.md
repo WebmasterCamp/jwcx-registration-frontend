@@ -1,13 +1,25 @@
+# JWCx Registration Frontend
+
+This is the frontend used for handling registration requests by Junior Webmaster Camp X.
+
 ## TODOs
 
 1.  Update font to RSU, RSU Text and KeepCalm, and update style according to JWCx CI
 
-2.  The user might re-enter the registration subdomain directly. Re-auth, then check if the user had already chosen their major, and redirect from / if user is already logged in.
+2.  Develop Stats API in Cloud Functions to count campers in each majors
 
-3.  Check if user is authenticated in steppers and verify, then redirect out if they haven't authenticated yet. (Optimistic UI)
+### Bugs
 
-4.  Fix Back Button Bugs on Safari
+* Redirection Loop on Windows (Status: Unknown)
+* Navigation Between Pages are Stuck (Status: Unknown)
+  * Might be caused by trying to submit while in re-deployment mode
+* Back Button not working as intended on Safari (Status: Confirmed)
 
-Nice to have: Resume to previously completed steps
+### Notes
+
+Nice to have:
+
+* Resume to previously completed steps
+* Add Steppers to allow switching between pages, and show completion percentage.
 
 Won't Fix: Set Design Uploader to Full Height with Fixed Width (Not Possible because it is a dropzone, not a normal `<img />` tag)
