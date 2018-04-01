@@ -53,7 +53,7 @@ const Redirection = props => {
     return <Redirect to={`/${major}/step1`} />
   }
 
-  return <Splash>ไม่พบสาขาดังกล่าวในระบบ กรุณาลองใหม่อีกครั้ง</Splash>
+  return <Loading {...props} />
 }
 
 const mapStateToProps = state => ({

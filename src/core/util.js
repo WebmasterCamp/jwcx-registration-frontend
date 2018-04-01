@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 
 import majors from './majors'
 
+const isClient = typeof window !== 'undefined'
+
 export function getMajorFromPath(pathname) {
-  if (!pathname && typeof window !== 'undefined') {
-    pathname = window.location.pathname
+  if (!pathname) {
+    pathname = isClient ? window.location.pathname : '/'
   }
 
   const path = pathname.split('/')[1]
@@ -15,7 +17,7 @@ export function getMajorFromPath(pathname) {
 }
 
 export function getStepFromPath() {
-  if (typeof window !== 'undefined') {
+  if (isClient) {
     const [_, major, step] = window.location.pathname.match(/\/(\w+)\/step(\d)/)
 
     if (majors.indexOf(major) > -1) {
