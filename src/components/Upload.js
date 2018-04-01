@@ -104,16 +104,12 @@ class Upload extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.uid) {
-      await this.loadPreview(this.props.uid)
-    }
+    await this.loadPreview(this.props.uid)
   }
 
   async componentWillReceiveProps(props) {
     if (this.props.uid !== props.uid) {
-      const {uid} = props
-
-      await this.loadPreview(uid)
+      await this.loadPreview(props.uid)
     }
   }
 
@@ -121,20 +117,30 @@ class Upload extends Component {
     const storage = firebase.storage().ref()
     const avatar = storage.child(`avatar/${uid}.jpg`)
 
+    if (!uid) return
+
     try {
       const url = await avatar.getDownloadURL()
-      console.log('Avatar URL', url)
 
-      this.setState({preview: url})
+      if (url) {
+        console.log('Avatar URL', url)
+
+        this.setState({preview: url})
+
+        if (this.props.input) {
+          this.props.input.onChange(url)
+        }
+      }
     } catch (err) {
       if (err.code === 'storage/object-not-found') {
-        console.info('User', uid, 'has not uploaded an avatar yet.')
-      } else {
-        console.warn(err.message)
+        console.info('Camper', uid, 'has not uploaded an avatar yet.')
+        return
+      }
 
-        if (window.Raven) {
-          window.Raven.captureException(err)
-        }
+      console.warn(err.message)
+
+      if (window.Raven) {
+        window.Raven.captureException(err)
       }
     }
   }

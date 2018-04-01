@@ -125,14 +125,26 @@ class Upload extends Component {
 
     try {
       const url = await designs.getDownloadURL()
-      console.log('Design URL', url)
 
-      this.setState({preview: url})
+      if (url) {
+        console.log('Design URL', url)
+
+        this.setState({preview: url})
+
+        if (this.props.input) {
+          this.props.input.onChange(url)
+        }
+      }
     } catch (err) {
       if (err.code === 'storage/object-not-found') {
-        console.info('User', uid, 'has not uploaded their designs yet.')
-      } else {
-        console.warn(err.message)
+        console.info('Camper', uid, 'has not uploaded their designs yet.')
+        return
+      }
+
+      console.warn(err.message)
+
+      if (window.Raven) {
+        window.Raven.captureException(err)
       }
     }
   }
