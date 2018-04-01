@@ -72,12 +72,20 @@ export function* loadCamperSaga() {
       return
     }
 
+    // Retrieve the camper information
     const docRef = db.collection('campers').doc(uid)
     const doc = yield call(rsf.firestore.getDocument, docRef)
 
+    // Identify camper's identity in analytics.
     Identify(uid, displayName, email, photoURL)
 
-    // If the document does exist, navigate to the "Change Denied" route
+    // If user is not at major path, such as "/" or "/thankyou"
+    if (!major) {
+      console.info('User is not at any major path.')
+      return
+    }
+
+    // If the document does exist, simply navigate to the "Change Denied" route
     if (doc.exists) {
       const record = doc.data()
       console.log('Retrieved Camper Record:', record)

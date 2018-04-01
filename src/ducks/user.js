@@ -8,7 +8,6 @@ import {loadCamperSaga} from './camper'
 
 import rsf, {app} from '../core/fire'
 import {getMajorFromPath} from '../core/util'
-import history from '../core/history'
 
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
@@ -28,8 +27,6 @@ export const clearUser = Creator(CLEAR_USER)
 export const setLoading = Creator(SET_LOADING)
 export const setAuthenticating = Creator(SET_AUTHENTICATING)
 
-const db = app.firestore()
-
 // Serializes the user's information into an object
 const userProps = R.pick([
   'uid',
@@ -40,7 +37,7 @@ const userProps = R.pick([
   'metadata',
 ])
 
-export function* loginSaga({payload}) {
+export function* loginSaga() {
   const hide = message.loading('กำลังยืนยันตัวตนผ่าน Facebook...', 0)
   yield put(setAuthenticating(true))
 
@@ -49,20 +46,21 @@ export function* loginSaga({payload}) {
   provider.addScope('public_profile')
 
   try {
+    // Attempt to Sign In with redirection.
     const auth = yield call(rsf.auth.signInWithRedirect, provider)
+
+    // Retrieve the user credential by using authentication credential.
     const cred = yield call(rsf.auth.signInAndRetrieveDataWithCredential, auth)
 
     if (cred) {
       console.log('Logged in as', cred.user.displayName, cred.user.uid)
 
-      yield call(hide)
       yield fork(authRoutineSaga, cred.user)
-    } else {
-      console.warn('Credentials not found!')
+      return
     }
-  } catch (err) {
-    yield call(hide)
 
+    console.warn('Credentials not found! Authentication might have failed.')
+  } catch (err) {
     console.warn('Authentication Error:', err.code, err.message)
     message.error('พบความผิดพลาดในการยืนยันตัวตน:', err.message)
 
@@ -70,6 +68,7 @@ export function* loginSaga({payload}) {
       window.Raven.captureException(err)
     }
   } finally {
+    yield call(hide)
     yield put(setAuthenticating(false))
   }
 }
@@ -98,24 +97,32 @@ export const getUserStatus = () =>
 export function* reauthSaga() {
   try {
     const user = yield call(getUserStatus)
+    const major = getMajorFromPath()
 
-    if (!user) {
-      const major = getMajorFromPath()
-
-      if (major) {
-        console.log('User has not authenticated yet. Major:', major)
-
-        history.push(`/${major}`)
-      }
-    }
-
+    // If user is successfully re-authenticated.
     if (user) {
       console.log('User has been re-authenticated as', user.displayName, user)
 
       yield fork(authRoutineSaga, user)
+      return
+    }
+
+    // If user isn't at major path, don't do anything.
+    if (!major) {
+      console.log('User is not at major path:', window.location.pathname)
+      return
+    }
+
+    // If user has a major, but has not authenticated yet.
+    if (major && !user) {
+      console.log('User has not authenticated yet. Logging In:', major)
+      yield fork(loginSaga)
+
+      yield put(setLoading(false))
     }
   } catch (err) {
     message.warn(err.message)
+    console.warn('Re-authentication Failed!', err)
 
     if (window.Raven) {
       window.Raven.captureException(err)

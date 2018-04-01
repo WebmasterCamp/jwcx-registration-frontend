@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'react-emotion'
 import {connect} from 'react-redux'
-import {compose, lifecycle, branch, withState} from 'recompose'
-import {message, Spin} from 'antd'
+import {compose, branch} from 'recompose'
+import {Spin} from 'antd'
 import {Redirect} from 'react-static'
 
 import {Heading, Container, Backdrop, Paper} from '../components/Layout'
 
-import {login, logout, getUserStatus} from '../ducks/user'
+import {login, logout} from '../ducks/user'
 
 const Major = styled.span`
   text-transform: capitalize;
@@ -41,29 +41,12 @@ const Register = ({match}) => <Redirect to={`/${getMajor(match)}/step1`} />
 
 const mapStateToProps = state => ({
   user: state.user,
+  loading: state.user.loading,
   authenticating: state.user.authenticating,
 })
 
 const enhance = compose(
   connect(mapStateToProps, {login, logout}),
-  withState('loading', 'setLoading', true),
-  lifecycle({
-    async componentWillMount() {
-      const {login, setLoading} = this.props
-      const hide = message.loading('กำลังเข้าสู่ระบบ กรุณารอสักครู่', 0)
-
-      // Check if the user is already logged in
-      const user = await getUserStatus()
-      hide()
-
-      // If the user hasn't authenticated before, do it now.
-      if (!user) {
-        await login()
-      }
-
-      setLoading(false)
-    },
-  }),
   branch(props => props.authenticating, () => Authenticating),
   branch(props => props.loading, () => Loading),
 )
