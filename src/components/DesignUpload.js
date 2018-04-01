@@ -182,7 +182,11 @@ class Upload extends Component {
     const {meta = {}} = this.props
 
     return (
-      <DropZone onDrop={this.onDrop} preview={preview} meta={meta}>
+      <DropZone
+        onDrop={this.onDrop}
+        preview={preview}
+        meta={meta}
+        accept="image/*">
         <Overlay active={preview}>
           <Ink />
           <DropIcon type="upload" />
