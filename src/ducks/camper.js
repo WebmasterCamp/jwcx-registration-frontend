@@ -16,6 +16,8 @@ export const STORE_CAMPER = 'STORE_CAMPER'
 export const storeCamper = Creator(STORE_CAMPER)
 
 const LoadingMessage = `กำลังดึงข้อมูลการสมัครเข้าค่าย กรุณารอสักครู่...`
+const MajorRedirectMessage = `กำลังเปลี่ยนหน้าไปที่แบบฟอร์มสมัครเข้าสาขา `
+const ChangeDeniedMessage = `คุณไม่สามารถเปลี่ยนสาขาได้อีก หลังจากที่เลือกสาขานั้นๆ ไปแล้ว`
 
 // Analytics Module
 function Identify(uid, displayName, email, photoURL) {
@@ -79,22 +81,32 @@ export function* loadCamperSaga() {
     // Identify camper's identity in analytics.
     Identify(uid, displayName, email, photoURL)
 
-    // If user is not at major path, such as "/" or "/thankyou"
-    if (!major) {
-      console.info('User is not at any major path.')
-      return
-    }
-
     // If the document does exist, simply navigate to the "Change Denied" route
     if (doc.exists) {
       const record = doc.data()
       console.log('Retrieved Camper Record:', record)
 
+      // Store the camper's information into redux store
       yield put(storeCamper(record))
 
-      if (major && record.major !== major) {
-        console.warn('You cannot change your major once it had been chosen.')
+      // A - If user is at root path and had chosen a major, redirect them.
+      if (record.major && window.location.pathname === '/') {
+        yield call(message.info, MajorRedirectMessage + record.major)
+        yield call(history.push, `/${record.major}`)
 
+        return
+      }
+
+      // B - If user is not at major path, such as "/" or "/thankyou"
+      if (!major) {
+        console.info('User is not at major path:', window.location.pathname)
+
+        return
+      }
+
+      // C - If user is not at the same major they had chosen at first.
+      if (record.major !== major) {
+        yield call(message.warn, ChangeDeniedMessage)
         yield call(history.push, '/change_denied?major=' + major)
 
         if (window.analytics) {
@@ -116,23 +128,22 @@ export function* loadCamperSaga() {
       return
     }
 
-    if (major) {
-      const data = {
-        major,
-        facebookDisplayName: displayName,
-        facebookEmail: email,
-        facebookPhotoURL: photoURL,
-        createdAt: new Date(),
-      }
-
-      yield call(rsf.firestore.setDocument, docRef, data)
-
-      if (window.analytics) {
-        window.analytics.track('Arrived', {uid, displayName, major})
-      }
-
-      console.log('Created Camper Record for', displayName, '->', data)
+    // D - If user arrives for the first time, create a Camper ID for them.
+    const data = {
+      major,
+      facebookDisplayName: displayName,
+      facebookEmail: email,
+      facebookPhotoURL: photoURL,
+      createdAt: new Date(),
     }
+
+    yield call(rsf.firestore.setDocument, docRef, data)
+
+    if (window.analytics) {
+      window.analytics.track('Arrived', {uid, displayName, major})
+    }
+
+    console.log('Created Camper Record for', displayName, '->', data)
   } catch (err) {
     message.error(err.message)
 
