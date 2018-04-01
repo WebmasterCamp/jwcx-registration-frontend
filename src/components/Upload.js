@@ -131,6 +131,10 @@ class Upload extends Component {
         console.info('User', uid, 'has not uploaded an avatar yet.')
       } else {
         console.warn(err.message)
+
+        if (window.Raven) {
+          window.Raven.captureException(err)
+        }
       }
     }
   }
@@ -178,6 +182,10 @@ class Upload extends Component {
       message.success('อัพโหลดรูปประจำตัวเรียบร้อยแล้ว')
     } catch (err) {
       message.error(err.message)
+
+      if (window.Raven) {
+        window.Raven.captureException(err)
+      }
     } finally {
       hide()
     }

@@ -6,27 +6,40 @@ import App from './components/App'
 
 import analytics from './core/analytics'
 
-if (typeof document !== 'undefined') {
-  analytics()
-
-  const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
-
-  const render = Component => {
-    renderMethod(
-      <AppContainer>
-        <Component />
-      </AppContainer>,
-      document.getElementById('root'),
-    )
-  }
-
-  render(App)
-
-  if (module.hot) {
-    module.hot.accept('./components/App', () => {
-      render(require('./components/App').default)
-    })
+function errorHandler(error) {
+  if (window.Raven) {
+    window.Raven.captureException(error)
   }
 }
+
+function initialize() {
+  if (typeof document !== 'undefined') {
+    analytics()
+
+    window.addEventListener('error', errorHandler)
+    window.addEventListener('unhandledrejection', errorHandler)
+
+    const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
+
+    const render = Component => {
+      renderMethod(
+        <AppContainer>
+          <Component />
+        </AppContainer>,
+        document.getElementById('root'),
+      )
+    }
+
+    render(App)
+
+    if (module.hot) {
+      module.hot.accept('./components/App', () => {
+        render(require('./components/App').default)
+      })
+    }
+  }
+}
+
+initialize()
 
 export default App

@@ -5,10 +5,6 @@ import {isDirty} from 'redux-form'
 
 const warnAboutUnsavedChanges = formName => WrappedComponent => {
   class WarnAboutUnsavedChanges extends React.Component {
-    componentDidMount() {
-      console.log('Setup OK')
-    }
-
     componentDidUpdate() {
       if (this.props.isFormDirty) {
         this.promptUnsaved()

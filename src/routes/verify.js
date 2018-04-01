@@ -230,7 +230,7 @@ const Verify = ({data = {}, submit}) => (
   <Backdrop>
     <PageTitle>ตรวจสอบข้อมูล และยืนยันการสมัคร</PageTitle>
     <Container>
-      <Upload />
+      <Upload value={data.photo} />
       <NavBar submit={submit} style={{marginBottom: '2.8em'}} />
 
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />

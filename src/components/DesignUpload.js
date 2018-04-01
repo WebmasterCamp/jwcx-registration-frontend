@@ -182,6 +182,10 @@ class Upload extends Component {
     } catch (err) {
       hide()
       message.error(err.message)
+
+      if (window.Raven) {
+        window.Raven.captureException(err)
+      }
     }
   }
 

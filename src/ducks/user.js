@@ -7,6 +7,8 @@ import {createReducer, Creator} from './helper'
 import {loadCamperSaga} from './camper'
 
 import rsf, {app} from '../core/fire'
+import {getMajorFromPath} from '../core/util'
+import history from '../core/history'
 
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
@@ -49,23 +51,27 @@ export function* loginSaga({payload}) {
   try {
     const auth = yield call(rsf.auth.signInWithRedirect, provider)
     const cred = yield call(rsf.auth.signInAndRetrieveDataWithCredential, auth)
-    console.log('Logged in as', cred.user.displayName, cred.user.uid)
 
-    yield call(hide)
-    yield fork(authRoutineSaga, cred.user)
+    if (cred) {
+      console.log('Logged in as', cred.user.displayName, cred.user.uid)
+
+      yield call(hide)
+      yield fork(authRoutineSaga, cred.user)
+    } else {
+      console.warn('Credentials not found!')
+    }
   } catch (err) {
     yield call(hide)
 
-    // The facebook login popup was closed by the user
-    if (err.code === 'auth/popup-closed-by-user') {
-      return
+    console.warn('Authentication Error:', err.code, err.message)
+    message.error('พบความผิดพลาดในการยืนยันตัวตน:', err.message)
+
+    if (window.Raven) {
+      window.Raven.captureException(err)
     }
-
-    console.warn(err.code, err.message)
-    message.error(err.message)
+  } finally {
+    yield put(setAuthenticating(false))
   }
-
-  yield put(setAuthenticating(false))
 }
 
 export function* logoutSaga() {
@@ -93,13 +99,27 @@ export function* reauthSaga() {
   try {
     const user = yield call(getUserStatus)
 
+    if (!user) {
+      const major = getMajorFromPath()
+
+      if (major) {
+        console.log('User has not authenticated yet. Major:', major)
+
+        history.push(`/${major}`)
+      }
+    }
+
     if (user) {
-      console.log('Reauthenticated:', user)
+      console.log('User has been re-authenticated as', user.displayName, user)
 
       yield fork(authRoutineSaga, user)
     }
   } catch (err) {
     message.warn(err.message)
+
+    if (window.Raven) {
+      window.Raven.captureException(err)
+    }
   } finally {
     yield put(setLoading(false))
   }

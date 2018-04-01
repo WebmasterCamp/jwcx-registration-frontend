@@ -22,18 +22,28 @@ const db = app.firestore()
 
 function* submissionSaga() {
   try {
-    const uid = yield select(s => s.user.uid)
+    const {uid, displayName} = yield select(s => s.user)
     const docRef = db.collection('campers').doc(uid)
 
     const data = {submitted: true, updatedAt: new Date()}
     yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
 
     console.log('Updated and Submitted Camper Record', data)
-    message.success('การสมัครเข้าค่ายเสร็จสิ้น')
+    yield call(message.success, 'การสมัครเข้าค่ายเสร็จสิ้น')
+
+    if (window.analytics) {
+      const major = yield select(s => s.camper.major)
+
+      yield call(window.analytics.track, 'Completed', {uid, displayName, major})
+    }
 
     yield call(history.push, '/thankyou')
   } catch (err) {
     message.error(err.message)
+
+    if (window.Raven) {
+      window.Raven.captureException(err)
+    }
   }
 }
 
@@ -55,6 +65,10 @@ function* updateCamperRecord(payload) {
     }
   } catch (err) {
     message.error(err.message)
+
+    if (window.Raven) {
+      window.Raven.captureException(err)
+    }
   } finally {
     hide()
   }
@@ -64,7 +78,11 @@ function* nextPageSaga({payload}) {
   yield fork(updateCamperRecord, payload)
 
   const {major, step} = getStepFromPath()
-  console.log('Next', major, step)
+  console.log('Advanced:', major, step + 1)
+
+  if (window.analytics) {
+    window.analytics.track('Advanced Step', {major, step: step + 1})
+  }
 
   // If user is at last step, continue to verification process
   if (step === 4) {
@@ -83,7 +101,11 @@ function* previousPageSaga() {
   }
 
   const {major, step} = getStepFromPath()
-  console.log('Prev', major, step)
+  console.log('Backtracked: ', major, step - 1)
+
+  if (window.analytics) {
+    window.analytics.track('Backtracked Step', {major, step: step - 1})
+  }
 
   yield call(history.push, `/${major}/step${step - 1}`)
 }

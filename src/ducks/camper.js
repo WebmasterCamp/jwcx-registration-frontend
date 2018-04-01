@@ -15,8 +15,49 @@ export const STORE_CAMPER = 'STORE_CAMPER'
 
 export const storeCamper = Creator(STORE_CAMPER)
 
+const LoadingMessage = `กำลังดึงข้อมูลการสมัครเข้าค่าย กรุณารอสักครู่...`
+
+// Analytics Module
+function Identify(uid, displayName, email, photoURL) {
+  // Segment
+  if (window.analytics) {
+    window.analytics.identify(uid, {
+      name: displayName,
+      email,
+      photoURL,
+    })
+  }
+
+  // Fullstory
+  if (window.FS) {
+    window.FS.identify(uid, {
+      email,
+      displayName,
+      photoURL,
+    })
+  }
+
+  // Sentry
+  if (window.Raven) {
+    window.Raven.setUserContext({
+      id: uid,
+      email,
+      displayName,
+      photoURL,
+    })
+  }
+
+  // Google Analytics
+  if (window.ga) {
+    window.ga('set', 'userId', uid)
+  }
+
+  // prettier-ignore
+  console.log(`[Analytics] Identified Camper ${uid}'s identity as ${displayName}`)
+}
+
 export function* loadCamperSaga() {
-  const hide = message.loading('กรุณารอสักครู่...', 0)
+  const hide = message.loading(LoadingMessage, 0)
   yield put(setLoading(true))
 
   try {
@@ -27,22 +68,14 @@ export function* loadCamperSaga() {
     console.log('Camper UID', uid, '| Major', major, '| Facebook', displayName)
 
     if (!uid) {
+      console.warn("Camper hasn't authenticated yet. This should not happen.")
       return
     }
 
     const docRef = db.collection('campers').doc(uid)
     const doc = yield call(rsf.firestore.getDocument, docRef)
 
-    if (window.FS) {
-      console.log(`Identified camper ${uid} in Fullstory as ${displayName}`)
-
-      window.FS.identify(email, {
-        email,
-        displayName,
-        uid,
-        photoURL,
-      })
-    }
+    Identify(uid, displayName, email, photoURL)
 
     // If the document does exist, navigate to the "Change Denied" route
     if (doc.exists) {
@@ -55,6 +88,21 @@ export function* loadCamperSaga() {
         console.warn('You cannot change your major once it had been chosen.')
 
         yield call(history.push, '/change_denied?major=' + major)
+
+        if (window.analytics) {
+          window.analytics.track('Change Denied', {
+            uid,
+            displayName,
+            newMajor: major,
+            oldMajor: record.major,
+          })
+        }
+
+        return
+      }
+
+      if (window.analytics) {
+        window.analytics.track('Returned', {uid, displayName, major})
       }
 
       return
@@ -71,10 +119,18 @@ export function* loadCamperSaga() {
 
       yield call(rsf.firestore.setDocument, docRef, data)
 
-      console.log('Created Camper Record:', data)
+      if (window.analytics) {
+        window.analytics.track('Arrived', {uid, displayName, major})
+      }
+
+      console.log('Created Camper Record for', displayName, '->', data)
     }
   } catch (err) {
     message.error(err.message)
+
+    if (window.Raven) {
+      window.Raven.captureException(err)
+    }
   } finally {
     hide()
     yield put(setLoading(false))
