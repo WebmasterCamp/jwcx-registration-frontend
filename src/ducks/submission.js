@@ -50,12 +50,13 @@ function* updateCamperRecord(payload) {
       yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
 
       console.log('Updated Camper Record:', data)
-      hide()
 
-      message.info('บันทึกข้อมูลเรียบร้อยแล้ว', 0.5)
+      yield call(message.info, 'บันทึกข้อมูลเรียบร้อยแล้ว', 0.5)
     }
   } catch (err) {
     message.error(err.message)
+  } finally {
+    hide()
   }
 }
 

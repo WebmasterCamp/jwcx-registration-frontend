@@ -39,6 +39,7 @@ const Label = styled.label`
 
     margin-bottom: 0.6em;
     transform: none !important;
+    pointer-events: all;
   `};
 
   ${props => props.meta.touched && props.meta.error && css`

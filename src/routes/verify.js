@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import styled from 'react-emotion'
+import styled, {css} from 'react-emotion'
 import {getFormValues} from 'redux-form'
+import Image from 'react-medium-image-zoom'
 
 import Button from '../components/Button'
 import Upload from '../components/Upload'
-import {DesignUpload} from '../components/DesignUpload'
 import {religions, grades, genders} from '../components/PersonalForm'
 import {Backdrop, Row, Paper} from '../components/Layout'
 import Q3Dev from '../components/Q3Dev'
@@ -138,6 +138,21 @@ const GeneralSection = ({data}) => (
   </Card>
 )
 
+const imageStyle = css`
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  min-height: 400px;
+  max-width: 100%;
+
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+  box-shadow: 0 1px 1.5px 1px rgba(0, 0, 0, 0.12);
+
+  background-color: #efefef;
+`
+
 const MajorSection = ({data}) => {
   const major = getMajorFromPath()
 
@@ -174,7 +189,10 @@ const MajorSection = ({data}) => {
         <Label>{Q3}</Label>
 
         {major === 'design' ? (
-          <DesignUpload />
+          <Image
+            image={{src: data.majorAnswer3, className: imageStyle}}
+            imageZoom={{src: data.majorAnswer3}}
+          />
         ) : (
           <Paragraph>{data.majorAnswer3}</Paragraph>
         )}
@@ -198,32 +216,29 @@ const PageTitle = styled.div`
   font-size: 1.6em;
 `
 
+const NavBar = ({submit, style}) => (
+  <Row style={style}>
+    <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
+
+    <Button onClick={submit} success>
+      ยืนยันการสมัครเข้าค่าย JWC
+    </Button>
+  </Row>
+)
+
 const Verify = ({data = {}, submit}) => (
   <Backdrop>
     <PageTitle>ตรวจสอบข้อมูล และยืนยันการสมัคร</PageTitle>
     <Container>
       <Upload />
-
-      <Row style={{marginBottom: '2.8em'}}>
-        <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
-
-        <Button onClick={submit} success>
-          ยืนยันการสมัครเข้าค่าย JWC
-        </Button>
-      </Row>
+      <NavBar submit={submit} style={{marginBottom: '2.8em'}} />
 
       <Section title="ข้อมูลส่วนตัว" fields={personalFields} data={data} />
       <Section title="ข้อมูลผู้ปกครอง" fields={parentFields} data={data} />
       <GeneralSection fields={personalFields} data={data} />
       <MajorSection data={data} />
 
-      <Row>
-        <Button onClick={prev}>ย้อนกลับไปแก้ไข</Button>
-
-        <Button onClick={submit} success>
-          ยืนยันการสมัครเข้าค่าย JWC
-        </Button>
-      </Row>
+      <NavBar submit={submit} />
     </Container>
   </Backdrop>
 )
