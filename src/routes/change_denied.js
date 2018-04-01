@@ -15,7 +15,7 @@ const ChangeDenied = ({camper, match}) => (
         </Heading>
 
         <Row>
-          <Link to={'/' + camper.major}>
+          <Link to={'/' + camper.major + '/step1'}>
             <Button>สมัครสมาชิกต่อในสาขา {camper.major}</Button>
           </Link>
 
