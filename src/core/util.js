@@ -6,7 +6,7 @@ export function getMajorFromPath() {
   if (typeof window !== 'undefined') {
     const path = window.location.pathname.split('/')[1]
 
-    if (majors.includes(path)) {
+    if (majors.indexOf(path) > -1) {
       return path
     }
   }
@@ -16,7 +16,7 @@ export function getStepFromPath() {
   if (typeof window !== 'undefined') {
     const [_, major, step] = window.location.pathname.match(/\/(\w+)\/step(\d)/)
 
-    if (majors.includes(major)) {
+    if (majors.indexOf(major) > -1) {
       return {major, step: parseInt(step)}
     }
   }
