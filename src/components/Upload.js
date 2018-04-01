@@ -138,6 +138,14 @@ class Upload extends Component {
   onDrop = async (acceptedFiles, rejectedFiles) => {
     const hide = message.loading('กำลังอัพโหลดรูปประจำตัว กรุณารอสักครู่...', 0)
 
+    if (rejectedFiles.length > 0) {
+      console.warn('Rejected Files:', rejectedFiles)
+
+      hide()
+      message.error('รูปโปรไฟล์ต้องมีขนาดน้อยกว่า 10MB และเป็นไฟล์รูปเท่านั้น')
+      return
+    }
+
     try {
       const {uid, input = {}} = this.props
 
@@ -184,6 +192,8 @@ class Upload extends Component {
         onDrop={this.onDrop}
         preview={preview}
         meta={meta}
+        maxSize={10000000}
+        multiple={false}
         accept="image/*">
         <Overlay active={preview}>
           <DropIcon type="upload" />

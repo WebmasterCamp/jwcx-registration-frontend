@@ -48,7 +48,7 @@ const DropZone = styled(ReactDropzone)`
     background-repeat: no-repeat;
     background-position: center;
   `};
-  
+
   ${props => props.meta.touched && props.meta.error && css`
     border: 5px solid #ee5253;
   `};
@@ -140,6 +140,14 @@ class Upload extends Component {
   onDrop = async (acceptedFiles, rejectedFiles) => {
     const hide = message.loading('กำลังอัพโหลดรูปดีไซน์ กรุณารอสักครู่...', 0)
 
+    if (rejectedFiles.length > 0) {
+      console.warn('Rejected Files:', rejectedFiles)
+
+      hide()
+      message.error('รูปดีไซน์ต้องมีขนาดน้อยกว่า 10MB และเป็นไฟล์รูปเท่านั้น')
+      return
+    }
+
     try {
       const {uid, onChange} = this.props
 
@@ -186,6 +194,8 @@ class Upload extends Component {
         onDrop={this.onDrop}
         preview={preview}
         meta={meta}
+        maxSize={10000000}
+        multiple={false}
         accept="image/*">
         <Overlay active={preview}>
           <Ink />
