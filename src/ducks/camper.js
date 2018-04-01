@@ -89,8 +89,6 @@ export function* loadCamperSaga() {
       // Store the camper's information into redux store
       yield put(storeCamper(record))
 
-      console.log(record.major, window.location.pathname)
-
       // A - If user is at root path and had chosen a major, redirect them.
       if (record.major && window.location.pathname === '/') {
         console.log('Redirecting to', record.major)
@@ -129,7 +127,7 @@ export function* loadCamperSaga() {
         window.analytics.track('Returned', {uid, displayName, major})
       }
 
-      if (window.location.pathname === `/${major}`) {
+      if (window.location.pathname.indexOf(`/${major}`) > -1) {
         yield call(history.push, `/${major}/step1`)
       }
 
@@ -153,7 +151,7 @@ export function* loadCamperSaga() {
 
     console.log('Created Camper Record for', displayName, '->', data)
 
-    if (window.location.pathname === `/${major}`) {
+    if (window.location.pathname.replace('/', '') === major) {
       yield call(history.push, `/${major}/step1`)
     }
   } catch (err) {
