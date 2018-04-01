@@ -3,7 +3,6 @@ import styled from 'react-emotion'
 import {connect} from 'react-redux'
 import {compose, branch} from 'recompose'
 import {Spin} from 'antd'
-import {Redirect} from 'react-static'
 
 import {Heading, Container, Backdrop, Paper} from '../components/Layout'
 
@@ -28,7 +27,7 @@ const Splash = ({children}) => (
   </Backdrop>
 )
 
-const Loading = ({match}) => <Splash>กำลังยืนยันตัวตน กรุณารอสักครู่</Splash>
+const Loading = () => <Splash>กำลังยืนยันตัวตน กรุณารอสักครู่</Splash>
 
 const Authenticating = ({match}) => (
   <Splash>
@@ -36,8 +35,6 @@ const Authenticating = ({match}) => (
     <Major> {getMajor(match)}</Major>
   </Splash>
 )
-
-const Register = ({match}) => <Redirect to={`/${getMajor(match)}/step1`} />
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -48,7 +45,6 @@ const mapStateToProps = state => ({
 const enhance = compose(
   connect(mapStateToProps, {login, logout}),
   branch(props => props.authenticating, () => Authenticating),
-  branch(props => props.loading, () => Loading),
 )
 
-export default enhance(Register)
+export default enhance(Loading)

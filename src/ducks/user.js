@@ -8,6 +8,7 @@ import {loadCamperSaga} from './camper'
 
 import rsf, {app} from '../core/fire'
 import {getMajorFromPath} from '../core/util'
+import history from '../core/history'
 
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
@@ -56,6 +57,7 @@ export function* loginSaga() {
       console.log('Logged in as', cred.user.displayName, cred.user.uid)
 
       yield fork(authRoutineSaga, cred.user)
+
       return
     }
 
