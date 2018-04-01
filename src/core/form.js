@@ -19,7 +19,6 @@ const personalFields = [
   'address',
   'phone',
   'email',
-  'socialMedia',
   'shirtSize',
   'activity',
 ]
