@@ -133,7 +133,7 @@ export function* loadCamperSaga() {
       }
 
       // If user is at /:major, redirect to /:major/step1
-      if (isMajorRoot) {
+      if (isMajorRoot(major)) {
         yield call(history.push, `/${major}/step1`)
       }
 
