@@ -37,7 +37,7 @@ class Document extends Component {
 
           <meta
             property="og:image"
-            content="http://x.jwc.in.th/assets/img/og.jpg"
+            content="http://www.jwc.in.th/assets/img/og.jpg"
           />
 
           <meta

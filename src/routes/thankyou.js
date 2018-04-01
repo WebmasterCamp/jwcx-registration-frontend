@@ -19,7 +19,7 @@ const ThankYou = () => (
       <Paper>
         <Title>ขอบคุณที่สมัครเข้าร่วมค่าย Junior Webmaster Camp ค่ะ! 💖</Title>
 
-        <a href="https://x.jwc.in.th">
+        <a href="https://www.jwc.in.th">
           <Button>กลับสู่เว็บไซต์หลัก</Button>
         </a>
       </Paper>

@@ -18,7 +18,7 @@ const Landing = () => (
       <Paper>
         <Title>ไม่พบหน้าดังกล่าว | Junior Webmaster Camp X</Title>
 
-        <a href="https://x.jwc.in.th">
+        <a href="https://www.jwc.in.th">
           <Button>กลับสู่เว็บไซต์หลัก</Button>
         </a>
       </Paper>

@@ -19,7 +19,7 @@ const ChangeDenied = ({camper, match}) => (
             <Button>สมัครสมาชิกต่อในสาขา {camper.major}</Button>
           </Link>
 
-          <a href="https://x.jwc.in.th">
+          <a href="https://www.jwc.in.th">
             <Button>กลับสู่เว็บไซต์หลัก</Button>
           </a>
         </Row>

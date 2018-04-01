@@ -27,7 +27,7 @@ const Landing = () => (
         <Heading>ลงทะเบียนเข้าค่าย | Junior Webmaster Camp X</Heading>
         <SubHeading>กรุณาเลือกสาขาที่ท่านต้องการในเว็บไซต์หลัก</SubHeading>
 
-        <a href="https://x.jwc.in.th">
+        <a href="https://www.jwc.in.th">
           <Button>กลับสู่เว็บไซต์หลัก</Button>
         </a>
       </Paper>
