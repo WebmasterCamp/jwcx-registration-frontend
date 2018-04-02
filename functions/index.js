@@ -12,7 +12,7 @@ exports.stats = functions.firestore
     const counterRef = db.collection('stats').doc('counter')
 
     if (data.submitted) {
-      return db.transaction(transaction => {
+      return db.runTransaction(transaction => {
         return transaction.get(counterRef).then(doc => {
           const major = data.major
           const payload = {[major]: doc.data(major) + 1}
