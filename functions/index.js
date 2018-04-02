@@ -8,7 +8,7 @@ exports.stats = functions.firestore
   .onWrite(e => {
     const data = e.data.data()
 
-    const db = functions.firestore()
+    const db = admin.firestore()
     const counterRef = db.collection('stats').doc('counter')
 
     if (data.submitted) {
