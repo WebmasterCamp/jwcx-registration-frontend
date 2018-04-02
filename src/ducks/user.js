@@ -8,7 +8,7 @@ import {loadCamperSaga} from './camper'
 
 import rsf, {app} from '../core/fire'
 import {getMajorFromPath} from '../core/util'
-import history from '../core/history'
+import logger from '../core/log'
 
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
@@ -54,16 +54,16 @@ export function* loginSaga() {
     const cred = yield call(rsf.auth.signInAndRetrieveDataWithCredential, auth)
 
     if (cred) {
-      console.log('Logged in as', cred.user.displayName, cred.user.uid)
+      logger.log('Logged in as', cred.user.displayName, cred.user.uid)
 
       yield fork(authRoutineSaga, cred.user)
 
       return
     }
 
-    console.warn('Credentials not found! Authentication might have failed.')
+    logger.warn('Credentials not found! Authentication might have failed.')
   } catch (err) {
-    console.warn('Authentication Error:', err.code, err.message)
+    logger.warn('Authentication Error:', err.code, err.message)
     message.error('พบความผิดพลาดในการยืนยันตัวตน:', err.message)
 
     if (window.Raven) {
@@ -103,7 +103,7 @@ export function* reauthSaga() {
 
     // If user is successfully re-authenticated.
     if (user) {
-      console.log('User has been re-authenticated as', user.displayName, user)
+      logger.log('User has been re-authenticated as', user.displayName, user)
 
       yield fork(authRoutineSaga, user)
       return
@@ -111,20 +111,20 @@ export function* reauthSaga() {
 
     // If user isn't at major path, don't do anything.
     if (!major) {
-      console.log('User is not at major path:', window.location.pathname)
+      logger.log('User is not at major path:', window.location.pathname)
       return
     }
 
     // If user has a major, but has not authenticated yet.
     if (major && !user) {
-      console.log('User has not authenticated yet. Logging In:', major)
+      logger.log('User has not authenticated yet. Logging In:', major)
       yield fork(loginSaga)
 
       yield put(setLoading(false))
     }
   } catch (err) {
     message.warn(err.message)
-    console.warn('Re-authentication Failed!', err)
+    logger.warn('Re-authentication Failed!', err)
 
     if (window.Raven) {
       window.Raven.captureException(err)

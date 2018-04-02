@@ -6,6 +6,7 @@ import {createReducer, Creator} from './helper'
 import rsf, {app} from '../core/fire'
 import history from '../core/history'
 import {getMajorFromPath} from '../core/util'
+import logger from '../core/log'
 
 import {setLoading} from '../ducks/submission'
 
@@ -61,7 +62,7 @@ function Identify(uid, displayName, email, photoURL) {
   }
 
   // prettier-ignore
-  console.log(`[Analytics] Identified Camper ${uid}'s identity as ${displayName}`)
+  logger.log(`[Analytics] Identified Camper ${uid}'s identity as ${displayName}`)
 }
 
 export function* loadCamperSaga() {
@@ -73,10 +74,10 @@ export function* loadCamperSaga() {
     const user = yield select(s => s.user)
     const {uid, displayName, email, photoURL} = user
 
-    console.log('Camper UID', uid, '| Major', major, '| Facebook', displayName)
+    logger.log('Camper UID', uid, '| Major', major, '| Facebook', displayName)
 
     if (!uid) {
-      console.warn("Camper hasn't authenticated yet. This should not happen.")
+      logger.warn("Camper hasn't authenticated yet. This should not happen.")
       return
     }
 
@@ -90,14 +91,14 @@ export function* loadCamperSaga() {
     // If the document does exist, simply navigate to the "Change Denied" route
     if (doc.exists) {
       const record = doc.data()
-      console.log('Retrieved Camper Record:', record)
+      logger.log('Retrieved Camper Record:', record)
 
       // Store the camper's information into redux store
       yield put(storeCamper(record))
 
       // A - If user is at root path and had chosen a major, redirect them.
       if (record.major && window.location.pathname === '/') {
-        console.info(MajorRedirectLog, record.major)
+        logger.info(MajorRedirectLog, record.major)
 
         yield call(message.info, MajorRedirectMessage + record.major)
         yield call(history.push, `/${record.major}/step1`)
@@ -107,7 +108,7 @@ export function* loadCamperSaga() {
 
       // B - If user is not at major path, such as "/" or "/thankyou"
       if (!major) {
-        console.info('User is not at major path:', window.location.pathname)
+        logger.info('User is not at major path:', window.location.pathname)
 
         return
       }
@@ -135,7 +136,7 @@ export function* loadCamperSaga() {
 
       // If user is at /:major, redirect to /:major/step1
       if (isMajorRoot(major)) {
-        console.info('User is at major root. Redirecting to Step 1.')
+        logger.info('User is at major root. Redirecting to Step 1.')
 
         yield call(history.push, `/${major}/step1`)
       }
@@ -158,7 +159,7 @@ export function* loadCamperSaga() {
       window.analytics.track('Arrived', {uid, displayName, major})
     }
 
-    console.log('Created Record for New Camper:', displayName, '->', data)
+    logger.log('Created Record for New Camper:', displayName, '->', data)
 
     // If user is at /:major, redirect to /:major/step1
     if (isMajorRoot(major)) {

@@ -6,6 +6,8 @@ import {message, Icon} from 'antd'
 import firebase from 'firebase'
 import {Field} from 'redux-form'
 
+import logger from '../core/log'
+
 // prettier-ignore
 const DropZone = styled(ReactDropzone)`
   display: flex;
@@ -123,7 +125,7 @@ class Upload extends Component {
       const url = await avatar.getDownloadURL()
 
       if (url) {
-        console.log('Avatar URL', url)
+        logger.log('Avatar URL', url)
 
         this.setState({preview: url})
 
@@ -133,11 +135,11 @@ class Upload extends Component {
       }
     } catch (err) {
       if (err.code === 'storage/object-not-found') {
-        console.info('Camper', uid, 'has not uploaded an avatar yet.')
+        logger.info('Camper', uid, 'has not uploaded an avatar yet.')
         return
       }
 
-      console.warn(err.message)
+      logger.warn(err.message)
 
       if (window.Raven) {
         window.Raven.captureException(err)
@@ -149,7 +151,7 @@ class Upload extends Component {
     const hide = message.loading('กำลังอัพโหลดรูปประจำตัว กรุณารอสักครู่...', 0)
 
     if (rejectedFiles.length > 0) {
-      console.warn('Rejected Files:', rejectedFiles)
+      logger.warn('Rejected Files:', rejectedFiles)
 
       hide()
       message.error('รูปโปรไฟล์ต้องมีขนาดน้อยกว่า 10MB และเป็นไฟล์รูปเท่านั้น')
@@ -178,8 +180,8 @@ class Upload extends Component {
         input.onChange(true)
       }
 
-      console.log('Avatar File:', file)
-      console.log('Uploaded Avatar:', snapshot)
+      logger.log('Avatar File:', file)
+      logger.log('Uploaded Avatar:', snapshot)
 
       if (input.onChange) {
         input.onChange(snapshot.downloadURL)

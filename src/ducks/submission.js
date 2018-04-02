@@ -7,6 +7,7 @@ import {createReducer, Creator} from './helper'
 import rsf, {app} from '../core/fire'
 import history from '../core/history'
 import {getStepFromPath} from '../core/util'
+import logger from '../core/log'
 
 export const NEXT = '@CAMP/NEXT'
 export const PREV = '@CAMP/PREV'
@@ -28,7 +29,7 @@ function* submissionSaga() {
     const data = {submitted: true, updatedAt: new Date()}
     yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
 
-    console.log('Updated and Submitted Camper Record', data)
+    logger.log('Updated and Submitted Camper Record', data)
     yield call(message.success, 'การสมัครเข้าค่ายเสร็จสิ้น')
 
     if (window.analytics) {
@@ -59,7 +60,7 @@ function* updateCamperRecord(payload) {
       const data = {...payload, updatedAt: new Date()}
       yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
 
-      console.log('Updated Camper Record:', data)
+      logger.log('Updated Camper Record:', data)
 
       yield call(message.info, 'บันทึกข้อมูลเรียบร้อยแล้ว', 0.5)
     }
@@ -78,7 +79,7 @@ function* nextPageSaga({payload}) {
   yield fork(updateCamperRecord, payload)
 
   const {major, step} = getStepFromPath()
-  console.log('Advanced:', major, step + 1)
+  logger.log('Advanced:', major, step + 1)
 
   if (window.analytics) {
     window.analytics.track('Advanced Step', {major, step: step + 1})
@@ -101,7 +102,7 @@ function* previousPageSaga() {
   }
 
   const {major, step} = getStepFromPath()
-  console.log('Backtracked: ', major, step - 1)
+  logger.log('Backtracked: ', major, step - 1)
 
   if (window.analytics) {
     window.analytics.track('Backtracked Step', {major, step: step - 1})

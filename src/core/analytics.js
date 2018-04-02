@@ -46,7 +46,7 @@ export default function segment() {
           n.type = 'text/javascript'
           n.async = !0
           n.src =
-            ('https:' === document.location.protocol ? 'https://' : 'http://') +
+            (document.location.protocol === 'https:' ? 'https://' : 'http://') +
             'cdn.segment.com/analytics.js/v1/' +
             t +
             '/analytics.min.js'
@@ -59,6 +59,4 @@ export default function segment() {
         analytics.page()
       }
   })()
-
-  console.log(':: Analytics Module are now Active ::')
 }

@@ -8,6 +8,8 @@ import Ink from 'react-ink'
 
 import withField from '../components/withField'
 
+import logger from '../core/log'
+
 // prettier-ignore
 const DropZone = styled(ReactDropzone)`
   display: flex;
@@ -127,7 +129,7 @@ class Upload extends Component {
       const url = await designs.getDownloadURL()
 
       if (url) {
-        console.log('Design URL', url)
+        logger.log('Design URL', url)
 
         this.setState({preview: url})
 
@@ -137,11 +139,11 @@ class Upload extends Component {
       }
     } catch (err) {
       if (err.code === 'storage/object-not-found') {
-        console.info('Camper', uid, 'has not uploaded their designs yet.')
+        logger.info('Camper', uid, 'has not uploaded their designs yet.')
         return
       }
 
-      console.warn(err.message)
+      logger.warn(err.message)
 
       if (window.Raven) {
         window.Raven.captureException(err)
@@ -153,7 +155,7 @@ class Upload extends Component {
     const hide = message.loading('กำลังอัพโหลดรูปดีไซน์ กรุณารอสักครู่...', 0)
 
     if (rejectedFiles.length > 0) {
-      console.warn('Rejected Files:', rejectedFiles)
+      logger.warn('Rejected Files:', rejectedFiles)
 
       hide()
       message.error('รูปดีไซน์ต้องมีขนาดน้อยกว่า 10MB และเป็นไฟล์รูปเท่านั้น')
@@ -182,8 +184,8 @@ class Upload extends Component {
 
       const snapshot = await designs.put(file)
 
-      console.log('Design Photo File:', file)
-      console.log('Uploaded Design Photo:', snapshot)
+      logger.log('Design Photo File:', file)
+      logger.log('Uploaded Design Photo:', snapshot)
 
       if (onChange) {
         onChange(snapshot.downloadURL)

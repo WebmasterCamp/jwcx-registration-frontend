@@ -7,6 +7,8 @@ import preventUnsaved from '../components/PreventUnsaved'
 
 import {prev} from '../ducks/submission'
 
+import logger from '../core/log'
+
 const personalFields = [
   'firstname',
   'lastname',
@@ -91,7 +93,7 @@ function validate(values) {
 function onSubmitFail(error) {
   message.error('กรุณากรอกข้อมูลให้ครบถ้วน')
 
-  console.warn('Encountered Validation Error:', error)
+  logger.warn('Encountered Validation Error:', error)
 }
 
 export const formOptions = {
