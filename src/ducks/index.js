@@ -1,6 +1,6 @@
 import {compose, createStore, applyMiddleware} from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import {persistStore} from 'redux-persist'
+// import {persistStore} from 'redux-persist'
 
 import {reducers, rootSaga} from './root'
 
@@ -12,7 +12,11 @@ export default () => {
   let composeEnhancers = compose
 
   if (typeof window !== 'undefined') {
-    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    if (process.env.NODE_ENV === 'development') {
+      console.log(':: Enabled Redux DevTools in Development Environment ::')
+
+      composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    }
   }
 
   const store = createStore(
