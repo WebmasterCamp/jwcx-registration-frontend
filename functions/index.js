@@ -15,7 +15,10 @@ exports.stats = functions.firestore
       return db.runTransaction(transaction => {
         return transaction.get(counterRef).then(doc => {
           const major = data.major
-          const payload = {[major]: doc.data(major) + 1}
+          const majorCount = doc.data()[major]
+
+          const payload = {[major]: majorCount + 1}
+          console.log('Updating stats/counter to', payload[major])
 
           return transaction.update(counterRef, payload, {merge: true})
         })
