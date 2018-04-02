@@ -7,6 +7,8 @@ exports.stats = functions.firestore
   .document('campers/{camperId}')
   .onWrite(e => {
     const data = e.data.data()
+
+    const db = functions.firestore()
     const counterRef = db.collection('stats').doc('counter')
 
     if (data.submitted) {
