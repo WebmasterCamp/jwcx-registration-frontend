@@ -19,7 +19,9 @@ const MajorQuestionForm = ({prev, questions = {}, handleSubmit}) => {
       <Paper>
         <TextArea name="majorAnswer1" label={questions.Q1} wordy />
         <TextArea name="majorAnswer2" label={questions.Q2} wordy />
-        <Q3Field name="majorAnswer3" label={Q3} wordy />
+        {major !== 'content' && (
+          <Q3Field name="majorAnswer3" label={Q3} wordy />
+        )}
       </Paper>
 
       <Row>

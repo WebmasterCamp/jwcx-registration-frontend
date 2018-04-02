@@ -7,6 +7,7 @@ import preventUnsaved from '../components/PreventUnsaved'
 
 import {prev} from '../ducks/submission'
 
+import {getMajorFromPath} from '../core/util'
 import logger from '../core/log'
 
 const personalFields = [
@@ -38,7 +39,7 @@ const generalQuestionFields = [
   'generalAnswer3',
 ]
 
-const majorQuestionFields = ['majorAnswer1', 'majorAnswer2', 'majorAnswer3']
+const majorQuestionFields = ['majorAnswer1', 'majorAnswer2']
 
 const requiredFields = [...personalFields, ...parentFields]
 const questionFields = [...generalQuestionFields, ...majorQuestionFields]
@@ -47,6 +48,7 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const phoneRegex = /^\d{10}$/
 
 function validate(values) {
+  const major = getMajorFromPath()
   const errors = {}
 
   if (!values.photo) {
@@ -75,6 +77,10 @@ function validate(values) {
 
   if (!phoneRegex.test(values.parentPhone)) {
     errors.parentPhone = 'เบอร์โทรศัพท์ไม่ถูกต้อง'
+  }
+
+  if (major !== 'content' && !values.majorAnswer3) {
+    errors.majorAnswer3 = 'กรุณาตอบคำถามดังกล่าว'
   }
 
   const age = parseInt(values.age)

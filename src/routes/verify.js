@@ -185,18 +185,20 @@ const MajorSection = ({data}) => {
         <Paragraph>{data.majorAnswer2}</Paragraph>
       </Item>
 
-      <Item>
-        <Label>{Q3}</Label>
+      {major !== 'content' && (
+        <Item>
+          <Label>{Q3}</Label>
 
-        {major === 'design' ? (
-          <Image
-            image={{src: data.majorAnswer3, className: imageStyle}}
-            imageZoom={{src: data.majorAnswer3}}
-          />
-        ) : (
-          <Paragraph>{data.majorAnswer3}</Paragraph>
-        )}
-      </Item>
+          {major === 'design' ? (
+            <Image
+              image={{src: data.majorAnswer3, className: imageStyle}}
+              imageZoom={{src: data.majorAnswer3}}
+            />
+          ) : (
+            <Paragraph>{data.majorAnswer3}</Paragraph>
+          )}
+        </Item>
+      )}
     </Card>
   )
 }
