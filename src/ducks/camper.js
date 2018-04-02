@@ -113,6 +113,28 @@ export function* loadCamperSaga() {
         return
       }
 
+      // Edge Case: Major was not found in Camper Record
+      if (!record.major) {
+        logger.error('CRITICAL: Major was not found in camper record!')
+
+        if (window.analytics) {
+          window.analytics.track('Major Missing In Record', {
+            uid,
+            displayName,
+            majorPath: major,
+          })
+        }
+
+        // Merge the major data in record.major
+        const data = {major}
+        yield call(rsf.firestore.setDocument, docRef, data, {merge: true})
+
+        // Redirect the camper to their own major
+        yield call(history.push, '/' + major + '/step1')
+
+        return
+      }
+
       // C - If user is not at the same major they had chosen at first.
       if (record.major !== major) {
         yield call(message.warn, ChangeDeniedMessage)

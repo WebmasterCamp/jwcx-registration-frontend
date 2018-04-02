@@ -21,4 +21,6 @@ exports.stats = functions.firestore
         })
       })
     }
+
+    return true
   })
