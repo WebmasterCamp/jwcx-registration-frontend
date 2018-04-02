@@ -70,30 +70,32 @@ export function* loadCamperSaga() {
   yield put(setLoading(true))
 
   try {
+    // Retrieve the user information from the store, and the major from path
     const major = getMajorFromPath()
     const user = yield select(s => s.user)
     const {uid, displayName, email, photoURL} = user
 
     logger.log('Camper UID', uid, '| Major', major, '| Facebook', displayName)
 
+    // UID should always be there, since it's triggered upon auth success
     if (!uid) {
-      logger.warn("Camper hasn't authenticated yet. This should not happen.")
+      logger.error("Camper hasn't authenticated yet. This should not happen.")
       return
     }
 
-    // Retrieve the camper information
+    // Retrieve the camper information from firestore database
     const docRef = db.collection('campers').doc(uid)
     const doc = yield call(rsf.firestore.getDocument, docRef)
 
     // Identify camper's identity in analytics.
     Identify(uid, displayName, email, photoURL)
 
-    // If the document does exist, simply navigate to the "Change Denied" route
+    // If the camper's record does exist:
     if (doc.exists) {
       const record = doc.data()
       logger.log('Retrieved Camper Record:', record)
 
-      // Store the camper's information into redux store
+      // Store the camper's submission record into the redux store
       yield put(storeCamper(record))
 
       // A - If user is at root path and had chosen a major, redirect them.
@@ -113,7 +115,7 @@ export function* loadCamperSaga() {
         return
       }
 
-      // Edge Case: Major was not found in Camper Record
+      // C - Edge Case: Major was not found in Camper Record
       if (!record.major) {
         logger.error('CRITICAL: Major was not found in camper record!')
 
@@ -135,7 +137,7 @@ export function* loadCamperSaga() {
         return
       }
 
-      // C - If user is not at the same major they had chosen at first.
+      // D - If user is not at the same major they had chosen at first.
       if (record.major !== major) {
         yield call(message.warn, ChangeDeniedMessage)
         yield call(history.push, '/change_denied?major=' + major)
@@ -152,21 +154,22 @@ export function* loadCamperSaga() {
         return
       }
 
-      if (window.analytics) {
-        window.analytics.track('Returned', {uid, displayName, major})
-      }
-
-      // If user is at /:major, redirect to /:major/step1
+      // E - If user is at /:major, redirect to /:major/step1
       if (isMajorRoot(major)) {
         logger.info('User is at major root. Redirecting to Step 1.')
 
         yield call(history.push, `/${major}/step1`)
       }
 
+      // Submit the Track Event to Segment Analytics
+      if (window.analytics) {
+        window.analytics.track('Returned', {uid, displayName, major})
+      }
+
       return
     }
 
-    // D - If user arrives for the first time, create a Camper ID for them.
+    // F - If user arrives for the first time, create a Camper ID for them.
     const data = {
       major,
       facebookDisplayName: displayName,
