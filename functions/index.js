@@ -7,11 +7,13 @@ exports.stats = functions.firestore
   .document('campers/{camperId}')
   .onWrite(e => {
     const data = e.data.data()
+    const previousData = e.data.previous.data()
 
     const db = admin.firestore()
     const counterRef = db.collection('stats').doc('counter')
 
-    if (data.submitted) {
+    // If previously not submitted, but it is now submitted.
+    if (!previousData.submitted && data.submitted) {
       return db.runTransaction(transaction => {
         return transaction.get(counterRef).then(doc => {
           const major = data.major
