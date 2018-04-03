@@ -29,6 +29,10 @@ const Label = styled.label`
   pointer-events: none;
   transition: transform 0.2s ease-out;
 
+  white-space: pre-line;
+  word-break: break-word;
+  word-wrap: break-word;
+
   ${props => props.float && css`
     transform: translateY(-40px) scale(1);
   `};

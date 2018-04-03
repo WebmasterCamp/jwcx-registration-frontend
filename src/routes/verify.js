@@ -71,6 +71,10 @@ const Item = styled.div`
 
 const Label = styled.strong`
   font-weight: bold;
+
+  white-space: pre-line;
+  word-break: break-word;
+  word-wrap: break-word;
 `
 
 const Paragraph = styled.p`

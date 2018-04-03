@@ -108,10 +108,8 @@ export function* loadCamperSaga() {
         return
       }
 
-      // B - If user is not at major path, such as "/" or "/thankyou"
+      // B - If user does not have major in record, and is not at major path
       if (!major) {
-        logger.info('User is not at major path:', window.location.pathname)
-
         return
       }
 
@@ -169,26 +167,28 @@ export function* loadCamperSaga() {
       return
     }
 
-    // F - If user arrives for the first time, create a Camper ID for them.
-    const data = {
-      major,
-      facebookDisplayName: displayName,
-      facebookEmail: email,
-      facebookPhotoURL: photoURL,
-      createdAt: new Date(),
-    }
+    // F - If user arrives at major paths for the first time, create a Camper Record for them.
+    if (major) {
+      const data = {
+        major,
+        facebookDisplayName: displayName,
+        facebookEmail: email,
+        facebookPhotoURL: photoURL,
+        createdAt: new Date(),
+      }
 
-    yield call(rsf.firestore.setDocument, docRef, data)
+      yield call(rsf.firestore.setDocument, docRef, data)
 
-    if (window.analytics) {
-      window.analytics.track('Arrived', {uid, displayName, major})
-    }
+      if (window.analytics) {
+        window.analytics.track('Arrived', {uid, displayName, major})
+      }
 
-    logger.log('Created Record for New Camper:', displayName, '->', data)
+      logger.log('Created Record for New Camper:', displayName, '->', data)
 
-    // If user is at /:major, redirect to /:major/step1
-    if (isMajorRoot(major)) {
-      yield call(history.push, `/${major}/step1`)
+      // If user is at /:major, also redirect to /:major/step1
+      if (isMajorRoot(major)) {
+        yield call(history.push, `/${major}/step1`)
+      }
     }
   } catch (err) {
     message.error(err.message)
