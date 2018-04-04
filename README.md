@@ -2,12 +2,6 @@
 
 This is the frontend used for handling registration requests by Junior Webmaster Camp X.
 
-## TODOs
-
-1.  Update font to RSU, RSU Text and KeepCalm, and update style according to JWCx CI
-
-2.  Develop Stats API in Cloud Functions to count campers in each majors
-
 ### Bugs
 
 * Redirection Loop on Windows (Status: Unknown)
@@ -20,6 +14,7 @@ This is the frontend used for handling registration requests by Junior Webmaster
 
 Nice to have:
 
+* Update font to RSU, RSU Text and KeepCalm, and update style according to JWCx CI
 * Resume to previously completed steps
 * Add Steppers to allow switching between pages, and show completion percentage.
 
