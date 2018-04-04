@@ -24,7 +24,8 @@ exports.stats = functions.firestore
       return db.runTransaction(transaction => {
         return transaction.get(counterRef).then(doc => {
           const major = data.major
-          const majorCount = doc.data.get(major)
+          const counterData = doc.data()
+          const majorCount = counterData[major]
           const nextCount = majorCount + 1
 
           const payload = {[major]: nextCount}
