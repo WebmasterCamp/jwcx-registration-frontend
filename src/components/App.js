@@ -37,6 +37,10 @@ const enhance = lifecycle({
         min-width: unset !important;
       }
 
+      .ant-confirm-body .ant-confirm-content {
+        margin-top: 0 !important;
+      }
+
       .DayPickerInput {
         width: 100%;
       }
