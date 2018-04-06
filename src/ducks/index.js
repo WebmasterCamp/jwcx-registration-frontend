@@ -1,6 +1,6 @@
 import {compose, createStore, applyMiddleware} from 'redux'
 import createSagaMiddleware from 'redux-saga'
-// import {persistStore} from 'redux-persist'
+import {persistStore} from 'redux-persist'
 
 import {reducers, rootSaga} from './root'
 
@@ -24,7 +24,7 @@ export default () => {
     composeEnhancers(applyMiddleware(...middleware)),
   )
 
-  // persistStore(store)
+  persistStore(store)
 
   if (module.hot) {
     module.hot.accept(() => {
