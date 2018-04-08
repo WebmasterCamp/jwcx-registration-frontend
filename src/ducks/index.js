@@ -24,7 +24,7 @@ export default () => {
     composeEnhancers(applyMiddleware(...middleware)),
   )
 
-  persistStore(store)
+  // persistStore(store)
 
   if (module.hot) {
     module.hot.accept(() => {
