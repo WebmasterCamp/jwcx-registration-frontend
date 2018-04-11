@@ -1,5 +1,6 @@
+import React from 'react'
 import {call, put, select} from 'redux-saga/effects'
-import {message} from 'antd'
+import {message, Modal} from 'antd'
 
 import {createReducer, Creator} from './helper'
 
@@ -63,6 +64,34 @@ function Identify(uid, displayName, email, photoURL) {
 
   // prettier-ignore
   logger.log(`[Analytics] Identified Camper ${uid}'s identity as ${displayName}`)
+}
+
+function notifySubmitted(camper) {
+  const name = camper.firstname
+    ? `${camper.firstname} ${camper.lastname}`
+    : camper.facebookDisplayName
+
+  Modal.success({
+    content: (
+      <div style={{fontSize: '1.15em'}}>
+        <p>
+          คุณ {name} ได้ยืนยันการสมัครเข้าร่วมค่าย Junior Webmaster Camp X
+          ในสาขา {camper.major} ไปเรียบร้อยแล้วค่ะ 🎉
+        </p>
+        <p>
+          ค่ายจะประกาศผลการคัดเลือกในวันที่ 16 เมษายน ผ่านทางเว็บไซต์{' '}
+          <a href="https://www.jwc.in.th">www.jwc.in.th</a> ค่ะ
+        </p>
+        <p>ขอให้โชคดีนะคะ ให้คุกกี้ทำนายกัน! 🥠</p>
+      </div>
+    ),
+    okText: `กลับสู่เว็บไซต์หลัก`,
+    onOk: () => {
+      if (typeof window !== 'undefined') {
+        window.location.href = 'https://www.jwc.in.th'
+      }
+    },
+  })
 }
 
 export function* loadCamperSaga() {
@@ -135,7 +164,24 @@ export function* loadCamperSaga() {
         return
       }
 
-      // D - If user is not at the same major they had chosen at first.
+      // D - If user had already submitted, redirect them to the submission status
+      if (record.submitted) {
+        logger.info('User had already submitted before. Redirecting...')
+
+        if (window.analytics) {
+          window.analytics.track('Returned after Submitted', {
+            uid,
+            displayName,
+            major,
+          })
+        }
+
+        yield call(notifySubmitted, record)
+
+        return
+      }
+
+      // E - If user is not at the same major they had chosen at first.
       if (record.major !== major) {
         yield call(message.warn, ChangeDeniedMessage)
         yield call(history.push, '/change_denied?major=' + major)
@@ -152,7 +198,7 @@ export function* loadCamperSaga() {
         return
       }
 
-      // E - If user is at /:major, redirect to /:major/step1
+      // F - If user is at /:major, redirect to /:major/step1
       if (isMajorRoot(major)) {
         logger.info('User is at major root. Redirecting to Step 1.')
 
@@ -167,7 +213,7 @@ export function* loadCamperSaga() {
       return
     }
 
-    // F - If user arrives at major paths for the first time, create a Camper Record for them.
+    // G - If user arrives at major paths for the first time, create a Camper Record for them.
     if (major) {
       const data = {
         major,
