@@ -119,8 +119,8 @@ export function* loadCamperSaga() {
     // Identify camper's identity in analytics.
     Identify(uid, displayName, email, photoURL)
 
-    // If the camper's record does exist:
     if (doc.exists) {
+      // If the camper's record does exist:
       const record = doc.data()
       logger.log('Retrieved Camper Record:', record)
 

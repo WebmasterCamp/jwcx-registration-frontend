@@ -1,5 +1,6 @@
+import React from 'react'
 import * as R from 'ramda'
-import {message} from 'antd'
+import {message, Modal} from 'antd'
 import firebase from 'firebase'
 import {takeEvery, call, put, fork} from 'redux-saga/effects'
 
@@ -27,6 +28,9 @@ export const clearUser = Creator(CLEAR_USER)
 
 export const setLoading = Creator(SET_LOADING)
 export const setAuthenticating = Creator(SET_AUTHENTICATING)
+
+// The epoch timestamp in which the registration system will be closed
+const SUBMISSION_CLOSED_TIME = new Date('Apr 13 2018 02:00:00').getTime()
 
 // Serializes the user's information into an object
 const userProps = R.pick([
@@ -95,11 +99,39 @@ export const getUserStatus = () =>
     app.auth().onAuthStateChanged(resolve, reject)
   })
 
+function notifySubmissionClosed() {
+  Modal.error({
+    content: (
+      <div style={{fontSize: '1.15em'}}>
+        <p>ช่วงเวลารับสมัครของค่าย Junior Webmaster Camp X ได้จบลงแล้วค่ะ 🙌</p>
+        <p>
+          ค่ายจะประกาศผลการคัดเลือกในวันที่ 16 เมษายน ผ่านทางเว็บไซต์{' '}
+          <a href="https://www.jwc.in.th">www.jwc.in.th</a> ค่ะ
+        </p>
+        <p>ขอให้โชคดีนะคะ ให้คุกกี้ทำนายกัน! 🥠</p>
+      </div>
+    ),
+    okText: `กลับสู่เว็บไซต์หลัก`,
+    onOk: () => {
+      if (typeof window !== 'undefined') {
+        window.location.href = 'https://www.jwc.in.th'
+      }
+    },
+  })
+}
+
 // Attempt to re-authenticate when user resumes their session
 export function* reauthSaga() {
   try {
     const user = yield call(getUserStatus)
     const major = getMajorFromPath()
+
+    // Notify the user that registration has been closed.
+    if (Date.now() > SUBMISSION_CLOSED_TIME) {
+      yield call(notifySubmissionClosed)
+
+      return
+    }
 
     // If user is successfully re-authenticated.
     if (user) {

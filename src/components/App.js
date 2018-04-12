@@ -44,6 +44,10 @@ const enhance = lifecycle({
       .DayPickerInput-OverlayWrapper {
         z-index: 2;
       }
+
+      .ant-confirm-body .ant-confirm-content {
+        margin-top: 0 !important;
+      }
     `
   },
 })
