@@ -1,6 +1,6 @@
 # JWCx Registration Frontend
 
-This is the frontend used for handling registration requests by Junior Webmaster Camp X.
+This is the frontend used for handling registration requests by Junior Webmaster Camp XI.
 
 ### Bugs
 

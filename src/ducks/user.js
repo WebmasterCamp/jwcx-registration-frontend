@@ -30,7 +30,7 @@ export const setLoading = Creator(SET_LOADING)
 export const setAuthenticating = Creator(SET_AUTHENTICATING)
 
 // The epoch timestamp in which the registration system will be closed
-const SUBMISSION_CLOSED_TIME = new Date('Apr 13 2018 02:00:00').getTime()
+const SUBMISSION_CLOSED_TIME = new Date('Apr 13 2019 02:00:00').getTime()
 
 // Serializes the user's information into an object
 const userProps = R.pick([
@@ -46,7 +46,7 @@ function notifySubmissionClosed() {
   Modal.error({
     content: (
       <div style={{fontSize: '1.15em'}}>
-        <p>ช่วงเวลารับสมัครของค่าย Junior Webmaster Camp X ได้จบลงแล้วค่ะ 🙌</p>
+        <p>ช่วงเวลารับสมัครของค่าย Junior Webmaster Camp XI ได้จบลงแล้วค่ะ 🙌</p>
         <p>
           ค่ายจะประกาศผลการคัดเลือกในวันที่ 16 เมษายน ผ่านทางเว็บไซต์{' '}
           <a href="https://www.jwc.in.th">www.jwc.in.th</a> ค่ะ

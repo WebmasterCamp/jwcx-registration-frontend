@@ -16,7 +16,7 @@ class Document extends Component {
         <Head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>สมัครเข้าค่าย Junior Webmaster Camp X</title>
+          <title>สมัครเข้าค่าย Junior Webmaster Camp XI</title>
 
           <meta
             name="description"
@@ -27,7 +27,7 @@ class Document extends Component {
 
           <meta
             property="og:title"
-            content="สมัครเข้าค่าย Junior Webmaster Camp X"
+            content="สมัครเข้าค่าย Junior Webmaster Camp XI"
           />
 
           <meta
